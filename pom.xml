@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>xyz.morlotti</groupId>
+    <artifactId>VirtualBookcase</artifactId>
+    <version>1.0.0</version>
+
+    <name>VirtualBookcase</name>
+    <url>http://www.github.com/OMorlotti/P7/</url>
+
+    <developers>
+        <developer>
+            <name>Olivier Morlotti</name>
+            <email>o.morlotti@gmail.com</email>
+        </developer>
+    </developers>
+
+    <packaging>pom</packaging>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.source>15</maven.compiler.source>
+        <maven.compiler.target>15</maven.compiler.target>
+    </properties>
+
+    <dependencies>
+        <!--*********************************************************************************************************-->
+        <!--*********************************************************************************************************-->
+    </dependencies>
+
+    <modules>
+        <module>WebAPI</module>
+        <module>Batch</module>
+        <module>UserWebSite</module>
+        <module>StaffWebSite</module>
+    </modules>
+
+</project>
