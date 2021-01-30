@@ -6,6 +6,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import xyz.morlotti.virtualbookcase.webapi.exceptions.APINotCreatedException;
+import xyz.morlotti.virtualbookcase.webapi.exceptions.APINotDeletedException;
+import xyz.morlotti.virtualbookcase.webapi.exceptions.APINotFoundException;
 import xyz.morlotti.virtualbookcase.webapi.beans.Genre;
 import xyz.morlotti.virtualbookcase.webapi.daos.GenreDAO;
 
@@ -29,9 +32,11 @@ public class GenreController
 	@RequestMapping(value="/genre/{id}", method = RequestMethod.GET)
 	public Optional<Genre> getGenre(@PathVariable int id)
 	{
-		Optional<Genre> genre = genreDAO.findById(id);
+		Optional<Genre> optional = genreDAO.findById(id);
 
-		return genre;
+		optional.orElseThrow(() -> new APINotFoundException("Genre " + id + " not found"));
+
+		return optional;
 	}
 
 	@RequestMapping(value = "/genre", method = RequestMethod.POST)
@@ -41,7 +46,7 @@ public class GenreController
 
 		if(newGenre == null)
 		{
-			return ResponseEntity.noContent().build();
+			throw new APINotCreatedException("Genre not inserted");
 		}
 
 		URI location = ServletUriComponentsBuilder
@@ -57,14 +62,7 @@ public class GenreController
 	@RequestMapping(value="/genre/{id}", method = RequestMethod.PUT)
 	public ResponseEntity<Void> updateGenre(@PathVariable int id, @RequestBody Genre genre)
 	{
-		Optional<Genre> optional = genreDAO.findById(id);
-
-		if(!optional.isPresent())
-		{
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-		}
-
-		Genre existingGenre = optional.get();
+		Genre existingGenre = getGenre(id).get();
 
 		existingGenre.setName(genre.getName());
 
@@ -82,8 +80,7 @@ public class GenreController
 		}
 		catch(EmptyResultDataAccessException e)
 		{
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+			throw new APINotDeletedException("Genre " + id + " not deleted: " + e.getMessage());
 		}
 	}
-
 }
