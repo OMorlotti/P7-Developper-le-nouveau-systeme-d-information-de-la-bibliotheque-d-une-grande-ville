@@ -21,7 +21,7 @@ public class BookGenreController
 	@Autowired
 	private BookGenreDAO bookGenreDAO;
 
-	@RequestMapping(value="/bookGenres", method = RequestMethod.GET)
+	@RequestMapping(value="/bookgenres", method = RequestMethod.GET)
 	public Iterable<BookGenre> listBookGenres()
 	{
 		Iterable<BookGenre> bookGenres = bookGenreDAO.findAll();
@@ -29,7 +29,7 @@ public class BookGenreController
 		return bookGenres;
 	}
 
-	@RequestMapping(value="/bookGenre/{id}", method = RequestMethod.GET)
+	@RequestMapping(value="/bookgenre/{id}", method = RequestMethod.GET)
 	public Optional<BookGenre> getBookGenre(@PathVariable int id)
 	{
 		Optional<BookGenre> optional = bookGenreDAO.findById(id);
@@ -39,7 +39,7 @@ public class BookGenreController
 		return optional;
 	}
 
-	@RequestMapping(value = "/bookGenre", method = RequestMethod.POST)
+	@RequestMapping(value = "/bookgenre", method = RequestMethod.POST)
 	public ResponseEntity<Void> addBookGenre(@RequestBody BookGenre bookGenre)
 	{
 		BookGenre newBookGenre = bookGenreDAO.save(bookGenre);
@@ -59,7 +59,7 @@ public class BookGenreController
 		return ResponseEntity.created(location).build();
 	}
 
-	@RequestMapping(value="/bookGenre/{id}", method = RequestMethod.DELETE)
+	@RequestMapping(value="/bookgenre/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<Void> deleteBookGenre(@PathVariable int id)
 	{
 		try

@@ -21,16 +21,15 @@ public class BookDescriptionController
 	@Autowired
 	private BookDescriptionDAO bookDescriptionDAO;
 
-	@RequestMapping(value="/bookdescription", method = RequestMethod.GET)
-	public Iterable<BookDescription> listBookDescription
-		()
+	@RequestMapping(value="/bookdescriptions", method = RequestMethod.GET)
+	public Iterable<BookDescription> listBookDescription()
 	{
 		Iterable<BookDescription> bookDescriptions = bookDescriptionDAO.findAll();
 
 		return bookDescriptions;
 	}
 
-	@RequestMapping(value="/bookDescription/{id}", method = RequestMethod.GET)
+	@RequestMapping(value="/bookdescription/{id}", method = RequestMethod.GET)
 	public Optional<BookDescription> getBookDescription(@PathVariable int id)
 	{
 		Optional<BookDescription> optional = bookDescriptionDAO.findById(id);
@@ -40,7 +39,7 @@ public class BookDescriptionController
 		return optional;
 	}
 
-	@RequestMapping(value = "/book", method = RequestMethod.POST)
+	@RequestMapping(value = "/bookdescription", method = RequestMethod.POST)
 	public ResponseEntity<Void> addBookDescription(@RequestBody BookDescription book)
 	{
 		BookDescription newBookDescription = bookDescriptionDAO.save(book);
@@ -86,7 +85,7 @@ public class BookDescriptionController
 		return addBookDescription(existingBookDescription);
 	}
 
-	@RequestMapping(value="/book/{id}", method = RequestMethod.DELETE)
+	@RequestMapping(value="/bookdescription/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<Void> deleteBookDescription(@PathVariable int id)
 	{
 		try

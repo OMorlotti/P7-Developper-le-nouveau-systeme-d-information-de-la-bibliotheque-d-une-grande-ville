@@ -23,8 +23,7 @@ public class BookController
 	private BookDAO bookDAO;
 
 	@RequestMapping(value="/books", method = RequestMethod.GET)
-	public Iterable<Book> listBooks
-		()
+	public Iterable<Book> listBooks()
 	{
 		Iterable<Book> books = bookDAO.findAll();
 
