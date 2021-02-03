@@ -7,5 +7,4 @@ import xyz.morlotti.virtualbookcase.webapi.beans.Genre;
 @Repository
 public interface GenreDAO extends JpaRepository<Genre, Integer>
 {
-
 }

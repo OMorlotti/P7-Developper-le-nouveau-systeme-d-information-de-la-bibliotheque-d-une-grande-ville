@@ -21,8 +21,6 @@ public class AuthController
     @Autowired
     private UserDAO userDAO;
 
-    /*----------------------------------------------------------------------------------------------------------------*/
-
     @RequestMapping(path = "/login", method = RequestMethod.GET)
     public ResponseEntity<Void> login(
         @RequestParam("login") String login,

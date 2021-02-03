@@ -13,7 +13,6 @@ import xyz.morlotti.virtualbookcase.webapi.exceptions.APINotDeletedException;
 import xyz.morlotti.virtualbookcase.webapi.exceptions.APINotFoundException;
 
 import java.net.URI;
-import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -31,7 +30,7 @@ public class BookController
 	}
 
 	@RequestMapping(value="/book/{id}", method = RequestMethod.GET)
-	public Optional<Book> getBook(@PathVariable int id)
+	public Optional<Book> getBook(@PathVariable int id) // optional : si la variable 'book' ne retourne finalement rien, "optional" évite de gérer l'exception levée.
 	{
 		Optional<Book> optional = bookDAO.findById(id);
 

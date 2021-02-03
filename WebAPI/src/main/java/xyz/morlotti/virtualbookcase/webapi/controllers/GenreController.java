@@ -1,16 +1,13 @@
 package xyz.morlotti.virtualbookcase.webapi.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-import xyz.morlotti.virtualbookcase.webapi.exceptions.APINotCreatedException;
-import xyz.morlotti.virtualbookcase.webapi.exceptions.APINotDeletedException;
-import xyz.morlotti.virtualbookcase.webapi.exceptions.APINotFoundException;
+
 import xyz.morlotti.virtualbookcase.webapi.beans.Genre;
-import xyz.morlotti.virtualbookcase.webapi.daos.GenreDAO;
+import xyz.morlotti.virtualbookcase.webapi.services.interfaces.GenreService;
 
 import java.net.URI;
 import java.util.Optional;
@@ -19,35 +16,24 @@ import java.util.Optional;
 public class GenreController
 {
 	@Autowired
-	private GenreDAO genreDAO;
+	GenreService genreService;
 
 	@RequestMapping(value="/genres", method = RequestMethod.GET)
 	public Iterable<Genre> listGenres()
 	{
-		Iterable<Genre> genres = genreDAO.findAll();
-
-		return genres;
+		return genreService.listGenres();
 	}
 
 	@RequestMapping(value="/genre/{id}", method = RequestMethod.GET)
 	public Optional<Genre> getGenre(@PathVariable int id)
 	{
-		Optional<Genre> optional = genreDAO.findById(id);
-
-		optional.orElseThrow(() -> new APINotFoundException("Genre " + id + " not found"));
-
-		return optional;
+		return genreService.getGenre(id);
 	}
 
 	@RequestMapping(value = "/genre", method = RequestMethod.POST)
 	public ResponseEntity<Void> addGenre(@RequestBody Genre genre)
 	{
-		Genre newGenre = genreDAO.save(genre);
-
-		if(newGenre == null)
-		{
-			throw new APINotCreatedException("Genre not inserted");
-		}
+		Genre newGenre = genreService.addGenre(genre);
 
 		URI location = ServletUriComponentsBuilder
            .fromCurrentRequest()
@@ -62,25 +48,23 @@ public class GenreController
 	@RequestMapping(value="/genre/{id}", method = RequestMethod.PUT)
 	public ResponseEntity<Void> updateGenre(@PathVariable int id, @RequestBody Genre genre)
 	{
-		Genre existingGenre = getGenre(id).get();
+		Genre newGenre = genreService.updateGenre(id, genre);
 
-		existingGenre.setName(genre.getName());
+		URI location = ServletUriComponentsBuilder
+           .fromCurrentRequest()
+           .path("/{id}")
+           .buildAndExpand(newGenre.getId())
+           .toUri()
+		;
 
-		return addGenre(existingGenre);
+		return ResponseEntity.created(location).build();
 	}
 
 	@RequestMapping(value="/genre/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<Void> deleteGenre(@PathVariable int id)
 	{
-		try
-		{
-			genreDAO.deleteById(id);
+		genreService.deleteGenre(id);
 
-			return ResponseEntity.status(HttpStatus.OK).build();
-		}
-		catch(EmptyResultDataAccessException e)
-		{
-			throw new APINotDeletedException("Genre " + id + " not deleted: " + e.getMessage());
-		}
+		return ResponseEntity.status(HttpStatus.OK).build();
 	}
 }
