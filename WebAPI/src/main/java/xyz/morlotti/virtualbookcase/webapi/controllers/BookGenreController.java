@@ -1,16 +1,13 @@
 package xyz.morlotti.virtualbookcase.webapi.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
 import xyz.morlotti.virtualbookcase.webapi.beans.BookGenre;
-import xyz.morlotti.virtualbookcase.webapi.daos.BookGenreDAO;
-import xyz.morlotti.virtualbookcase.webapi.exceptions.APINotCreatedException;
-import xyz.morlotti.virtualbookcase.webapi.exceptions.APINotDeletedException;
-import xyz.morlotti.virtualbookcase.webapi.exceptions.APINotFoundException;
+import xyz.morlotti.virtualbookcase.webapi.services.interfaces.BookGenreService;
 
 import java.net.URI;
 import java.util.Optional;
@@ -19,58 +16,55 @@ import java.util.Optional;
 public class BookGenreController
 {
 	@Autowired
-	private BookGenreDAO bookGenreDAO;
+	BookGenreService bookGenreService;
 
-	@RequestMapping(value="/bookgenres", method = RequestMethod.GET)
+	@RequestMapping(value="/bookGenres", method = RequestMethod.GET)
 	public Iterable<BookGenre> listBookGenres()
 	{
-		Iterable<BookGenre> bookGenres = bookGenreDAO.findAll();
-
-		return bookGenres;
+		return bookGenreService.listBookGenres();
 	}
 
-	@RequestMapping(value="/bookgenre/{id}", method = RequestMethod.GET)
+	@RequestMapping(value="/bookGenre/{id}", method = RequestMethod.GET)
 	public Optional<BookGenre> getBookGenre(@PathVariable int id)
 	{
-		Optional<BookGenre> optional = bookGenreDAO.findById(id);
-
-		optional.orElseThrow(() -> new APINotFoundException("BookGenre " + id + " not found"));
-
-		return optional;
+		return bookGenreService.getBookGenre(id);
 	}
 
-	@RequestMapping(value = "/bookgenre", method = RequestMethod.POST)
+	@RequestMapping(value = "/bookGenre", method = RequestMethod.POST)
 	public ResponseEntity<Void> addBookGenre(@RequestBody BookGenre bookGenre)
 	{
-		BookGenre newBookGenre = bookGenreDAO.save(bookGenre);
-
-		if(newBookGenre == null)
-		{
-			throw new APINotCreatedException("BookGenre not inserted");
-		}
+		BookGenre newBookGenre = bookGenreService.addBookGenre(bookGenre);
 
 		URI location = ServletUriComponentsBuilder
-           .fromCurrentRequest()
-           .path("/{id}")
-           .buildAndExpand(newBookGenre.getId())
-           .toUri()
-		;
+			               .fromCurrentRequest()
+			               .path("/{id}")
+			               .buildAndExpand(newBookGenre.getId())
+			               .toUri()
+			;
 
 		return ResponseEntity.created(location).build();
 	}
 
-	@RequestMapping(value="/bookgenre/{id}", method = RequestMethod.DELETE)
+	@RequestMapping(value="/bookGenre/{id}", method = RequestMethod.PUT)
+	public ResponseEntity<Void> updateBookGenre(@PathVariable int id, @RequestBody BookGenre bookGenre)
+	{
+		BookGenre newBookGenre = bookGenreService.updateBookGenre(id, bookGenre);
+
+		URI location = ServletUriComponentsBuilder
+			               .fromCurrentRequest()
+			               .path("/{id}")
+			               .buildAndExpand(newBookGenre.getId())
+			               .toUri()
+			;
+
+		return ResponseEntity.created(location).build();
+	}
+
+	@RequestMapping(value="/bookGenre/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<Void> deleteBookGenre(@PathVariable int id)
 	{
-		try
-		{
-			bookGenreDAO.deleteById(id);
+		bookGenreService.deleteBookGenre(id);
 
-			return ResponseEntity.status(HttpStatus.OK).build();
-		}
-		catch(EmptyResultDataAccessException e)
-		{
-			throw new APINotDeletedException("BookGenre " + id + " not deleted: " + e.getMessage());
-		}
+		return ResponseEntity.status(HttpStatus.OK).build();
 	}
 }

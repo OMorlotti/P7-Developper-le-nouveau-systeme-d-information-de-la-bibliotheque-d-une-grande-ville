@@ -1,16 +1,13 @@
 package xyz.morlotti.virtualbookcase.webapi.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
 import xyz.morlotti.virtualbookcase.webapi.beans.BookDescription;
-import xyz.morlotti.virtualbookcase.webapi.daos.BookDescriptionDAO;
-import xyz.morlotti.virtualbookcase.webapi.exceptions.APINotCreatedException;
-import xyz.morlotti.virtualbookcase.webapi.exceptions.APINotDeletedException;
-import xyz.morlotti.virtualbookcase.webapi.exceptions.APINotFoundException;
+import xyz.morlotti.virtualbookcase.webapi.services.interfaces.BookDescriptionService;
 
 import java.net.URI;
 import java.util.Optional;
@@ -19,84 +16,55 @@ import java.util.Optional;
 public class BookDescriptionController
 {
 	@Autowired
-	private BookDescriptionDAO bookDescriptionDAO;
+	BookDescriptionService bookDescriptionService;
 
-	@RequestMapping(value="/bookdescriptions", method = RequestMethod.GET)
-	public Iterable<BookDescription> listBookDescription()
+	@RequestMapping(value="/bookDescriptions", method = RequestMethod.GET)
+	public Iterable<BookDescription> listBookDescriptions()
 	{
-		Iterable<BookDescription> bookDescriptions = bookDescriptionDAO.findAll();
-
-		return bookDescriptions;
+		return bookDescriptionService.listBookDescriptions();
 	}
 
-	@RequestMapping(value="/bookdescription/{id}", method = RequestMethod.GET)
+	@RequestMapping(value="/bookDescription/{id}", method = RequestMethod.GET)
 	public Optional<BookDescription> getBookDescription(@PathVariable int id)
 	{
-		Optional<BookDescription> optional = bookDescriptionDAO.findById(id);
-
-		optional.orElseThrow(() -> new APINotFoundException("BookDescription " + id + " not found"));
-
-		return optional;
+		return bookDescriptionService.getBookDescription(id);
 	}
 
-	@RequestMapping(value = "/bookdescription", method = RequestMethod.POST)
-	public ResponseEntity<Void> addBookDescription(@RequestBody BookDescription book)
+	@RequestMapping(value = "/bookDescription", method = RequestMethod.POST)
+	public ResponseEntity<Void> addBookDescription(@RequestBody BookDescription bookDescription)
 	{
-		BookDescription newBookDescription = bookDescriptionDAO.save(book);
-
-		if(newBookDescription == null)
-		{
-			throw new APINotCreatedException("BookDescription not inserted");
-		}
+		BookDescription newBookDescription = bookDescriptionService.addBookDescription(bookDescription);
 
 		URI location = ServletUriComponentsBuilder
-           .fromCurrentRequest()
-           .path("/{id}")
-           .buildAndExpand(newBookDescription.getId())
-           .toUri()
-		;
+			               .fromCurrentRequest()
+			               .path("/{id}")
+			               .buildAndExpand(newBookDescription.getId())
+			               .toUri()
+			;
 
 		return ResponseEntity.created(location).build();
 	}
 
-	@RequestMapping(value="/bookdescription/{id}", method = RequestMethod.PUT)
-	public ResponseEntity<Void> updateBookDescription(@PathVariable int id, @RequestBody BookDescription book)
+	@RequestMapping(value="/bookDescription/{id}", method = RequestMethod.PUT)
+	public ResponseEntity<Void> updateBookDescription(@PathVariable int id, @RequestBody BookDescription bookDescription)
 	{
-		BookDescription existingBookDescription = getBookDescription(id).get();
+		BookDescription newBookDescription = bookDescriptionService.updateBookDescription(id, bookDescription);
 
-		existingBookDescription.setAuthorFirstname(book.getAuthorFirstname());
+		URI location = ServletUriComponentsBuilder
+			               .fromCurrentRequest()
+			               .path("/{id}")
+			               .buildAndExpand(newBookDescription.getId())
+			               .toUri()
+			;
 
-		existingBookDescription.setAuthorLastname(book.getAuthorLastname());
-
-		existingBookDescription.setComment(book.getComment());
-
-		existingBookDescription.setEdition(book.getEdition());
-
-		existingBookDescription.setEditionYear(book.getEditionYear());
-
-		existingBookDescription.setEditor(book.getEditor());
-
-		existingBookDescription.setFormat(book.getFormat());
-
-		existingBookDescription.setIsbn(book.getIsbn());
-
-		existingBookDescription.setTitle(book.getTitle());
-
-		return addBookDescription(existingBookDescription);
+		return ResponseEntity.created(location).build();
 	}
 
-	@RequestMapping(value="/bookdescription/{id}", method = RequestMethod.DELETE)
+	@RequestMapping(value="/bookDescription/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<Void> deleteBookDescription(@PathVariable int id)
 	{
-		try
-		{
-			bookDescriptionDAO.deleteById(id);
+		bookDescriptionService.deleteBookDescription(id);
 
-			return ResponseEntity.status(HttpStatus.OK).build();
-		}
-		catch(EmptyResultDataAccessException e)
-		{
-			throw new APINotDeletedException("BookDescription " + id + " not deleted: " + e.getMessage());
-		}
+		return ResponseEntity.status(HttpStatus.OK).build();
 	}
 }
