@@ -12,7 +12,5 @@ public interface BookGenreService
 
 	public BookGenre addBookGenre(BookGenre genre);
 
-	public BookGenre updateBookGenre(int id, BookGenre genre);
-
 	public void deleteBookGenre(int id);
 }

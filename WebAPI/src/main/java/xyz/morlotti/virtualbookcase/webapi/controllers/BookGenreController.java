@@ -45,21 +45,6 @@ public class BookGenreController
 		return ResponseEntity.created(location).build();
 	}
 
-	@RequestMapping(value="/bookGenre/{id}", method = RequestMethod.PUT)
-	public ResponseEntity<Void> updateBookGenre(@PathVariable int id, @RequestBody BookGenre bookGenre)
-	{
-		BookGenre newBookGenre = bookGenreService.updateBookGenre(id, bookGenre);
-
-		URI location = ServletUriComponentsBuilder
-			               .fromCurrentRequest()
-			               .path("/{id}")
-			               .buildAndExpand(newBookGenre.getId())
-			               .toUri()
-			;
-
-		return ResponseEntity.created(location).build();
-	}
-
 	@RequestMapping(value="/bookGenre/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<Void> deleteBookGenre(@PathVariable int id)
 	{
