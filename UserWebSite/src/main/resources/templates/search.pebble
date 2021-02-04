@@ -1,0 +1,139 @@
+{% extends "base" %}
+
+{% block title %}search{% endblock %}
+
+{% block content %}
+<div class="card mt-1" id="searchform">
+    <div class="card-body">
+
+        <p>Sélectionnez vos critères de recherche :</p>
+
+        <form method="POST" action="{{ href('/search') }}">
+
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="format">Format :</label>
+                <div class="col-sm-10">
+
+                    <div class="input-group input-group-sm">
+                      <div class="input-group-prepend">
+                        <div class="input-group-text">
+                          <input type="checkbox" onclick="$('#format').prop('disabled', !$(this).prop('checked'));" />
+                        </div>
+                      </div>
+                        <select class="custom-select custom-select-sm" name="format" id="format" disabled>
+                            <option value="00">Livre standard</option>
+                            <option value="01">Livre de poche </option>
+                            <option value="02">Bande dessinée </option>
+                            <option value="03">Livre audio </option>
+                            <option value="04">Journal </option>
+                            <option value="05">Magazine </option>
+                        </select>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="title">Titre :</label>
+                <div class="col-sm-10">
+
+                    <div class="input-group input-group-sm">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <input type="checkbox" onclick="$('#title').prop('disabled', !$(this).prop('checked'));" />
+                            </div>
+                        </div>
+                        <input class="form-control form-control-sm" type="text" min="1" name="title" id="title" disabled />
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="author">Nom de l'auteur :</label>
+                <div class="col-sm-10">
+
+                    <div class="input-group input-group-sm">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <input type="checkbox" onclick="$('#author').prop('disabled', !$(this).prop('checked'));" />
+                            </div>
+                        </div>
+                        <input class="form-control form-control-sm" type="text" min="1" name="author" id="author" disabled />
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="edition">Numéro d'édition :</label>
+                <div class="col-sm-10">
+
+                    <div class="input-group input-group-sm">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <input type="checkbox" onclick="$('#edition').prop('disabled', !$(this).prop('checked'));" />
+                            </div>
+                        </div>
+                        <input class="form-control form-control-sm" type="number" min="1" name="edition" id="edition" disabled />
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="editor">Editeur :</label>
+                <div class="col-sm-10">
+
+                    <div class="input-group input-group-sm">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <input type="checkbox" onclick="$('#editor').prop('disabled', !$(this).prop('checked'));" />
+                            </div>
+                        </div>
+                        <input class="form-control form-control-sm" type="text" min="1" name="editor" id="editor" disabled />
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="editionYear">Année d'édition :</label>
+                <div class="col-sm-10">
+
+                    <div class="input-group input-group-sm">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <input type="checkbox" onclick="$('#editionYear').prop('disabled', !$(this).prop('checked'));" />
+                            </div>
+                        </div>
+                        <input class="form-control form-control-sm" type="number" pattern="[0-9]{4}" name="editionYear" id="editionYear" disabled />
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="isbn">ISBN :</label>
+                <div class="col-sm-10">
+
+                    <div class="input-group input-group-sm">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <input type="checkbox" onclick="$('#isbn').prop('disabled', !$(this).prop('checked'));" />
+                            </div>
+                        </div>
+                        <input class="form-control form-control-sm" type="text" length="10" name="isbn" id="isbn" disabled />
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="text-right">
+                <button class="btn btn-light" type="submit">🔍 Rechercher</button>
+            </div>
+
+        </form>
+    </div>
+</div>
+{% endblock %}

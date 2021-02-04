@@ -5,11 +5,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
-public class TestController
+public class BookController
 {
-	@RequestMapping(value="/test", method = RequestMethod.GET)
-	public String test()
+	@RequestMapping(value="/book", method = RequestMethod.GET)
+	public String book()
 	{
-		return "test";
+		return "book";
+	}
+
+	@RequestMapping(value="/search", method = RequestMethod.GET)
+	public String search()
+	{
+		return "search";
 	}
 }
