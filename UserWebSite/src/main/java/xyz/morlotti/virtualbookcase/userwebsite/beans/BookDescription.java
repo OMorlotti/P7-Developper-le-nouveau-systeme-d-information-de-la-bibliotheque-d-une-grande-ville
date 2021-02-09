@@ -15,20 +15,19 @@ import java.util.Set;
 public class BookDescription implements java.io.Serializable {
 
      private Integer id;
-     private int isbn;
+     private String isbn;
      private String title;
      private String authorFirstname;
      private String authorLastname;
      private String editor;
-     private int edition;
-     private Date editionYear;
+     private Integer edition;
+     private Integer editionYear;
      private String format;
      private String comment;
      private Date created;
      private Date modified;
      private Set<BookGenre> bookGenres = new HashSet<>(0);
      private Set<Book> books = new HashSet<>(0);
-
 }
 
 

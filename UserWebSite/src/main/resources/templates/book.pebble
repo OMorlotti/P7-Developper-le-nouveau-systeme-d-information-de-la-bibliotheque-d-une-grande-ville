@@ -1,5 +1,32 @@
-Toto
+<div class="card">
+    <h1 class="card-header">
+        {{ book.bookDescription.title }}
+        <br />
+        <small>
+            {% if book.available %}
+            <span class="badge badge-success">Disponible</span>
+            {% else %}
+            <span class="badge badge-danger">Indisponible</span>
+            {% endif %}
+        </small>
+    </h1>
+    <div class="card-body">
 
-{% for genre in genres %}
-:{{ genre.name }}
-{% endfor %}
+        <table class="table table-sm table-strip">
+            <tr>
+                <td>{{ book.bookDescription.isbn|e }}</td>
+                <td>{{ book.bookDescription.authorFirstname|e }}</td>
+                <td>{{ book.bookDescription.authorLastname|e }}</td>
+                <td>{{ book.bookDescription.editor|e }}</td>
+                <td>{{ book.bookDescription.edition|e }}</td>
+                <td>{{ book.bookDescription.editionYear|e }}</td>
+                <td>{{ book.bookDescription.format|e }}</td>
+                <td>{% for genre in book.bookDescription.bookGenres %}<span class="badge badge-primary">{{ genre.name|e }}</span>{% endfor %}</td>
+                <td>{{ book.localId|e }}</td>
+                <td>{{ book.condition|e }}</td>
+                <td></td>
+            </tr>
+        </table>
+
+    </div>
+</div>

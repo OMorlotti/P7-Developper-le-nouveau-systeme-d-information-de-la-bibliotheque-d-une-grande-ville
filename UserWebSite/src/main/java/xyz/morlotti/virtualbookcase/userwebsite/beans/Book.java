@@ -9,8 +9,8 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-@Setter
-@Getter
+@Setter // création automatique des setters
+@Getter // création automatique des getters
 @NoArgsConstructor
 public class Book implements java.io.Serializable {
 
