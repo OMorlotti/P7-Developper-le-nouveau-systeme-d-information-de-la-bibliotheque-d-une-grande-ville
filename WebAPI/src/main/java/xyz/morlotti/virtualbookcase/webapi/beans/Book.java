@@ -1,10 +1,5 @@
 package xyz.morlotti.virtualbookcase.webapi.beans;
 
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import xyz.morlotti.virtualbookcase.webapi.exceptions.APINotFoundException;
 
 import java.util.Date;
@@ -88,14 +83,14 @@ public class Book implements java.io.Serializable {
        this.created = created;
        this.loans = loans;
     }
-   
+
     @Id
     @GeneratedValue(strategy=IDENTITY)
     @Column(name="id", unique=true, nullable=false)
     public Integer getId() {
         return this.id;
     }
-    
+
     public void setId(Integer id) {
         this.id = id;
     }
@@ -103,9 +98,9 @@ public class Book implements java.io.Serializable {
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="bookDescrFK", nullable=false)
     public BookDescription getBookdescription() {
-        return this.bookdescription.;
+        return this.bookdescription;
     }
-    
+
     public void setBookdescription(BookDescription bookdescription) {
         this.bookdescription = bookdescription;
     }
@@ -114,7 +109,7 @@ public class Book implements java.io.Serializable {
     public String getLocalId() {
         return this.localId;
     }
-    
+
     public void setLocalId(String localId) {
         this.localId = localId;
     }
@@ -133,7 +128,7 @@ public class Book implements java.io.Serializable {
     public boolean isAvailable() {
         return this.available;
     }
-    
+
     public void setAvailable(boolean available) {
         this.available = available;
     }
@@ -143,7 +138,7 @@ public class Book implements java.io.Serializable {
     public Date getCreated() {
         return this.created;
     }
-    
+
     public void setCreated(Date created) {
         this.created = created;
     }
@@ -152,7 +147,7 @@ public class Book implements java.io.Serializable {
     public Set<Loan> getLoans() {
         return this.loans;
     }
-    
+
     public void setLoans(Set<Loan> loans) {
         this.loans = loans;
     }
