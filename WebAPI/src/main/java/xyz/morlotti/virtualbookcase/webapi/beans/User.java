@@ -56,6 +56,54 @@ public class User implements java.io.Serializable
         }
     }
 
+    private enum Role
+    {
+        ADMIN("ADMIN"),
+        BATCH("BATCH"),
+        EMPLOYEE("EMPLOYEE"),
+        USER("USER"),
+        GUEST("GUEST");
+
+        private final String value;
+
+        private Role(String value) /* Une valeur d'enum est comme une classe, elle peut avoir un constructeur et des méthodes : https://stackoverflow.com/questions/13291076/java-enum-why-use-tostring-instead-of-name */
+        {
+            this.value = value;
+        }
+
+        @Override
+        public String toString() /* Pour convertir une valeur d'enum en String */
+        {
+            return value;
+        }
+
+        public static Role parseRole(String value) throws APINotFoundException /* Pour convertir une chaîne en une valeur d'enum */
+        {
+            /**/ if("ADMIN".equalsIgnoreCase(value))
+            {
+                return ADMIN;
+            }
+            else if("BATCH".equalsIgnoreCase(value))
+            {
+                return BATCH;
+            }
+            else if("EMPLOYEE".equalsIgnoreCase(value))
+            {
+                return EMPLOYEE;
+            }
+            else if("USER".equalsIgnoreCase(value))
+            {
+                return USER;
+            }
+            else if("BATCH".equalsIgnoreCase(value))
+            {
+                return BATCH;
+            }
+
+            throw new APINotFoundException("Ne peut pas parser la valeur du rôle");
+        }
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", unique = true, nullable = false)
@@ -97,6 +145,9 @@ public class User implements java.io.Serializable
     @Column(name = "sex", nullable = false)
     private Sex sex;
 
+    @Column(name = "role", nullable = false, columnDefinition = "INT DEFAULT 4") // 4 pour GUEST
+    private Role role;
+
     @Column(name = "membership", nullable = false)
     private LocalDate membership;
 
@@ -126,6 +177,7 @@ public class User implements java.io.Serializable
         this.email = "N/A";
         this.birthdate = localNow;
         this.sex = Sex.F;
+        this.role = Role.GUEST;
         this.membership = localNow;
         this.created = now;
 
