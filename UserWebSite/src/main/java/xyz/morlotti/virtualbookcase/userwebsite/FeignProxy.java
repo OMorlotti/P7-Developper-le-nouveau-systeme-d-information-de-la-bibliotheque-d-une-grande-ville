@@ -10,9 +10,6 @@ import java.util.Optional;
 @FeignClient(name = "genre-proxy", url = "localhost:9090")
 public interface FeignProxy
 {
-	@GetMapping("/genres")
-	public Iterable<Genre> listGenres();
-
 	@GetMapping("/book/{id}")
 	public Optional<Book> getBook(@PathVariable("id") int id);
 }
