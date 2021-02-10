@@ -1,26 +1,29 @@
 package xyz.morlotti.virtualbookcase.userwebsite.beans;
 
+import java.time.LocalDate;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.Date;
-
-@Setter
 @Getter
+@Setter
+@AllArgsConstructor
 @NoArgsConstructor
-public class Loan implements java.io.Serializable {
-
+public class Loan implements java.io.Serializable
+{
      private Integer id;
+
      private User user;
+
      private Book book;
-     private Date loanStartDate;
-     private Date loanEndDate;
-     private boolean prolongationAsked;
-     private String condition;
+
+     private LocalDate loanStartDate;
+
+     private LocalDate loanEndDate;
+
+     private Boolean prolongationAsked;
+
      private String comment;
-
 }
-
-

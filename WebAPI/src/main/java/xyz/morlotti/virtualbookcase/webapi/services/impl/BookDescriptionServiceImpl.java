@@ -56,7 +56,7 @@ public class BookDescriptionServiceImpl implements BookDescriptionService
 
 		existingBookDescription.setComment(bookDescription.getComment());
 
-		existingBookDescription.setEdition(bookDescription.getEdition());
+		existingBookDescription.setEditionNumber(bookDescription.getEditionNumber());
 
 		existingBookDescription.setEditionYear(bookDescription.getEditionYear());
 

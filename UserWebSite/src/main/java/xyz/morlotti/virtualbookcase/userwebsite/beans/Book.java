@@ -1,19 +1,19 @@
 package xyz.morlotti.virtualbookcase.userwebsite.beans;
 
+import java.util.Date;
+import java.util.Set;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
-
 @Setter // création automatique des setters
 @Getter // création automatique des getters
+@AllArgsConstructor
 @NoArgsConstructor
-public class Book implements java.io.Serializable {
-
+public class Book implements java.io.Serializable
+{
     private enum Condition
     {
         NEW("NEW"), GOOD("GOOD"), BAD("BAD"), DEAD("DEAD");
@@ -54,12 +54,17 @@ public class Book implements java.io.Serializable {
         }
     }
 
-     private Integer id;
-     private BookDescription bookdescription;
-     private String localId;
-     private String condition;
-     private boolean available;
-     private Date created;
-     private Set<Loan> loans = new HashSet(0);
+    private Integer id;
 
+    private BookDescription bookDescription;
+
+    private String localId;
+
+    private Condition condition;
+
+    private boolean available;
+
+    private Set<Loan> loans;
+
+    private Date created;
 }

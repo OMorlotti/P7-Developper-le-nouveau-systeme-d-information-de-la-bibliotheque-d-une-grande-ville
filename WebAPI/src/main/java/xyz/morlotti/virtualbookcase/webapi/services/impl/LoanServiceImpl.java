@@ -52,11 +52,9 @@ public class LoanServiceImpl implements LoanService
 
 		existingLoan.setComment(loan.getComment());
 
-		existingLoan.setCondition(loan.getComment());
-
 		existingLoan.setLoanEndDate(loan.getLoanEndDate());
 
-		existingLoan.setProlongationAsked(loan.isProlongationAsked());
+		existingLoan.setProlongationAsked(loan.getProlongationAsked());
 
 		return addLoan(existingLoan);
 	}

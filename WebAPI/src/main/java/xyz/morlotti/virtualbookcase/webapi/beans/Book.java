@@ -1,21 +1,26 @@
 package xyz.morlotti.virtualbookcase.webapi.beans;
 
-import xyz.morlotti.virtualbookcase.webapi.exceptions.APINotFoundException;
-
 import java.util.Date;
-import java.util.HashSet;
 import java.util.Set;
+
 import javax.persistence.*;
 
-import static javax.persistence.GenerationType.IDENTITY;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+import xyz.morlotti.virtualbookcase.webapi.exceptions.APINotFoundException;
 
-@Entity(name="BOOK")
-@Table(name="BOOK"
-    ,catalog="virtualbookcase"
-)
-public class Book implements java.io.Serializable {
-
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Entity(name = "BOOK")
+@Table(name = "BOOK", catalog = "virtualbookcase")
+public class Book implements java.io.Serializable
+{
     private enum Condition
     {
         NEW("NEW"), GOOD("GOOD"), BAD("BAD"), DEAD("DEAD");
@@ -56,99 +61,29 @@ public class Book implements java.io.Serializable {
         }
     }
 
-     private Integer id;
-     private BookDescription bookdescription;
-     private String localId;
-     private String condition;
-     private boolean available;
-     private Date created;
-     private Set<Loan> loans = new HashSet(0);
-
-    public Book() {
-    }
-
-    public Book(BookDescription bookdescription, String localId, Condition condition, boolean available, Date created) {
-        this.bookdescription = bookdescription;
-        this.localId = localId;
-        this.condition = condition.toString();
-        this.available = available;
-        this.created = created;
-    }
-
-    public Book(BookDescription bookdescription, String localId, Condition condition, boolean available, Date created, Set loans) {
-       this.bookdescription = bookdescription;
-       this.localId = localId;
-       this.condition = condition.toString();
-       this.available = available;
-       this.created = created;
-       this.loans = loans;
-    }
-
     @Id
-    @GeneratedValue(strategy=IDENTITY)
-    @Column(name="id", unique=true, nullable=false)
-    public Integer getId() {
-        return this.id;
-    }
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", unique = true, nullable = false)
+    private Integer id;
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "bookDescriptionFK", nullable = false)
+    private BookDescription bookDescription;
 
-    @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="bookDescrFK", nullable=false)
-    public BookDescription getBookdescription() {
-        return this.bookdescription;
-    }
+    @Column(name = "localId", nullable = false, length = 64)
+    private String localId;
 
-    public void setBookdescription(BookDescription bookdescription) {
-        this.bookdescription = bookdescription;
-    }
+    @Column(name = "cond", nullable = false)
+    private Condition condition;
 
-    @Column(name="localId", nullable=false, length=64)
-    public String getLocalId() {
-        return this.localId;
-    }
+    @Column(name = "available", nullable = false)
+    private boolean available;
 
-    public void setLocalId(String localId) {
-        this.localId = localId;
-    }
-
-    @Column(name="cond", nullable=false, length=4)
-    public Condition getCondition() throws APINotFoundException
-    {
-        return Condition.parseCondition(this.condition);
-    }
-
-    public void setCondition(Condition condition) {
-        this.condition = condition.toString();
-    }
-
-    @Column(name="available", nullable=false)
-    public boolean isAvailable() {
-        return this.available;
-    }
-
-    public void setAvailable(boolean available) {
-        this.available = available;
-    }
+    @JsonIgnoreProperties("book")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "book")
+    private Set<Loan> loans;
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name="created", nullable=false, length=19)
-    public Date getCreated() {
-        return this.created;
-    }
-
-    public void setCreated(Date created) {
-        this.created = created;
-    }
-
-    @OneToMany(fetch=FetchType.LAZY, mappedBy="book")
-    public Set<Loan> getLoans() {
-        return this.loans;
-    }
-
-    public void setLoans(Set<Loan> loans) {
-        this.loans = loans;
-    }
+    @Column(name = "created", nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    private Date created;
 }

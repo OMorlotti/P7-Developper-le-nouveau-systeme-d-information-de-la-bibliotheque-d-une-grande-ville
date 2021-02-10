@@ -4,7 +4,6 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import xyz.morlotti.virtualbookcase.userwebsite.beans.Book;
-import xyz.morlotti.virtualbookcase.userwebsite.beans.Genre;
 
 import java.util.Optional;
 
