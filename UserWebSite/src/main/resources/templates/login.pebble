@@ -3,7 +3,8 @@
 {% block title %}Authentification{% endblock %}
 
 {% block content %}
-<div class="card mt-1">
+<div class="card m-4">
+    <h1 class="card-header">M'authentifier</h1>
     <div class="card-body">
         <form method="POST" action="{{ href('/login') }}">
 
@@ -20,10 +21,13 @@
                 </div>
             </div>
 
-            <button class="btn btn-primary" type="submit">Se connecter</button>
-            <a href="{{ href('/remind-password') }}">
-                Mot de passe oublié
-            </a>
+			<div class="text-right">
+	            <button class="btn btn-primary" type="submit">Se connecter</button>
+    	        <a href="{{ href('/remind-password') }}">
+        	        Mot de passe oublié
+            	</a>
+            </div>
+
         </form>
     </div>
 </div>
