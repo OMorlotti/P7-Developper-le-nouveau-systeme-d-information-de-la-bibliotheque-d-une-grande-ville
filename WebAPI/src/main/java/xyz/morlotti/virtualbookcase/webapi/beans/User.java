@@ -151,7 +151,7 @@ public class User implements java.io.Serializable
     @Column(name = "membership", nullable = false)
     private LocalDate membership;
 
-    @JsonIgnoreProperties("user")
+    @JsonIgnoreProperties("user") //
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
     private Set<Loan> loans;
 

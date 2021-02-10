@@ -34,7 +34,15 @@
         </nav>
 
         <div class="container shadow-lg bg-white p-2">
+
+            {% if message %}
+            <div class="alert alert-{{ messageType | default("success") }}">
+                {{ message }}
+            </div>
+            {% endif %}
+
 {% block content %}{% endblock %}
+
         </div>
 
         <footer class="container rounded-bottom shadow-lg p-0" style="background-color: rgba(157, 195, 237, 0.25)">

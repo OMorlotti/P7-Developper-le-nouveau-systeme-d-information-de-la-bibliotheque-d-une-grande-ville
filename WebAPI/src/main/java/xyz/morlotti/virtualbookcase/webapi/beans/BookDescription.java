@@ -55,7 +55,7 @@ public class BookDescription implements java.io.Serializable
     @Column(name = "comment", columnDefinition = "TEXT")
     private String comment;
 
-    @JsonIgnoreProperties("bookDescription")
+    @JsonIgnoreProperties("bookDescription") // évite la récursivité infinie
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "bookDescription")
     private Set<Book> books;
 

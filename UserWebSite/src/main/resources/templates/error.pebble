@@ -1,0 +1,7 @@
+{% extends "base" %}
+
+{% block content %}
+<div class="text-center my-4">
+    <button class="btn btn-warning" onclick="history.back();">Retour à la page précédente</button>
+</div>
+{% endblock %}

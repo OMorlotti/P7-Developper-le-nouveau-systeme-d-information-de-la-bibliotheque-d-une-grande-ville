@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import xyz.morlotti.virtualbookcase.webapi.beans.User;
+import xyz.morlotti.virtualbookcase.webapi.exceptions.APINotFoundException;
 import xyz.morlotti.virtualbookcase.webapi.services.interfaces.UserService;
 
 @RestController
@@ -25,9 +26,13 @@ public class UserController
 	}
 
 	@RequestMapping(value = "/user/{id}", method = RequestMethod.GET)
-	public Optional<User> getUser(@PathVariable int id)
+	public User getUser(@PathVariable int id)
 	{
-		return userService.getUser(id);
+		Optional<User> optional = userService.getUser(id);
+
+		optional.orElseThrow(() -> new APINotFoundException("User " + id + " not found"));
+
+		return optional.get();
 	}
 
 	@RequestMapping(value = "/user", method = RequestMethod.POST)
@@ -36,11 +41,11 @@ public class UserController
 		User newUser = userService.addUser(user);
 
 		URI location = ServletUriComponentsBuilder
-			               .fromCurrentRequest()
-			               .path("/{id}")
-			               .buildAndExpand(newUser.getId())
-			               .toUri()
-			;
+           .fromCurrentRequest()
+           .path("/{id}")
+           .buildAndExpand(newUser.getId())
+           .toUri()
+		;
 
 		return ResponseEntity.created(location).build();
 	}
@@ -51,11 +56,11 @@ public class UserController
 		User newUser = userService.updateUser(id, user);
 
 		URI location = ServletUriComponentsBuilder
-			               .fromCurrentRequest()
-			               .path("/{id}")
-			               .buildAndExpand(newUser.getId())
-			               .toUri()
-			;
+           .fromCurrentRequest()
+           .path("/{id}")
+           .buildAndExpand(newUser.getId())
+           .toUri()
+		;
 
 		return ResponseEntity.created(location).build();
 	}

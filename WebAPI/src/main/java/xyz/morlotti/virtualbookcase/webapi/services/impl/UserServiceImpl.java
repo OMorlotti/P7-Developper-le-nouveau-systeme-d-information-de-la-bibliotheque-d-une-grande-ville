@@ -29,8 +29,6 @@ public class UserServiceImpl implements UserService
 	{
 		Optional<User> optional = userDAO.findById(id);
 
-		optional.orElseThrow(() -> new APINotFoundException("User " + id + " not found"));
-
 		return optional;
 	}
 

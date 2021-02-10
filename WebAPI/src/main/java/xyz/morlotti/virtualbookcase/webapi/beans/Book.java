@@ -13,8 +13,8 @@ import lombok.Setter;
 
 import xyz.morlotti.virtualbookcase.webapi.exceptions.APINotFoundException;
 
-@Getter
-@Setter
+@Getter // génère automatiquement les getters
+@Setter // génère automatiquement les setters
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity(name = "BOOK")
@@ -79,7 +79,7 @@ public class Book implements java.io.Serializable
     @Column(name = "available", nullable = false)
     private boolean available;
 
-    @JsonIgnoreProperties("book")
+    @JsonIgnoreProperties("book") // Evite la récursivité infinie
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "book")
     private Set<Loan> loans;
 

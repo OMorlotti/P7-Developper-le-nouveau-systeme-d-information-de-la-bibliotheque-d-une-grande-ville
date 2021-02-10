@@ -1,0 +1,78 @@
+{% extends "base" %}
+
+{% block content %}
+<form class="card mt-0" action="{{ href('/user/' + user.id) }}" method="POST">
+    <h3 class="card-header" data-toggle="collapse" data-target="#collapseOne">{{ user.firstname }} {{ user.lastname }} <small>(cliquer pour voir les détails)</small></h3>
+    <div class="card-body collapse" id="collapseOne">
+        <table class="table table-sm table-strip">
+            <tr>
+                <td>Login :</td>
+                <td>
+                    {{ user.login }}
+
+                    <input type="hidden" name="id" value="{{ user.id }}" />
+                    <input type="hidden" name="login" value="{{ user.login }}" />
+                    <input type="hidden" name="membership" value="{{ user.membership }}" />
+                </td>
+			</tr>
+            <tr>
+                <td>Mot de passe :</td>
+                <td><input class="form-control form-control-sm" type="password" name="password" value="{{ user.password }}" required="required" /></td>
+			</tr>
+            <tr>
+                <td>Numéro de voie :</td>
+                <td><input class="form-control form-control-sm" type="text" name="streetNb" value="{{ user.streetNb }}" required="required" /></td>
+			</tr>
+            <tr>
+                <td>Nom de voie :</td>
+                <td><input class="form-control form-control-sm" type="text" name="streetName" value="{{ user.streetName }}" required="required" /></td>
+			</tr>
+            <tr>
+                <td>Code postal :</td>
+                <td><input class="form-control form-control-sm" type="text" name="postalCode" value="{{ user.postalCode }}" required="required" /></td>
+			</tr>
+            <tr>
+                <td>Ville :</td>
+                <td><input class="form-control form-control-sm" type="text" name="city" value="{{ user.city }}" required="required" /></td>
+			</tr>
+            <tr>
+                <td>Pays :</td>
+                <td><input class="form-control form-control-sm" type="text" name="country" value="{{ user.country }}" required="required" /></td>
+			</tr>
+            <tr>
+                <td>E-mail :</td>
+                <td><input class="form-control form-control-sm" type="email" name="email" value="{{ user.email }}" required="required" /></td>
+			</tr>
+            <tr>
+                <td>Date de naissance :</td>
+                <td><input class="form-control form-control-sm" type="date" name="birthdate" value="{{ user.birthdate | date("yyyy-MM-dd") }}" required="required" /></td>
+            </tr>
+            <tr>
+                <td>Sexe :</td>
+                <td>
+                    <select class="custom-select custom-select-sm" name="sex">
+                        <option value="F"{% if user.sex == 'F' %} selected="selected"{% endif %}>Femme</option>
+                        <option value="H"{% if user.sex == 'H' %} selected="selected"{% endif %}>Homme</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>Date d'adhésion :</td>
+                <td>{{ user.membership | date("dd/MM/yyyy") }}</td>
+			</tr>
+        </table>
+
+        <div class="text-right">
+            <button class="btn btn-outline-info" type="submit">Actualiser mes informations</button>
+        </div>
+
+    </div>
+</form>
+
+<div class="card mt-2">
+    <h3 class="card-header" data-toggle="collapse" data-target="#collapseTwo">Mes prêts</h3>
+    <div class="card-body collapse show" id="collapseTwo">
+
+    </div>
+</div>
+{% endblock %}
