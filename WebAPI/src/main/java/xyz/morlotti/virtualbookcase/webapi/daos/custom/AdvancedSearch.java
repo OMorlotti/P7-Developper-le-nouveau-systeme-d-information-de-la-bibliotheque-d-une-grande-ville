@@ -7,5 +7,17 @@ import lombok.ToString;
 @ToString
 public class AdvancedSearch
 {
+	private String format;
+
+	private String titre;
+
+	private String author;
+
+	private String editionNumber;
+
+	private String editionYear;
+
+	private String editor;
+
 	private String isbn;
 }
