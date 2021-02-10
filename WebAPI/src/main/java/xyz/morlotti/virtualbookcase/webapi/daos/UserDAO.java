@@ -1,12 +1,13 @@
 package xyz.morlotti.virtualbookcase.webapi.daos;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import java.util.Optional;
+
+import org.springframework.stereotype.Repository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import org.springframework.stereotype.Repository;
-import xyz.morlotti.virtualbookcase.webapi.beans.User;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.Optional;
+import xyz.morlotti.virtualbookcase.webapi.beans.User;
 
 @Repository
 public interface UserDAO extends JpaRepository<User, Integer>

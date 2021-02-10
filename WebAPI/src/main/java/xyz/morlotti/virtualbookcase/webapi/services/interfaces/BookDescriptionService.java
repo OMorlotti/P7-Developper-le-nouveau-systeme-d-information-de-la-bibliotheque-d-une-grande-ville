@@ -1,6 +1,7 @@
 package xyz.morlotti.virtualbookcase.webapi.services.interfaces;
 
 import xyz.morlotti.virtualbookcase.webapi.beans.BookDescription;
+import xyz.morlotti.virtualbookcase.webapi.daos.custom.AdvancedSearch;
 
 import java.util.Optional;
 
@@ -15,4 +16,6 @@ public interface BookDescriptionService
 	public BookDescription updateBookDescription(int id, BookDescription genre);
 
 	public void deleteBookDescription(int id);
+
+	public Iterable<BookDescription> searchBookDescriptions(AdvancedSearch advancedSearch);
 }

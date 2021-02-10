@@ -3,8 +3,10 @@ package xyz.morlotti.virtualbookcase.webapi.services.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
+
 import xyz.morlotti.virtualbookcase.webapi.beans.BookDescription;
 import xyz.morlotti.virtualbookcase.webapi.daos.BookDescriptionDAO;
+import xyz.morlotti.virtualbookcase.webapi.daos.custom.AdvancedSearch;
 import xyz.morlotti.virtualbookcase.webapi.exceptions.APINotCreatedException;
 import xyz.morlotti.virtualbookcase.webapi.exceptions.APINotDeletedException;
 import xyz.morlotti.virtualbookcase.webapi.exceptions.APINotFoundException;
@@ -81,5 +83,12 @@ public class BookDescriptionServiceImpl implements BookDescriptionService
 		{
 			throw new APINotDeletedException("BookDescription " + id + " not deleted: " + e.getMessage());
 		}
+	}
+
+	public Iterable<BookDescription> searchBookDescriptions(AdvancedSearch advancedSearch)
+	{
+		Iterable<BookDescription> bookDescriptions = bookDescriptionDAO.advancedSearch(advancedSearch);
+
+		return bookDescriptions;
 	}
 }

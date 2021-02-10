@@ -1,5 +1,8 @@
 package xyz.morlotti.virtualbookcase.webapi.controllers;
 
+import java.net.URI;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,22 +12,19 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import xyz.morlotti.virtualbookcase.webapi.beans.User;
 import xyz.morlotti.virtualbookcase.webapi.services.interfaces.UserService;
 
-import java.net.URI;
-import java.util.Optional;
-
 @RestController
 public class UserController
 {
 	@Autowired
 	UserService userService;
 
-	@RequestMapping(value="/users", method = RequestMethod.GET)
+	@RequestMapping(value = "/users", method = RequestMethod.GET)
 	public Iterable<User> listUsers()
 	{
 		return userService.listUsers();
 	}
 
-	@RequestMapping(value="/user/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/user/{id}", method = RequestMethod.GET)
 	public Optional<User> getUser(@PathVariable int id)
 	{
 		return userService.getUser(id);
@@ -45,7 +45,7 @@ public class UserController
 		return ResponseEntity.created(location).build();
 	}
 
-	@RequestMapping(value="/user/{id}", method = RequestMethod.PUT)
+	@RequestMapping(value = "/user/{id}", method = RequestMethod.PUT)
 	public ResponseEntity<Void> updateUser(@PathVariable int id, @RequestBody User user)
 	{
 		User newUser = userService.updateUser(id, user);
@@ -60,7 +60,7 @@ public class UserController
 		return ResponseEntity.created(location).build();
 	}
 
-	@RequestMapping(value="/user/{id}", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/user/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<Void> deleteUser(@PathVariable int id)
 	{
 		userService.deleteUser(id);

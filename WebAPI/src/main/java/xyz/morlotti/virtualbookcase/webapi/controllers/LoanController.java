@@ -1,5 +1,8 @@
 package xyz.morlotti.virtualbookcase.webapi.controllers;
 
+import java.net.URI;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,22 +12,19 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import xyz.morlotti.virtualbookcase.webapi.beans.Loan;
 import xyz.morlotti.virtualbookcase.webapi.services.interfaces.LoanService;
 
-import java.net.URI;
-import java.util.Optional;
-
 @RestController
 public class LoanController
 {
 	@Autowired
 	LoanService loanService;
 
-	@RequestMapping(value="/loans", method = RequestMethod.GET)
+	@RequestMapping(value = "/loans", method = RequestMethod.GET)
 	public Iterable<Loan> listLoans()
 	{
 		return loanService.listLoans();
 	}
 
-	@RequestMapping(value="/loan/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/loan/{id}", method = RequestMethod.GET)
 	public Optional<Loan> getLoan(@PathVariable int id)
 	{
 		return loanService.getLoan(id);
@@ -45,7 +45,7 @@ public class LoanController
 		return ResponseEntity.created(location).build();
 	}
 
-	@RequestMapping(value="/loan/{id}", method = RequestMethod.PUT)
+	@RequestMapping(value = "/loan/{id}", method = RequestMethod.PUT)
 	public ResponseEntity<Void> updateLoan(@PathVariable int id, @RequestBody Loan loan)
 	{
 		Loan newLoan = loanService.updateLoan(id, loan);
@@ -60,7 +60,7 @@ public class LoanController
 		return ResponseEntity.created(location).build();
 	}
 
-	@RequestMapping(value="/loan/{id}", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/loan/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<Void> deleteLoan(@PathVariable int id)
 	{
 		loanService.deleteLoan(id);

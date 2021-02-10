@@ -3,15 +3,13 @@ package xyz.morlotti.virtualbookcase.userwebsite.beans;
 import java.util.Date;
 import java.util.Set;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Setter // création automatique des setters
 @Getter // création automatique des getters
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 public class Book implements java.io.Serializable
 {
     private enum Condition
@@ -67,9 +65,4 @@ public class Book implements java.io.Serializable
     private Set<Loan> loans;
 
     private Date created;
-
-    public String toString()
-    {
-        return "(" + bookDescription.toString() + "|" + localId + "|" + condition.toString() + "|" + available + ")";
-    }
 }

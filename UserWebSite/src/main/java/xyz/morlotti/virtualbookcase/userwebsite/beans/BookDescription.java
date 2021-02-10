@@ -3,15 +3,13 @@ package xyz.morlotti.virtualbookcase.userwebsite.beans;
 import java.util.Date;
 import java.util.Set;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 public class BookDescription implements java.io.Serializable
 {
      private Integer id;

@@ -2,15 +2,13 @@ package xyz.morlotti.virtualbookcase.userwebsite.beans;
 
 import java.time.LocalDate;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 public class Loan implements java.io.Serializable
 {
      private Integer id;

@@ -4,15 +4,13 @@ import java.time.LocalDate;
 import java.util.Date;
 import java.util.Set;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 public class User implements java.io.Serializable
 {
      private enum Sex
