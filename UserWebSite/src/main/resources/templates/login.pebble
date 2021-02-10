@@ -22,10 +22,10 @@
             </div>
 
 			<div class="text-right">
-	            <button class="btn btn-primary" type="submit">Se connecter</button>
-    	        <a href="{{ href('/remind-password') }}">
+    	        <a class="btn btn-text" href="{{ href('/remind-password') }}">
         	        Mot de passe oublié
             	</a>
+	            <button class="btn btn-primary" type="submit">Me connecter</button>
             </div>
 
         </form>
