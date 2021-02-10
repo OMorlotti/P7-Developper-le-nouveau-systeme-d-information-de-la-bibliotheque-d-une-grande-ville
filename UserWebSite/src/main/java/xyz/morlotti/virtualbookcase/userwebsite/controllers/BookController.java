@@ -6,13 +6,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import xyz.morlotti.virtualbookcase.userwebsite.FeignProxy;
+import xyz.morlotti.virtualbookcase.userwebsite.myFeignProxy;
 
 @Controller
 public class BookController
 {
 	@Autowired
-	FeignProxy feignProxy;
+	myFeignProxy feignProxy;
 
 	@RequestMapping(value="/book/{id}", method = RequestMethod.GET)
 	public String book(@PathVariable("id") int id, Model model)
