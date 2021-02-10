@@ -67,4 +67,9 @@ public class Book implements java.io.Serializable
     private Set<Loan> loans;
 
     private Date created;
+
+    public String toString()
+    {
+        return "(" + bookDescription.toString() + "|" + localId + "|" + condition.toString() + "|" + available + ")";
+    }
 }

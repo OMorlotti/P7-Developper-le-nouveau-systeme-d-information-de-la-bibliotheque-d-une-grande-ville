@@ -6,7 +6,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import xyz.morlotti.virtualbookcase.userwebsite.beans.Book;
 import xyz.morlotti.virtualbookcase.userwebsite.myFeignProxy;
+
+import java.util.Optional;
 
 @Controller
 public class BookController
@@ -17,7 +20,12 @@ public class BookController
 	@RequestMapping(value="/book/{id}", method = RequestMethod.GET)
 	public String book(@PathVariable("id") int id, Model model)
 	{
-		model.addAttribute("book", feignProxy.getBook(id));
+		Optional<Book> optional = feignProxy.getBook(id);
+
+		if(optional.isPresent())
+		{
+			model.addAttribute("book", optional.get());
+		}
 
 		return "book";
 	}
