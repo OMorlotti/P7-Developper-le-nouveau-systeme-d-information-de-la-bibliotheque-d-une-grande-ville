@@ -4,9 +4,8 @@
 
 {% block content %}
 <div class="card mt-1" id="searchform">
+    <h1 class="card-header">Sélectionnez vos critères de recherche :</h1>
     <div class="card-body">
-
-        <p>Sélectionnez vos critères de recherche :</p>
 
         <form method="POST" action="{{ href('/search') }}">
 
@@ -130,10 +129,11 @@
             </div>
 
             <div class="text-right">
-                <button class="btn btn-light" type="submit">🔍 Rechercher</button>
+                <button class="btn btn-outline-secondary" type="submit">🔍 Rechercher</button>
             </div>
 
         </form>
+
     </div>
 </div>
 {% endblock %}
