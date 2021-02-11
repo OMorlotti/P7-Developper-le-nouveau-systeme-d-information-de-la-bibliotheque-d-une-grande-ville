@@ -12,32 +12,14 @@
             <div class="form-group row">
                 <label class="col-sm-2 col-form-label" for="title">Titre :</label>
                 <div class="col-sm-10">
-
-                    <div class="input-group input-group-sm">
-                        <div class="input-group-prepend">
-                            <div class="input-group-text">
-                                <input type="checkbox" onclick="$('#title').prop('disabled', !$(this).prop('checked'));" />
-                            </div>
-                        </div>
-                        <input class="form-control form-control-sm" type="text" min="1" name="title" id="title" disabled />
-                    </div>
-
+                    <input class="form-control form-control-sm" type="text" min="1" name="title" id="title" />
                 </div>
             </div>
 
             <div class="form-group row">
                 <label class="col-sm-2 col-form-label" for="author">Nom de l'auteur :</label>
                 <div class="col-sm-10">
-
-                    <div class="input-group input-group-sm">
-                        <div class="input-group-prepend">
-                            <div class="input-group-text">
-                                <input type="checkbox" onclick="$('#author').prop('disabled', !$(this).prop('checked'));" />
-                            </div>
-                        </div>
-                        <input class="form-control form-control-sm" type="text" min="1" name="author" id="author" disabled />
-                    </div>
-
+                    <input class="form-control form-control-sm" type="text" min="1" name="author" id="author" />
                 </div>
             </div>
 
@@ -47,16 +29,7 @@
                     <div class="form-group row">
                         <label class="col-sm-3 col-form-label" for="edition">Numéro d'édition :</label>
                         <div class="col-sm-9">
-
-                            <div class="input-group input-group-sm">
-                                <div class="input-group-prepend">
-                                    <div class="input-group-text">
-                                        <input type="checkbox" onclick="$('#edition').prop('disabled', !$(this).prop('checked'));" />
-                                    </div>
-                                </div>
-                                <input class="form-control form-control-sm" type="number" min="1" name="edition" id="edition" disabled />
-                            </div>
-
+                            <input class="form-control form-control-sm" type="number" min="1" name="edition" id="edition" />
                         </div>
                     </div>
 
@@ -66,16 +39,7 @@
                     <div class="form-group row">
                         <label class="col-sm-3 col-form-label" for="editionYear">Année d'édition :</label>
                         <div class="col-sm-9">
-
-                            <div class="input-group input-group-sm">
-                                <div class="input-group-prepend">
-                                    <div class="input-group-text">
-                                        <input type="checkbox" onclick="$('#editionYear').prop('disabled', !$(this).prop('checked'));" />
-                                    </div>
-                                </div>
-                                <input class="form-control form-control-sm" type="number" pattern="[0-9]{4}" name="editionYear" id="editionYear" disabled />
-                            </div>
-
+                            <input class="form-control form-control-sm" type="number" pattern="[0-9]{4}" name="editionYear" id="editionYear" />
                         </div>
                     </div>
 
@@ -88,16 +52,7 @@
                     <div class="form-group row">
                         <label class="col-sm-3 col-form-label" for="editor">Editeur :</label>
                         <div class="col-sm-9">
-
-                            <div class="input-group input-group-sm">
-                                <div class="input-group-prepend">
-                                    <div class="input-group-text">
-                                        <input type="checkbox" onclick="$('#editor').prop('disabled', !$(this).prop('checked'));" />
-                                    </div>
-                                </div>
-                                <input class="form-control form-control-sm" type="text" min="1" name="editor" id="editor" disabled />
-                            </div>
-
+                            <input class="form-control form-control-sm" type="text" min="1" name="editor" id="editor" />
                         </div>
                     </div>
 
@@ -107,16 +62,7 @@
                     <div class="form-group row">
                         <label class="col-sm-3 col-form-label" for="isbn">ISBN :</label>
                         <div class="col-sm-9">
-
-                            <div class="input-group input-group-sm">
-                                <div class="input-group-prepend">
-                                    <div class="input-group-text">
-                                        <input type="checkbox" onclick="$('#isbn').prop('disabled', !$(this).prop('checked'));" />
-                                    </div>
-                                </div>
-                                <input class="form-control form-control-sm" type="text" length="10" name="isbn" id="isbn" disabled />
-                            </div>
-
+                            <input class="form-control form-control-sm" type="text" length="10" name="isbn" id="isbn" />
                         </div>
                     </div>
 
@@ -129,6 +75,30 @@
 
         </form>
 
+    </div>
+</div>
+
+<div class="card mt-2">
+    <h3 class="card-header" data-toggle="collapse" data-target="#collapseTwo">Résultat(s)</h3>
+    <div class="card-body collapse show" id="collapseTwo">
+    	<table class="table table-sm">
+    		<thead>
+				<tr>
+					<td>Titre du livre</a></td>
+					<td>Auteur</td>
+					<td>Disponibilité</td>
+				</tr>
+    		</thead>
+    		<tbody>
+			{% for bookDescription in bookDescriptions %}
+				<tr>
+					<td>★ {{ bookDescription.title }}</td>
+					<td>{{ bookDescription.authorFirstname }} {{ bookDescription.authorLastname }}</td>
+					<td></td>
+				</tr>
+				{% endfor %}
+			</tbody>
+		</table>
     </div>
 </div>
 {% endblock %}

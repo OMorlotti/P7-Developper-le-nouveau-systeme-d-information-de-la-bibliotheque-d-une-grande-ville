@@ -84,7 +84,7 @@
     		<thead>
 				<tr>
 					<td>Titre du livre</a></td>
-					<td>Date d'empreint</td>
+					<td>Date d'emprunt</td>
 					<td></td>
 				</tr>
     		</thead>

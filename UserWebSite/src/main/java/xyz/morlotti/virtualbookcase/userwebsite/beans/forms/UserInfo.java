@@ -2,9 +2,6 @@ package xyz.morlotti.virtualbookcase.userwebsite.beans.forms;
 
 import lombok.*;
 
-import java.time.LocalDate;
-import java.util.Set;
-
 @Data
 @Getter
 @Setter

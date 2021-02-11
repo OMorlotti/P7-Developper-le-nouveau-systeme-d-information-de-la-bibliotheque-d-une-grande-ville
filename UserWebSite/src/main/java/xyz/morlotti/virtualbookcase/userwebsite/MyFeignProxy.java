@@ -5,7 +5,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import xyz.morlotti.virtualbookcase.userwebsite.beans.Book;
+import xyz.morlotti.virtualbookcase.userwebsite.beans.BookDescription;
 import xyz.morlotti.virtualbookcase.userwebsite.beans.User;
+import xyz.morlotti.virtualbookcase.userwebsite.beans.forms.AdvancedSearch;
 
 import java.util.Optional;
 
@@ -20,4 +22,7 @@ public interface MyFeignProxy
 
 	@GetMapping("/book/{id}")
 	public Book getBook(@PathVariable("id") int id);
+
+	@PostMapping("/bookDescription/search")
+	public Iterable<BookDescription> searchBook(@RequestBody AdvancedSearch advancedSearch);
 }

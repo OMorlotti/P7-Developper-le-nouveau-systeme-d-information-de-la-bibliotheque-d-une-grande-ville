@@ -1,4 +1,4 @@
-package xyz.morlotti.virtualbookcase.webapi.daos.custom;
+package xyz.morlotti.virtualbookcase.userwebsite.beans.forms;
 
 import lombok.*;
 
