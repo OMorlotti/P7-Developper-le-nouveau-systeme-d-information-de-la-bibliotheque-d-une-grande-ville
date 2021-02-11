@@ -36,11 +36,11 @@ public class BookController
 		Book newBook = bookService.addBook(book);
 
 		URI location = ServletUriComponentsBuilder
-			               .fromCurrentRequest()
-			               .path("/{id}")
-			               .buildAndExpand(newBook.getId())
-			               .toUri()
-			;
+		   .fromCurrentRequest()
+		   .path("/{id}")
+		   .buildAndExpand(newBook.getId())
+		   .toUri()
+		;
 
 		return ResponseEntity.created(location).build();
 	}
@@ -51,11 +51,11 @@ public class BookController
 		Book newBook = bookService.updateBook(id, book);
 
 		URI location = ServletUriComponentsBuilder
-			               .fromCurrentRequest()
-			               .path("/{id}")
-			               .buildAndExpand(newBook.getId())
-			               .toUri()
-			;
+		   .fromCurrentRequest()
+		   .path("/{id}")
+		   .buildAndExpand(newBook.getId())
+		   .toUri()
+		;
 
 		return ResponseEntity.created(location).build();
 	}

@@ -66,6 +66,8 @@ public class UserServiceImpl implements UserService
 
 		existingUser.setPostalCode(user.getPostalCode());
 
+		existingUser.setRole(user.getRole());
+
 		existingUser.setSex(user.getSex());
 
 		existingUser.setStreetNb(user.getStreetNb());

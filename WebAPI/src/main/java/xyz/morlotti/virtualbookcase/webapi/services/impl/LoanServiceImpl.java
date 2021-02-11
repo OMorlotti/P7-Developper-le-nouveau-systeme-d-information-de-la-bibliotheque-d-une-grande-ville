@@ -54,7 +54,7 @@ public class LoanServiceImpl implements LoanService
 
 		existingLoan.setLoanEndDate(loan.getLoanEndDate());
 
-		existingLoan.setProlongationAsked(loan.getProlongationAsked());
+		existingLoan.setExtensionAsked(loan.getExtensionAsked());
 
 		return addLoan(existingLoan);
 	}

@@ -1,7 +1,7 @@
 package xyz.morlotti.virtualbookcase.webapi.beans;
 
-import java.util.Date;
 import java.util.Set;
+import java.util.Date;
 
 import javax.persistence.*;
 
@@ -10,7 +10,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import org.springframework.data.annotation.CreatedDate;
 
 @Getter
 @Setter
@@ -55,11 +57,14 @@ public class BookDescription implements java.io.Serializable
     @Column(name = "comment", columnDefinition = "TEXT")
     private String comment;
 
-    @JsonIgnoreProperties("bookDescription") // évite la récursivité infinie
+    @CreatedDate
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "created", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    private Date created;
+
+    ////////
+
+    @JsonIgnore
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "bookDescription")
     private Set<Book> books;
-
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "created", nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-    private Date created;
 }

@@ -4,12 +4,11 @@ import java.time.LocalDate;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Getter
 @Setter
@@ -24,6 +23,7 @@ public class Loan implements java.io.Serializable
     @Column(name = "id", unique = true, nullable = false)
     private Integer id;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "userFK", nullable = false)
     private User user;
@@ -35,11 +35,11 @@ public class Loan implements java.io.Serializable
     @Column(name = "loanStartDate", nullable = false)
     private LocalDate loanStartDate;
 
-    @Column(name = "loanEndDate")
+    @Column(name = "loanEndDate", nullable = true)
     private LocalDate loanEndDate;
 
-    @Column(name = "prolongationAsked", nullable = false)
-    private Boolean prolongationAsked;
+    @Column(name = "extensionAsked", nullable = false)
+    private Boolean extensionAsked;
 
     @Column(name = "comment", columnDefinition = "TEXT")
     private String comment;

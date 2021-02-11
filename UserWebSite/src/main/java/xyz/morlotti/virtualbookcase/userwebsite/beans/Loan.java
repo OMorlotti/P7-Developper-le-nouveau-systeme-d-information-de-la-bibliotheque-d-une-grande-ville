@@ -2,6 +2,8 @@ package xyz.morlotti.virtualbookcase.userwebsite.beans;
 
 import java.time.LocalDate;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.*;
 
 @Getter
@@ -21,7 +23,7 @@ public class Loan implements java.io.Serializable
 
      private LocalDate loanEndDate;
 
-     private Boolean prolongationAsked;
+     private Boolean extensionAsked;
 
      private String comment;
 }

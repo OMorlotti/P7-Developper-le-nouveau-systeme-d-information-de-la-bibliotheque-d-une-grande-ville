@@ -37,11 +37,11 @@ public class BookDescriptionController
 		BookDescription newBookDescription = bookDescriptionService.addBookDescription(bookDescription);
 
 		URI location = ServletUriComponentsBuilder
-			               .fromCurrentRequest()
-			               .path("/{id}")
-			               .buildAndExpand(newBookDescription.getId())
-			               .toUri()
-			;
+		   .fromCurrentRequest()
+		   .path("/{id}")
+		   .buildAndExpand(newBookDescription.getId())
+		   .toUri()
+		;
 
 		return ResponseEntity.created(location).build();
 	}
@@ -52,11 +52,11 @@ public class BookDescriptionController
 		BookDescription newBookDescription = bookDescriptionService.updateBookDescription(id, bookDescription);
 
 		URI location = ServletUriComponentsBuilder
-			               .fromCurrentRequest()
-			               .path("/{id}")
-			               .buildAndExpand(newBookDescription.getId())
-			               .toUri()
-			;
+		   .fromCurrentRequest()
+		   .path("/{id}")
+		   .buildAndExpand(newBookDescription.getId())
+		   .toUri()
+		;
 
 		return ResponseEntity.created(location).build();
 	}

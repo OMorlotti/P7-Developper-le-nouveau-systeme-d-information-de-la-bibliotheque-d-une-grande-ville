@@ -1,11 +1,14 @@
 package xyz.morlotti.virtualbookcase.userwebsite.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
 import xyz.morlotti.virtualbookcase.userwebsite.beans.User;
 import xyz.morlotti.virtualbookcase.userwebsite.MyFeignProxy;
+import xyz.morlotti.virtualbookcase.userwebsite.beans.forms.UserInfo;
 
 @Controller
 public class UserController
@@ -20,52 +23,62 @@ public class UserController
 		{
 			User user = feignProxy.getUser(id);
 
+			System.out.println(user);
+
 			model.addAttribute("user", user);
+			model.addAttribute("show", "xxxx");
 
 			return "user";
 		}
 		catch(Exception e)
 		{
 			model.addAttribute("messageType", "danger");
-			model.addAttribute("message", "Utilisateur inconnu.");
+			model.addAttribute("message", "Utilisateur inconnu : " + e.getMessage());
 
 			return "error";
 		}
 	}
 
-	@RequestMapping(value = "/user/{id}", method = RequestMethod.POST)
-	public String updateUser(@PathVariable("id") int id, @RequestBody User oldUser, Model model)
+	@RequestMapping(value = "/user/{id}", method = RequestMethod.POST, consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE})
+	public String updateUser(@PathVariable("id") int id, UserInfo userInfo, Model model)
 	{
-		if(true)
-		{
-			model.addAttribute("messageType", "success");
-			model.addAttribute("message", "Impossible de mettre à jour l'utilisateur.");
-
-			return "error";
-		}
-		/*
 		try
 		{
-			feignProxy.updateUser(id, oldUser);
-		}
-		catch(Exception e)
-		{
-			model.addAttribute("messageType", "danger");
-			model.addAttribute("message", "Impossible de mettre à jour l'utilisateur.");
-		}
-		*/
-		try
-		{
-			User newUser = feignProxy.getUser(id);
+			User user = feignProxy.getUser(id);
 
-			model.addAttribute("user", newUser);
+			user.setPassword(userInfo.getPassword());
+			user.setFirstname(userInfo.getFirstname());
+			user.setLastname(userInfo.getLastname());
+			user.setStreetNb(userInfo.getStreetNb());
+			user.setStreetName(userInfo.getStreetName());
+			user.setPostalCode(userInfo.getPostalCode());
+			user.setCity(userInfo.getCity());
+			user.setCountry(userInfo.getCountry());
+			user.setEmail(userInfo.getEmail());
+			user.setSex(userInfo.getSex());
+
+			model.addAttribute("user", user);
+			model.addAttribute("show", "show");
+
+			try
+			{
+				feignProxy.updateUser(id, user);
+
+				model.addAttribute("messageType", "success");
+				model.addAttribute("message", "Utilisateur mise à jour avec succès.");
+			}
+			catch(Exception e)
+			{
+				model.addAttribute("messageType", "danger");
+				model.addAttribute("message", "Impossible de mettre à jour l'utilisateur : " + e.getMessage());
+			}
 
 			return "user";
 		}
 		catch(Exception e)
 		{
 			model.addAttribute("messageType", "danger");
-			model.addAttribute("message", "Utilisateur inconnu.");
+			model.addAttribute("message", "Utilisateur inconnu : " + e.getMessage());
 
 			return "error";
 		}

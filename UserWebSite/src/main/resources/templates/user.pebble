@@ -3,7 +3,7 @@
 {% block content %}
 <form class="card mt-0" action="{{ href('/user/' + user.id) }}" method="POST">
     <h3 class="card-header" data-toggle="collapse" data-target="#collapseOne">{{ user.firstname }} {{ user.lastname }} <small>(cliquer pour voir les détails)</small></h3>
-    <div class="card-body collapse" id="collapseOne">
+    <div class="card-body collapse {{ show }}" id="collapseOne">
         <table class="table table-sm table-strip">
             <tr>
                 <td>Login :</td>
@@ -18,6 +18,14 @@
             <tr>
                 <td>Mot de passe :</td>
                 <td><input class="form-control form-control-sm" type="password" name="password" value="{{ user.password }}" required="required" /></td>
+			</tr>
+			<tr>
+				<td>Prénom :</td>
+				<td><input class="form-control form-control-sm" type="text" name="firstname" value="{{ user.firstname }}" required="required" /></td>
+			</tr>
+			<tr>
+				<td>Nom :</td>
+				<td><input class="form-control form-control-sm" type="text" name="lastname" value="{{ user.lastname }}" required="required" /></td>
 			</tr>
             <tr>
                 <td>Numéro de voie :</td>
@@ -72,7 +80,24 @@
 <div class="card mt-2">
     <h3 class="card-header" data-toggle="collapse" data-target="#collapseTwo">Mes prêts</h3>
     <div class="card-body collapse show" id="collapseTwo">
-
+    	<table class="table table-sm">
+    		<thead>
+				<tr>
+					<td>Titre du livre</a></td>
+					<td>Date d'empreint</td>
+					<td></td>
+				</tr>
+    		</thead>
+    		<tbody>
+			{% for loan in user.loans %}
+				<tr>
+					<td><a href="{{ href("/book/" + loan.book.id) }}" target="_blank">★ {{ loan.book.bookDescription.title }}</a></td>
+					<td>{{ loan.loanStartDate | date("dd/MM/yyyy") }}</td>
+					<td></td>
+				</tr>
+				{% endfor %}
+			</tbody>
+		</table>
     </div>
 </div>
 {% endblock %}

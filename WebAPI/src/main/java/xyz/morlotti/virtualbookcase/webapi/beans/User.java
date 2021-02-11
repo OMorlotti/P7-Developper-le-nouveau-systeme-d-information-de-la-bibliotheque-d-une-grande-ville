@@ -1,9 +1,10 @@
 package xyz.morlotti.virtualbookcase.webapi.beans;
 
 import java.time.LocalDate;
+import java.util.Set;
 import java.util.Date;
 import java.util.HashSet;
-import java.util.Set;
+import java.util.stream.Stream;
 
 import javax.persistence.*;
 
@@ -12,9 +13,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
-import xyz.morlotti.virtualbookcase.webapi.exceptions.APINotFoundException;
+import org.springframework.data.annotation.CreatedDate;
 
 @Getter
 @Setter
@@ -24,85 +23,81 @@ import xyz.morlotti.virtualbookcase.webapi.exceptions.APINotFoundException;
 @Table(name = "USER", catalog = "virtualbookcase")
 public class User implements java.io.Serializable
 {
-    private enum Sex
+    public enum Sex
     {
-        F("F"), H("H");
+        F("F", 0), H("H", 1);
 
         private final String value;
+        private final int code;
 
-        private Sex(String value) /* Une valeur d'enum est comme une classe, elle peut avoir un constructeur et des méthodes : https://stackoverflow.com/questions/13291076/java-enum-why-use-tostring-instead-of-name */
+        private Sex(String value, int code) /* Une valeur d'enum est comme une classe, elle peut avoir un constructeur et des méthodes : https://stackoverflow.com/questions/13291076/java-enum-why-use-tostring-instead-of-name */
         {
             this.value = value;
+            this.code = code;
         }
 
-        @Override
         public String toString() /* Pour convertir une valeur d'enum en String */
         {
             return value;
         }
 
-        public static Sex parseSex(String value) throws APINotFoundException /* Pour convertir une chaîne en une valeur d'enum */
+        public int toCode() /* Pour convertir une valeur d'enum en entier */
         {
-            /**/ if("F".equalsIgnoreCase(value))
-            {
-                return F;
-            }
-            else if("H".equalsIgnoreCase(value))
-            {
-                return H;
-            }
+            return code;
+        }
 
-            throw new APINotFoundException("Ne peut pas parser la valeur du sexe");
+        public static Sex parseString(String value) /* Pour convertir une chaîne en une valeur d'enum */
+        {
+            return Stream.of(values()).filter(x -> x.value.equalsIgnoreCase(value)).findFirst().orElse(null);
+        }
+
+        public static Sex parseCode(int code) /* Pour convertir un entier en une valeur d'enum */
+        {
+            return Stream.of(values()).filter(x -> x.code == code).findFirst().orElse(null);
         }
     }
 
-    private enum Role
+    ////////
+
+    public enum Role
     {
-        ADMIN("ADMIN"),
-        BATCH("BATCH"),
-        EMPLOYEE("EMPLOYEE"),
-        USER("USER"),
-        GUEST("GUEST");
+        ADMIN("ADMIN", 0),
+        BATCH("BATCH", 1),
+        EMPLOYEE("EMPLOYEE", 2),
+        USER("USER", 3),
+        GUEST("GUEST", 4);
 
         private final String value;
+        private final int code;
 
-        private Role(String value) /* Une valeur d'enum est comme une classe, elle peut avoir un constructeur et des méthodes : https://stackoverflow.com/questions/13291076/java-enum-why-use-tostring-instead-of-name */
+        private Role(String value, int code) /* Une valeur d'enum est comme une classe, elle peut avoir un constructeur et des méthodes : https://stackoverflow.com/questions/13291076/java-enum-why-use-tostring-instead-of-name */
         {
             this.value = value;
+            this.code = code;
         }
 
-        @Override
         public String toString() /* Pour convertir une valeur d'enum en String */
         {
             return value;
         }
 
-        public static Role parseRole(String value) throws APINotFoundException /* Pour convertir une chaîne en une valeur d'enum */
+        public int toCode() /* Pour convertir une valeur d'enum en entier */
         {
-            /**/ if("ADMIN".equalsIgnoreCase(value))
-            {
-                return ADMIN;
-            }
-            else if("BATCH".equalsIgnoreCase(value))
-            {
-                return BATCH;
-            }
-            else if("EMPLOYEE".equalsIgnoreCase(value))
-            {
-                return EMPLOYEE;
-            }
-            else if("USER".equalsIgnoreCase(value))
-            {
-                return USER;
-            }
-            else if("BATCH".equalsIgnoreCase(value))
-            {
-                return BATCH;
-            }
+            return code;
+        }
 
-            throw new APINotFoundException("Ne peut pas parser la valeur du rôle");
+        public static Role parseString(String value) /* Pour convertir une chaîne en une valeur d'enum */
+        {
+            return Stream.of(values()).filter(x -> x.value.equalsIgnoreCase(value)).findFirst().orElse(null);
+        }
+
+        public static Role parseCode(int code) /* Pour convertir un entier en une valeur d'enum */
+        {
+            return Stream.of(values()).filter(x -> x.code == code).findFirst().orElse(null);
         }
     }
+
+    ////////
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -143,21 +138,45 @@ public class User implements java.io.Serializable
     private LocalDate birthdate;
 
     @Column(name = "sex", nullable = false)
-    private Sex sex;
+    private Integer sex;
 
-    @Column(name = "role", nullable = false, columnDefinition = "INT DEFAULT 4") // 4 pour GUEST
-    private Role role;
+    public Sex getSex()
+    {
+        return Sex.parseCode(this.sex);
+    }
+
+    public void setSex(Sex sex)
+    {
+        this.sex = sex.toCode();
+    }
+
+    @Column(name = "role", nullable = false)
+    private Integer role;
+
+    public Role getRole()
+    {
+        return Role.parseCode(this.role);
+    }
+
+    public void setRole(Role role)
+    {
+        this.role = role.toCode();
+    }
 
     @Column(name = "membership", nullable = false)
     private LocalDate membership;
 
-    @JsonIgnoreProperties("user") //
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
-    private Set<Loan> loans;
-
+    @CreatedDate
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created", nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Date created;
+
+    ////////
+
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
+    private Set<Loan> loans;
+
+    ////////
 
     public void initGuest()
     {
@@ -176,8 +195,8 @@ public class User implements java.io.Serializable
         this.country = "N/A";
         this.email = "N/A";
         this.birthdate = localNow;
-        this.sex = Sex.F;
-        this.role = Role.GUEST;
+        this.sex = Sex.F.code;
+        this.role = Role.GUEST.code;
         this.membership = localNow;
         this.created = now;
 

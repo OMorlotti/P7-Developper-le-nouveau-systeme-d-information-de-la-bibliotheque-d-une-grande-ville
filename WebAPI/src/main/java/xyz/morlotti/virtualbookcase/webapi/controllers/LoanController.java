@@ -36,11 +36,11 @@ public class LoanController
 		Loan newLoan = loanService.addLoan(loan);
 
 		URI location = ServletUriComponentsBuilder
-			               .fromCurrentRequest()
-			               .path("/{id}")
-			               .buildAndExpand(newLoan.getId())
-			               .toUri()
-			;
+		   .fromCurrentRequest()
+		   .path("/{id}")
+		   .buildAndExpand(newLoan.getId())
+		   .toUri()
+		;
 
 		return ResponseEntity.created(location).build();
 	}
@@ -51,11 +51,11 @@ public class LoanController
 		Loan newLoan = loanService.updateLoan(id, loan);
 
 		URI location = ServletUriComponentsBuilder
-			               .fromCurrentRequest()
-			               .path("/{id}")
-			               .buildAndExpand(newLoan.getId())
-			               .toUri()
-			;
+		   .fromCurrentRequest()
+		   .path("/{id}")
+		   .buildAndExpand(newLoan.getId())
+		   .toUri()
+		;
 
 		return ResponseEntity.created(location).build();
 	}
