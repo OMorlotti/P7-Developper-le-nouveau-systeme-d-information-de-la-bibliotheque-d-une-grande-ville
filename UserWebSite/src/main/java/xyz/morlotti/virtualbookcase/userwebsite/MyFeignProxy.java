@@ -19,5 +19,5 @@ public interface MyFeignProxy
 	public ResponseEntity<Void> updateUser(@PathVariable int id, @RequestBody User user);
 
 	@GetMapping("/book/{id}")
-	public Optional<Book> getBook(@PathVariable("id") int id);
+	public Book getBook(@PathVariable("id") int id);
 }

@@ -30,7 +30,10 @@ public class UserController
 	{
 		Optional<User> optional = userService.getUser(id);
 
-		optional.orElseThrow(() -> new APINotFoundException("User " + id + " not found"));
+		if(!optional.isPresent())
+		{
+			throw new APINotFoundException("User " + id + " not found");
+		}
 
 		return optional.get();
 	}

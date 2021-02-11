@@ -11,8 +11,6 @@ import lombok.ToString;
 @ToString
 public class AdvancedSearch
 {
-	private String format;
-
 	private String titre;
 
 	private String author;

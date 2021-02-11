@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import xyz.morlotti.virtualbookcase.webapi.beans.Loan;
+import xyz.morlotti.virtualbookcase.webapi.exceptions.APINotFoundException;
 import xyz.morlotti.virtualbookcase.webapi.services.interfaces.LoanService;
 
 @RestController
@@ -25,9 +26,16 @@ public class LoanController
 	}
 
 	@RequestMapping(value = "/loan/{id}", method = RequestMethod.GET)
-	public Optional<Loan> getLoan(@PathVariable int id)
+	public Loan getLoan(@PathVariable int id)
 	{
-		return loanService.getLoan(id);
+		Optional<Loan> optional = loanService.getLoan(id);
+
+		if(!optional.isPresent())
+		{
+			throw new APINotFoundException("Loan " + id + " not found");
+		}
+
+		return optional.get();
 	}
 
 	@RequestMapping(value = "/loan", method = RequestMethod.POST)

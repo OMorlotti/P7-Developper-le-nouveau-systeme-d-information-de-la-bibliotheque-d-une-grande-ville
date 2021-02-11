@@ -29,8 +29,6 @@ public class LoanServiceImpl implements LoanService
 	{
 		Optional<Loan> optional = loanDAO.findById(id);
 
-		optional.orElseThrow(() -> new APINotFoundException("Loan " + id + " not found"));
-
 		return optional;
 	}
 

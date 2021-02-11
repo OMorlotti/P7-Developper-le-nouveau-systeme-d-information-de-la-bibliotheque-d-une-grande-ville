@@ -20,14 +20,21 @@ public class BookController
 	@RequestMapping(value="/book/{id}", method = RequestMethod.GET)
 	public String book(@PathVariable("id") int id, Model model)
 	{
-		Optional<Book> optional = feignProxy.getBook(id);
-
-		if(optional.isPresent())
+		try
 		{
-			model.addAttribute("book", optional.get());
-		}
+			Book book = feignProxy.getBook(id);
 
-		return "book";
+			model.addAttribute("book", book);
+
+			return "book";
+		}
+		catch(Exception e)
+		{
+			model.addAttribute("messageType", "danger");
+			model.addAttribute("message", "Livre inconnu : " + e.getMessage());
+
+			return "error";
+		}
 	}
 
 	@RequestMapping(value="/search", method = RequestMethod.GET)

@@ -11,6 +11,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import xyz.morlotti.virtualbookcase.webapi.beans.BookDescription;
 import xyz.morlotti.virtualbookcase.webapi.daos.custom.AdvancedSearch;
+import xyz.morlotti.virtualbookcase.webapi.exceptions.APINotFoundException;
 import xyz.morlotti.virtualbookcase.webapi.services.interfaces.BookDescriptionService;
 
 @RestController
@@ -26,9 +27,16 @@ public class BookDescriptionController
 	}
 
 	@RequestMapping(value = "/bookDescription/{id}", method = RequestMethod.GET)
-	public Optional<BookDescription> getBookDescription(@PathVariable int id)
+	public BookDescription getBookDescription(@PathVariable int id)
 	{
-		return bookDescriptionService.getBookDescription(id);
+		Optional<BookDescription> optional = bookDescriptionService.getBookDescription(id);
+
+		if(!optional.isPresent())
+		{
+			throw new APINotFoundException("Book description " + id + " not found");
+		}
+
+		return optional.get();
 	}
 
 	@RequestMapping(value = "/bookDescription", method = RequestMethod.POST)

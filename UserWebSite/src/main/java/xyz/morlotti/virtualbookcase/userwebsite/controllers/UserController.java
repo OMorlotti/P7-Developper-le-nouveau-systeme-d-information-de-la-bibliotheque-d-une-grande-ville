@@ -65,7 +65,7 @@ public class UserController
 				feignProxy.updateUser(id, user);
 
 				model.addAttribute("messageType", "success");
-				model.addAttribute("message", "Utilisateur mise à jour avec succès.");
+				model.addAttribute("message", "Utilisateur mis à jour avec succès.");
 			}
 			catch(Exception e)
 			{

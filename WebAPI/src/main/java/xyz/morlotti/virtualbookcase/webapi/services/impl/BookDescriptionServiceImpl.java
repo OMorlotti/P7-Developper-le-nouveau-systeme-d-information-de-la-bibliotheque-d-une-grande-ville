@@ -31,8 +31,6 @@ public class BookDescriptionServiceImpl implements BookDescriptionService
 	{
 		Optional<BookDescription> optional = bookDescriptionDAO.findById(id);
 
-		optional.orElseThrow(() -> new APINotFoundException("BookDescription " + id + " not found"));
-
 		return optional;
 	}
 

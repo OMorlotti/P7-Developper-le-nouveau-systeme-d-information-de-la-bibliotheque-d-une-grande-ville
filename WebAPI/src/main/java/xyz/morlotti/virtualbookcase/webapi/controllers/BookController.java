@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import xyz.morlotti.virtualbookcase.webapi.beans.Book;
+import xyz.morlotti.virtualbookcase.webapi.exceptions.APINotFoundException;
 import xyz.morlotti.virtualbookcase.webapi.services.interfaces.BookService;
 
 @RestController
@@ -25,9 +26,16 @@ public class BookController
 	}
 
 	@RequestMapping(value = "/book/{id}", method = RequestMethod.GET)
-	public Optional<Book> getBook(@PathVariable int id)
+	public Book getBook(@PathVariable int id)
 	{
-		return bookService.getBook(id);
+		Optional<Book> optional = bookService.getBook(id);
+
+		if(!optional.isPresent())
+		{
+			throw new APINotFoundException("Book " + id + " not found");
+		}
+
+		return optional.get();
 	}
 
 	@RequestMapping(value = "/book", method = RequestMethod.POST)
