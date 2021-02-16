@@ -11,11 +11,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import org.springframework.web.bind.annotation.RestController;
 import xyz.morlotti.virtualbookcase.webapi.EmailSingleton;
 import xyz.morlotti.virtualbookcase.webapi.beans.User;
 import xyz.morlotti.virtualbookcase.webapi.daos.UserDAO;
 
-@Controller
+@RestController
 public class AuthController
 {
     @Autowired
