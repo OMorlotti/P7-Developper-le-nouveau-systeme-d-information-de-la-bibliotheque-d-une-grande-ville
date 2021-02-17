@@ -14,7 +14,7 @@ import xyz.morlotti.virtualbookcase.userwebsite.beans.BookDescription;
 public interface MyFeignProxy
 {
 	@GetMapping("/auth/login")
-	public Auth login(@RequestParam("login") String login, @RequestParam("password") String password);
+	public String login(@RequestParam("login") String login, @RequestParam("password") String password);
 
 	@GetMapping("/user")
 	public User getUser();

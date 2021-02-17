@@ -31,11 +31,9 @@ public class AuthController
 	{
 		try
 		{
-			Auth auth = feignProxy.login(credentials.getLogin(), credentials.getPassword());
+			String token = feignProxy.login(credentials.getLogin(), credentials.getPassword());
 
-			String value = auth.getLogin() + "|" + auth.getEmail() + "|" + auth.getRole() + "|" + auth.getToken();
-
-			Cookie cookie = new Cookie("auth", value);
+			Cookie cookie = new Cookie("token", token);
 			cookie.setMaxAge(60 * 60 * 24 * 30);
 
 			httpServletResponse.addCookie(cookie);
@@ -54,7 +52,7 @@ public class AuthController
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
 	public String logout(HttpServletResponse httpServletResponse)
 	{
-		Cookie cookie = new Cookie("auth", "");
+		Cookie cookie = new Cookie("auth", null);
 		cookie.setMaxAge(60 * 60 * 24 * 30);
 
 		httpServletResponse.addCookie(cookie);
