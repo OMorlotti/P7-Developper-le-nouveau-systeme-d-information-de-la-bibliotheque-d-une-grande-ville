@@ -3,59 +3,47 @@ package xyz.morlotti.virtualbookcase.webapi.controllers;
 import java.util.Optional;
 import javax.servlet.http.HttpSession;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.security.core.Authentication;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 
-import org.springframework.web.bind.annotation.RestController;
-import xyz.morlotti.virtualbookcase.webapi.EmailSingleton;
 import xyz.morlotti.virtualbookcase.webapi.beans.User;
 import xyz.morlotti.virtualbookcase.webapi.daos.UserDAO;
+import xyz.morlotti.virtualbookcase.webapi.EmailSingleton;
+import xyz.morlotti.virtualbookcase.webapi.security.jwt.JwtUtils;
 
 @RestController
 public class AuthController
 {
     @Autowired
+    JwtUtils jwtUtils;
+
+    @Autowired
     private UserDAO userDAO;
 
-    @RequestMapping(path = "/login", method = RequestMethod.GET)
-    public ResponseEntity<Void> login(
+    @Autowired
+    AuthenticationManager authenticationManager;
+
+    @RequestMapping(path = "/auth/login", method = RequestMethod.GET)
+    public String login(
         @RequestParam("login") String login,
         @RequestParam("password") String password,
         HttpSession httpSession
     ) throws Exception
     {
-        Optional<User> optional = userDAO.findByLoginPassword(login, password);
+        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(login, password));
 
-        if(optional.isPresent())
-        {
-            User user = optional.get();
+        SecurityContextHolder.getContext().setAuthentication(authentication);
 
-            httpSession.setAttribute("currentUser", user);
-
-            return ResponseEntity.status(HttpStatus.OK).build();
-        }
-        else
-        {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-        }
+        return jwtUtils.generateJwtToken(authentication);
     }
 
-    @RequestMapping(path = "/logout", method = RequestMethod.GET)
-    public ResponseEntity<Void> logout(HttpSession httpSession) throws Exception
-    {
-        User user = (User) httpSession.getAttribute ("currentUser");
-
-        user.initGuest();
-
-        return ResponseEntity.status(HttpStatus.OK).build();
-    }
-
-    @RequestMapping(path = "/remind-password", method = RequestMethod.GET)
+    @RequestMapping(path = "/auth/remind-password", method = RequestMethod.GET)
     public ResponseEntity<Void> remindPassword(@RequestParam("email") String email) throws Exception
     {
         Optional<User> optional = userDAO.findByEmail(email);
@@ -70,7 +58,8 @@ public class AuthController
                 "",
                 "Mot de passe - Bibliothèque",
                 "Bonjour,\nVotre mot de passe est " + user.getPassword() + ".\n" +
-                    "Cordialement,\n" + "Votre bibliothèque"
+                "Cordialement,\n" +
+                "Votre bibliothèque"
             );
         }
 

@@ -6,10 +6,9 @@ import org.springframework.stereotype.Service;
 
 import xyz.morlotti.virtualbookcase.webapi.beans.BookDescription;
 import xyz.morlotti.virtualbookcase.webapi.daos.BookDescriptionDAO;
-import xyz.morlotti.virtualbookcase.webapi.daos.custom.AdvancedSearch;
+import xyz.morlotti.virtualbookcase.webapi.daos.beans.Search;
 import xyz.morlotti.virtualbookcase.webapi.exceptions.APINotCreatedException;
 import xyz.morlotti.virtualbookcase.webapi.exceptions.APINotDeletedException;
-import xyz.morlotti.virtualbookcase.webapi.exceptions.APINotFoundException;
 import xyz.morlotti.virtualbookcase.webapi.services.interfaces.BookDescriptionService;
 
 import java.util.Optional;
@@ -83,9 +82,9 @@ public class BookDescriptionServiceImpl implements BookDescriptionService
 		}
 	}
 
-	public Iterable<BookDescription> searchBookDescriptions(AdvancedSearch advancedSearch)
+	public Iterable<BookDescription> searchBookDescriptions(Search search)
 	{
-		Iterable<BookDescription> bookDescriptions = bookDescriptionDAO.advancedSearch(advancedSearch);
+		Iterable<BookDescription> bookDescriptions = bookDescriptionDAO.advancedSearch(search);
 
 		return bookDescriptions;
 	}

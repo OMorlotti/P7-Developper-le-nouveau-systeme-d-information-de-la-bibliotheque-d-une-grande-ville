@@ -2,8 +2,6 @@ package xyz.morlotti.virtualbookcase.userwebsite.beans;
 
 import java.time.LocalDate;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.*;
 
 @Getter

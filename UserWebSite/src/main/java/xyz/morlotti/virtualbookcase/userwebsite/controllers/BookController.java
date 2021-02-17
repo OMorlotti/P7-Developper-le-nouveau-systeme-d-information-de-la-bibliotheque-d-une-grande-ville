@@ -2,19 +2,15 @@ package xyz.morlotti.virtualbookcase.userwebsite.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import xyz.morlotti.virtualbookcase.userwebsite.beans.Book;
 import xyz.morlotti.virtualbookcase.userwebsite.MyFeignProxy;
 import xyz.morlotti.virtualbookcase.userwebsite.beans.BookDescription;
-import xyz.morlotti.virtualbookcase.userwebsite.beans.forms.AdvancedSearch;
-
-import java.util.Optional;
+import xyz.morlotti.virtualbookcase.userwebsite.beans.forms.Search;
 
 @Controller
 public class BookController
@@ -49,9 +45,9 @@ public class BookController
 	}
 
 	@RequestMapping(value="/search", method = RequestMethod.POST, consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE})
-	public String search2(AdvancedSearch advancedSearch, Model model)
+	public String search2(Search search, Model model)
 	{
-		Iterable<BookDescription> bookDescriptions = feignProxy.searchBook(advancedSearch);
+		Iterable<BookDescription> bookDescriptions = feignProxy.searchBook(search);
 
 		model.addAttribute("bookDescriptions", bookDescriptions);
 

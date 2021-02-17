@@ -5,10 +5,7 @@ import java.util.Date;
 
 import javax.persistence.*;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -18,6 +15,7 @@ import org.springframework.data.annotation.CreatedDate;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 @Entity(name = "BOOKDESCRIPTION")
 @Table(name = "BOOKDESCRIPTION", catalog = "virtualbookcase")
 public class BookDescription implements java.io.Serializable

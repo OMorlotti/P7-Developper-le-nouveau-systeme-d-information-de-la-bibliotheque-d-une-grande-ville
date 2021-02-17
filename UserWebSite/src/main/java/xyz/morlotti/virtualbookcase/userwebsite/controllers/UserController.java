@@ -16,14 +16,12 @@ public class UserController
 	@Autowired
 	MyFeignProxy feignProxy;
 
-	@RequestMapping(value = "/user/{id}", method = RequestMethod.GET)
-	public String showUser(@PathVariable("id") int id, Model model)
+	@RequestMapping(value = "/user", method = RequestMethod.GET)
+	public String showUser(Model model)
 	{
 		try
 		{
-			User user = feignProxy.getUser(id);
-
-			System.out.println(user);
+			User user = feignProxy.getUser();
 
 			model.addAttribute("user", user);
 			model.addAttribute("show", "xxxx");
@@ -32,6 +30,7 @@ public class UserController
 		}
 		catch(Exception e)
 		{
+			System.out.println(e.getClass().getName());
 			model.addAttribute("messageType", "danger");
 			model.addAttribute("message", "Utilisateur inconnu : " + e.getMessage());
 
@@ -39,12 +38,12 @@ public class UserController
 		}
 	}
 
-	@RequestMapping(value = "/user/{id}", method = RequestMethod.POST, consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE})
-	public String updateUser(@PathVariable("id") int id, UserInfo userInfo, Model model)
+	@RequestMapping(value = "/user", method = RequestMethod.POST, consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE})
+	public String updateUser(UserInfo userInfo, Model model)
 	{
 		try
 		{
-			User user = feignProxy.getUser(id);
+			User user = feignProxy.getUser();
 
 			user.setPassword(userInfo.getPassword());
 			user.setFirstname(userInfo.getFirstname());
@@ -62,7 +61,7 @@ public class UserController
 
 			try
 			{
-				feignProxy.updateUser(id, user);
+				feignProxy.updateUser(user);
 
 				model.addAttribute("messageType", "success");
 				model.addAttribute("message", "Utilisateur mis à jour avec succès.");

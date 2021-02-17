@@ -4,25 +4,31 @@ import java.time.LocalDate;
 import java.util.Set;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
 import javax.persistence.*;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.*;
 
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 @Entity(name = "USER")
 @Table(name = "USER", catalog = "virtualbookcase")
 public class User implements java.io.Serializable
 {
+    // According BCryptPasswordEncoder class from Spring, you could check if a String is encoded or not using this regex pattern
+
+    static Pattern BCRYPT_PATTERN = Pattern.compile("\\A\\$2a?\\$\\d\\d\\$[./0-9A-Za-z]{53}");
+
     public enum Sex
     {
         F("F", 0), H("H", 1);
@@ -48,12 +54,12 @@ public class User implements java.io.Serializable
 
         public static Sex parseString(String value) /* Pour convertir une chaîne en une valeur d'enum */
         {
-            return Stream.of(values()).filter(x -> x.value.equalsIgnoreCase(value)).findFirst().orElse(null);
+            return Stream.of(values()).filter(x -> x.value.equalsIgnoreCase(value)).findFirst().orElse(F);
         }
 
         public static Sex parseCode(int code) /* Pour convertir un entier en une valeur d'enum */
         {
-            return Stream.of(values()).filter(x -> x.code == code).findFirst().orElse(null);
+            return Stream.of(values()).filter(x -> x.code == code).findFirst().orElse(F);
         }
     }
 
@@ -62,10 +68,9 @@ public class User implements java.io.Serializable
     public enum Role
     {
         ADMIN("ADMIN", 0),
-        BATCH("BATCH", 1),
-        EMPLOYEE("EMPLOYEE", 2),
-        USER("USER", 3),
-        GUEST("GUEST", 4);
+        EMPLOYEE("EMPLOYEE", 1),
+        USER("USER", 2),
+        GUEST("GUEST", 3);
 
         private final String value;
         private final int code;
@@ -88,12 +93,12 @@ public class User implements java.io.Serializable
 
         public static Role parseString(String value) /* Pour convertir une chaîne en une valeur d'enum */
         {
-            return Stream.of(values()).filter(x -> x.value.equalsIgnoreCase(value)).findFirst().orElse(null);
+            return Stream.of(values()).filter(x -> x.value.equalsIgnoreCase(value)).findFirst().orElse(GUEST);
         }
 
         public static Role parseCode(int code) /* Pour convertir un entier en une valeur d'enum */
         {
-            return Stream.of(values()).filter(x -> x.code == code).findFirst().orElse(null);
+            return Stream.of(values()).filter(x -> x.code == code).findFirst().orElse(GUEST);
         }
     }
 
@@ -107,8 +112,15 @@ public class User implements java.io.Serializable
     @Column(name = "login", nullable = false, length = 64)
     private String login;
 
+    // Pour ne pas exposer le password lors d'un GET
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @Column(name = "password", nullable = false, length = 64)
     private String password;
+
+    // Pour ne pas exposer le password lors d'un GET
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @Column(name = "token", nullable = true, length = 64)
+    private String token;
 
     @Column(name = "firstname", nullable = false, length = 256)
     private String firstname;
@@ -178,28 +190,65 @@ public class User implements java.io.Serializable
 
     ////////
 
-    public void initGuest()
+    public static User guestUser()
     {
         Date now = new Date();
 
         LocalDate localNow = new java.sql.Date(now.getTime()).toLocalDate();
 
-        this.login = "guest";
-        this.password = "guest";
-        this.firstname = "guest";
-        this.lastname = "guest";
-        this.streetNb = "N/A";
-        this.streetName = "N/A";
-        this.postalCode = 0;
-        this.city = "N/A";
-        this.country = "N/A";
-        this.email = "N/A";
-        this.birthdate = localNow;
-        this.sex = Sex.F.code;
-        this.role = Role.GUEST.code;
-        this.membership = localNow;
-        this.created = now;
-
-        this.loans = new HashSet<>(0);
+        return new User(
+            null,
+            "guest",
+            "guest",
+            "token",
+            "guest",
+            "guest",
+            "N/A",
+            "N/A",
+            0,
+            "N/A",
+            "N/A",
+            "N/A",
+            localNow,
+            Sex.F.code,
+            Role.GUEST.code,
+            localNow,
+            now,
+            new HashSet<>(0)
+        );
     }
+/*
+    public String getPassword()
+    {
+        if(!BCRYPT_PATTERN.matcher(this.password).matches())
+        {
+            return new BCryptPasswordEncoder().encode(password);
+        }
+        else
+        {
+            return this.password;
+        }
+    }
+
+    public void setPassword(String password)
+    {
+        if(password != null)
+        {
+            if(!BCRYPT_PATTERN.matcher(password).matches())
+            {
+                if(!new BCryptPasswordEncoder().matches("", password))
+                {
+                    this.password = new BCryptPasswordEncoder().encode(password);
+                }
+            }
+            else
+            {
+                if(!password.isEmpty())
+                {
+                    this.password = password;
+                }
+            }
+        }
+    }
+*/
 }

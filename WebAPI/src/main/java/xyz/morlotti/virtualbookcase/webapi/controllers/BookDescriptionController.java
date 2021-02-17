@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import xyz.morlotti.virtualbookcase.webapi.beans.BookDescription;
-import xyz.morlotti.virtualbookcase.webapi.daos.custom.AdvancedSearch;
+import xyz.morlotti.virtualbookcase.webapi.daos.beans.Search;
 import xyz.morlotti.virtualbookcase.webapi.exceptions.APINotFoundException;
 import xyz.morlotti.virtualbookcase.webapi.services.interfaces.BookDescriptionService;
 
@@ -79,8 +79,8 @@ public class BookDescriptionController
 	}
 
 	@RequestMapping(value = "/bookDescription/search", method = RequestMethod.POST, consumes = {MediaType.APPLICATION_JSON_VALUE})
-	public Iterable<BookDescription> searchBook(@RequestBody AdvancedSearch advancedSearch)
+	public Iterable<BookDescription> searchBook(@RequestBody Search search)
 	{
-		return bookDescriptionService.searchBookDescriptions(advancedSearch);
+		return bookDescriptionService.searchBookDescriptions(search);
 	}
 }

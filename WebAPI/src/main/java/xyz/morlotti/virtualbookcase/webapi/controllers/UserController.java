@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -13,16 +14,25 @@ import xyz.morlotti.virtualbookcase.webapi.beans.User;
 import xyz.morlotti.virtualbookcase.webapi.exceptions.APINotFoundException;
 import xyz.morlotti.virtualbookcase.webapi.services.interfaces.UserService;
 
+import javax.servlet.http.HttpSession;
+
 @RestController
 public class UserController
 {
 	@Autowired
 	UserService userService;
 
+	@PreAuthorize("hasRole('ADMIN')")
 	@RequestMapping(value = "/users", method = RequestMethod.GET)
 	public Iterable<User> listUsers()
 	{
 		return userService.listUsers();
+	}
+
+	@RequestMapping(value = "/user", method = RequestMethod.GET)
+	public User getCurrentUser(HttpSession httpSession)
+	{
+		return (User) httpSession.getAttribute("currentUser");
 	}
 
 	@RequestMapping(value = "/user/{id}", method = RequestMethod.GET)
@@ -53,6 +63,23 @@ public class UserController
 		return ResponseEntity.created(location).build();
 	}
 
+	@RequestMapping(value = "/user", method = RequestMethod.PUT)
+	public ResponseEntity<Void> updateCurrentUser(@RequestBody User user, HttpSession httpSession)
+	{
+		User currentUser = (User) httpSession.getAttribute("currentUser");
+
+		User newUser = userService.updateUser(currentUser.getId(), user);
+
+		URI location = ServletUriComponentsBuilder
+			.fromCurrentRequest()
+			.path("/{id}")
+			.buildAndExpand(newUser.getId())
+			.toUri()
+		;
+
+		return ResponseEntity.created(location).build();
+	}
+
 	@RequestMapping(value = "/user/{id}", method = RequestMethod.PUT)
 	public ResponseEntity<Void> updateUser(@PathVariable int id, @RequestBody User user)
 	{
@@ -68,6 +95,7 @@ public class UserController
 		return ResponseEntity.created(location).build();
 	}
 
+	@PreAuthorize("hasRole('ADMIN')")
 	@RequestMapping(value = "/user/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<Void> deleteUser(@PathVariable int id)
 	{

@@ -8,10 +8,7 @@ import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.*;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import org.springframework.data.annotation.CreatedDate;
 
@@ -19,6 +16,7 @@ import org.springframework.data.annotation.CreatedDate;
 @Setter // génère automatiquement les setters
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 @Entity(name = "BOOK")
 @Table(name = "BOOK", catalog = "virtualbookcase")
 public class Book implements java.io.Serializable

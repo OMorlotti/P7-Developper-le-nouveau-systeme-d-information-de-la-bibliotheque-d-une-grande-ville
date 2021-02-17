@@ -7,22 +7,27 @@ import org.springframework.web.bind.annotation.*;
 import xyz.morlotti.virtualbookcase.userwebsite.beans.Book;
 import xyz.morlotti.virtualbookcase.userwebsite.beans.BookDescription;
 import xyz.morlotti.virtualbookcase.userwebsite.beans.User;
-import xyz.morlotti.virtualbookcase.userwebsite.beans.forms.AdvancedSearch;
-
-import java.util.Optional;
+import xyz.morlotti.virtualbookcase.userwebsite.beans.forms.Credentials;
+import xyz.morlotti.virtualbookcase.userwebsite.beans.forms.Search;
 
 @FeignClient(name = "myFeignProxy", url = "localhost:9090")
 public interface MyFeignProxy
 {
-	@GetMapping("/user/{id}")
-	public User getUser(@PathVariable("id") int id);
+	@GetMapping("/login")
+	public ResponseEntity<Void> login(@RequestParam("login") String login, @RequestParam("password") String password);
 
-	@PutMapping("/user/{id}")
-	public ResponseEntity<Void> updateUser(@PathVariable int id, @RequestBody User user);
+	@GetMapping("/logout")
+	public ResponseEntity<Void> logout();
+
+	@GetMapping("/user")
+	public User getUser();
+
+	@PutMapping("/user")
+	public ResponseEntity<Void> updateUser(@RequestBody User user);
 
 	@GetMapping("/book/{id}")
 	public Book getBook(@PathVariable("id") int id);
 
 	@PostMapping("/bookDescription/search")
-	public Iterable<BookDescription> searchBook(@RequestBody AdvancedSearch advancedSearch);
+	public Iterable<BookDescription> searchBook(@RequestBody Search search);
 }

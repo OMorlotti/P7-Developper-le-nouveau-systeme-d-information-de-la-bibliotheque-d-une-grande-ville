@@ -1,4 +1,4 @@
-package xyz.morlotti.virtualbookcase.webapi.daos.custom;
+package xyz.morlotti.virtualbookcase.webapi.daos.beans;
 
 import lombok.*;
 
@@ -8,7 +8,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class AdvancedSearch
+public class Search
 {
 	private String title;
 

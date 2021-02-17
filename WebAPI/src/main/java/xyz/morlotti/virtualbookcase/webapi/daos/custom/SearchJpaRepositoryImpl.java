@@ -1,8 +1,8 @@
 package xyz.morlotti.virtualbookcase.webapi.daos.custom;
 
-import java.util.LinkedHashSet;
-import java.util.List;
 import java.util.Set;
+import java.util.List;
+import java.util.LinkedHashSet;
 
 import javax.persistence.TypedQuery;
 import javax.persistence.EntityManager;
@@ -11,6 +11,7 @@ import javax.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
 
 import xyz.morlotti.virtualbookcase.webapi.beans.BookDescription;
+import xyz.morlotti.virtualbookcase.webapi.daos.beans.Search;
 
 @Repository
 public class SearchJpaRepositoryImpl implements SearchJpaRepository
@@ -19,40 +20,40 @@ public class SearchJpaRepositoryImpl implements SearchJpaRepository
 	private EntityManager entityManager;
 
 	@Override
-	public List<BookDescription> advancedSearch(AdvancedSearch advancedSearch)
+	public List<BookDescription> advancedSearch(Search search)
 	{
-		System.out.println(advancedSearch);
+		System.out.println(search);
 
 		Set<String> conds = new LinkedHashSet<>();
 
 		conds.add("1 = 1");
 
-		if(advancedSearch.getTitle() != null && !advancedSearch.getTitle().isEmpty())
+		if(search.getTitle() != null && !search.getTitle().isEmpty())
 		{
 			conds.add("title LIKE :title");
 		}
 
-		if(advancedSearch.getAuthor() != null && !advancedSearch.getAuthor().isEmpty())
+		if(search.getAuthor() != null && !search.getAuthor().isEmpty())
 		{
 			conds.add("author LIKE :author");
 		}
 
-		if(advancedSearch.getEditionNumber() != null && !advancedSearch.getEditionNumber().isEmpty())
+		if(search.getEditionNumber() != null && !search.getEditionNumber().isEmpty())
 		{
 			conds.add("editionNumber LIKE :editionNumber");
 		}
 
-		if(advancedSearch.getEditionYear() != null && !advancedSearch.getEditionYear().isEmpty())
+		if(search.getEditionYear() != null && !search.getEditionYear().isEmpty())
 		{
 			conds.add("editionYear LIKE :editionYear");
 		}
 
-		if(advancedSearch.getEditor() != null && !advancedSearch.getEditor().isEmpty())
+		if(search.getEditor() != null && !search.getEditor().isEmpty())
 		{
 			conds.add("editor LIKE :editor");
 		}
 
-		if(advancedSearch.getIsbn() != null && !advancedSearch.getIsbn().isEmpty())
+		if(search.getIsbn() != null && !search.getIsbn().isEmpty())
 		{
 			conds.add("isbn LIKE :isbn");
 		}
@@ -61,34 +62,34 @@ public class SearchJpaRepositoryImpl implements SearchJpaRepository
 
 		TypedQuery<BookDescription> query = entityManager.createQuery(sql, BookDescription.class);
 
-		if(advancedSearch.getTitle() != null && !advancedSearch.getTitle().isEmpty())
+		if(search.getTitle() != null && !search.getTitle().isEmpty())
 		{
-			query.setParameter("title", "%" + advancedSearch.getTitle() + "%");
+			query.setParameter("title", "%" + search.getTitle() + "%");
 		}
 
-		if(advancedSearch.getAuthor() != null && !advancedSearch.getAuthor().isEmpty())
+		if(search.getAuthor() != null && !search.getAuthor().isEmpty())
 		{
-			query.setParameter("author", "%" + advancedSearch.getAuthor() + "%");
+			query.setParameter("author", "%" + search.getAuthor() + "%");
 		}
 
-		if(advancedSearch.getEditionNumber() != null && !advancedSearch.getEditionNumber().isEmpty())
+		if(search.getEditionNumber() != null && !search.getEditionNumber().isEmpty())
 		{
-			query.setParameter("editionNumber", "%" + advancedSearch.getEditionNumber() + "%");
+			query.setParameter("editionNumber", "%" + search.getEditionNumber() + "%");
 		}
 
-		if(advancedSearch.getEditionYear() != null && !advancedSearch.getEditionYear().isEmpty())
+		if(search.getEditionYear() != null && !search.getEditionYear().isEmpty())
 		{
-			query.setParameter("editionYear", "%" + advancedSearch.getEditionYear() + "%");
+			query.setParameter("editionYear", "%" + search.getEditionYear() + "%");
 		}
 
-		if(advancedSearch.getEditor() != null && !advancedSearch.getEditor().isEmpty())
+		if(search.getEditor() != null && !search.getEditor().isEmpty())
 		{
-			query.setParameter("editor", "%" + advancedSearch.getEditor() + "%");
+			query.setParameter("editor", "%" + search.getEditor() + "%");
 		}
 
-		if(advancedSearch.getIsbn() != null && !advancedSearch.getIsbn().isEmpty())
+		if(search.getIsbn() != null && !search.getIsbn().isEmpty())
 		{
-			query.setParameter("isbn", "%" + advancedSearch.getIsbn() + "%");
+			query.setParameter("isbn", "%" + search.getIsbn() + "%");
 		}
 
 		return query.getResultList();
