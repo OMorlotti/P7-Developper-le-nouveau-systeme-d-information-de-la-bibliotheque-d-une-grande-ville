@@ -10,7 +10,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import xyz.morlotti.virtualbookcase.webapi.beans.User;
+import xyz.morlotti.virtualbookcase.webapi.models.User;
 import xyz.morlotti.virtualbookcase.webapi.exceptions.APINotFoundException;
 import xyz.morlotti.virtualbookcase.webapi.services.interfaces.UserService;
 

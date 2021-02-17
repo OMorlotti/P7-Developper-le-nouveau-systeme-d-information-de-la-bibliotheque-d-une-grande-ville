@@ -18,7 +18,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 
-import xyz.morlotti.virtualbookcase.webapi.security.service.UserDetailsServiceImpl;
+import xyz.morlotti.virtualbookcase.webapi.security.services.UserDetailsServiceImpl;
 
 public class AuthTokenFilter extends OncePerRequestFilter
 {
@@ -62,9 +62,9 @@ public class AuthTokenFilter extends OncePerRequestFilter
 	{
 		String headerAuth = request.getHeader("Authorization");
 
-		if(StringUtils.hasText(headerAuth) && headerAuth.startsWith("Bearer "))
+		if(StringUtils.hasText(headerAuth) && headerAuth.startsWith("Token:"))
 		{
-			return headerAuth.substring(7, headerAuth.length());
+			return headerAuth.substring(6);
 		}
 		else
 		{

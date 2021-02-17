@@ -11,7 +11,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 import org.springframework.beans.factory.annotation.Value;
 
-import xyz.morlotti.virtualbookcase.webapi.security.service.UserDetailsImpl;
+import xyz.morlotti.virtualbookcase.webapi.security.services.UserDetailsImpl;
 
 @Component
 public class JwtUtils

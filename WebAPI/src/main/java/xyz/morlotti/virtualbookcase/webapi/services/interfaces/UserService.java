@@ -2,7 +2,7 @@ package xyz.morlotti.virtualbookcase.webapi.services.interfaces;
 
 import java.util.Optional;
 
-import xyz.morlotti.virtualbookcase.webapi.beans.User;
+import xyz.morlotti.virtualbookcase.webapi.models.User;
 
 public interface UserService
 {

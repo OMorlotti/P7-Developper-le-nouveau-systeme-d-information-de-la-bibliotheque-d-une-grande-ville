@@ -1,4 +1,4 @@
-package xyz.morlotti.virtualbookcase.webapi.beans;
+package xyz.morlotti.virtualbookcase.webapi.models;
 
 import java.time.LocalDate;
 
@@ -10,7 +10,6 @@ import lombok.*;
 @Getter
 @Setter
 @AllArgsConstructor
-@NoArgsConstructor
 @ToString
 @Entity(name = "LOAN")
 @Table(name = "LOAN", catalog = "virtualbookcase")

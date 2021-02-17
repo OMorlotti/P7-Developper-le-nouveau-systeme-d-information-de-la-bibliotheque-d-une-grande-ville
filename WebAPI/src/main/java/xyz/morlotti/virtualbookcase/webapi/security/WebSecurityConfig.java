@@ -16,7 +16,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 
 import xyz.morlotti.virtualbookcase.webapi.security.jwt.AuthTokenFilter;
 import xyz.morlotti.virtualbookcase.webapi.security.jwt.AuthEntryPointJwt;
-import xyz.morlotti.virtualbookcase.webapi.security.service.UserDetailsServiceImpl;
+import xyz.morlotti.virtualbookcase.webapi.security.services.UserDetailsServiceImpl;
 
 // https://github.com/bezkoder/spring-boot-spring-security-jwt-authentication/
 

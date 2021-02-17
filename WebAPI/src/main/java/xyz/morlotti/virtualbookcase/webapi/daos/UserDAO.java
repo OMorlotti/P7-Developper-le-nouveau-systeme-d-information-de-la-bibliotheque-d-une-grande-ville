@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import xyz.morlotti.virtualbookcase.webapi.beans.User;
+import xyz.morlotti.virtualbookcase.webapi.models.User;
 
 @Repository
 public interface UserDAO extends JpaRepository<User, Integer>

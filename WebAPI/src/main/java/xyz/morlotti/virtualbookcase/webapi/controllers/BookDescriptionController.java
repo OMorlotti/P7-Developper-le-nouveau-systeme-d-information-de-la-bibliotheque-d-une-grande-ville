@@ -10,7 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import xyz.morlotti.virtualbookcase.webapi.beans.BookDescription;
+import xyz.morlotti.virtualbookcase.webapi.models.BookDescription;
 import xyz.morlotti.virtualbookcase.webapi.daos.beans.Search;
 import xyz.morlotti.virtualbookcase.webapi.exceptions.APINotFoundException;
 import xyz.morlotti.virtualbookcase.webapi.services.interfaces.BookDescriptionService;

@@ -1,4 +1,4 @@
-package xyz.morlotti.virtualbookcase.webapi.beans;
+package xyz.morlotti.virtualbookcase.webapi.models;
 
 import java.time.LocalDate;
 import java.util.Set;
@@ -9,17 +9,14 @@ import java.util.stream.Stream;
 
 import javax.persistence.*;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
 import org.springframework.data.annotation.CreatedDate;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Getter
 @Setter
 @AllArgsConstructor
-@NoArgsConstructor
 @ToString
 @Entity(name = "USER")
 @Table(name = "USER", catalog = "virtualbookcase")
@@ -117,11 +114,6 @@ public class User implements java.io.Serializable
     @Column(name = "password", nullable = false, length = 64)
     private String password;
 
-    // Pour ne pas exposer le password lors d'un GET
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    @Column(name = "token", nullable = true, length = 64)
-    private String token;
-
     @Column(name = "firstname", nullable = false, length = 256)
     private String firstname;
 
@@ -187,37 +179,9 @@ public class User implements java.io.Serializable
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
     private Set<Loan> loans;
-
+/*
     ////////
 
-    public static User guestUser()
-    {
-        Date now = new Date();
-
-        LocalDate localNow = new java.sql.Date(now.getTime()).toLocalDate();
-
-        return new User(
-            null,
-            "guest",
-            "guest",
-            "token",
-            "guest",
-            "guest",
-            "N/A",
-            "N/A",
-            0,
-            "N/A",
-            "N/A",
-            "N/A",
-            localNow,
-            Sex.F.code,
-            Role.GUEST.code,
-            localNow,
-            now,
-            new HashSet<>(0)
-        );
-    }
-/*
     public String getPassword()
     {
         if(!BCRYPT_PATTERN.matcher(this.password).matches())

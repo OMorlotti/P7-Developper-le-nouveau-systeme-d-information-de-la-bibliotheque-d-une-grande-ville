@@ -1,4 +1,4 @@
-package xyz.morlotti.virtualbookcase.webapi.security.service;
+package xyz.morlotti.virtualbookcase.webapi.security.services;
 
 import java.util.List;
 import java.util.Collection;
@@ -8,7 +8,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
-import xyz.morlotti.virtualbookcase.webapi.beans.User;
+import xyz.morlotti.virtualbookcase.webapi.models.User;
 
 public class UserDetailsImpl implements UserDetails
 {
@@ -46,6 +46,12 @@ public class UserDetailsImpl implements UserDetails
 		);
 	}
 
+	/////////
+	public Integer getId()
+	{
+		return this.id;
+	}
+
 	@Override
 	public String getUsername()
 	{
@@ -62,6 +68,12 @@ public class UserDetailsImpl implements UserDetails
 	public String getEmail()
 	{
 		return this.email;
+	}
+
+	/////////
+	public String getAuthority()
+	{
+		return this.authorities.stream().map(x -> x.getAuthority()).findFirst().get();
 	}
 
 	@Override
@@ -92,21 +104,5 @@ public class UserDetailsImpl implements UserDetails
 	public boolean isCredentialsNonExpired()
 	{
 		return true;
-	}
-
-	@Override
-	public boolean equals(Object o)
-	{
-		if(this == o)
-		{
-			return true;
-		}
-
-		if(o == null || this.getClass() != o.getClass())
-		{
-			return false;
-		}
-
-		return this.id == ((UserDetailsImpl) o).id;
 	}
 }

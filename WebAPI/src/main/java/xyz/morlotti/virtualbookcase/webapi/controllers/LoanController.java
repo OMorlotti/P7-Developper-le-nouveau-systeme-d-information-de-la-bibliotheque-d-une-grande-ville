@@ -9,7 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import xyz.morlotti.virtualbookcase.webapi.beans.Loan;
+import xyz.morlotti.virtualbookcase.webapi.models.Loan;
 import xyz.morlotti.virtualbookcase.webapi.exceptions.APINotFoundException;
 import xyz.morlotti.virtualbookcase.webapi.services.interfaces.LoanService;
 

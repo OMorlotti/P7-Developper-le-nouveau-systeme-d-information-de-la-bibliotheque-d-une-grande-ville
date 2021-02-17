@@ -1,4 +1,4 @@
-package xyz.morlotti.virtualbookcase.webapi.beans;
+package xyz.morlotti.virtualbookcase.webapi.models;
 
 import java.util.Set;
 import java.util.Date;
@@ -14,7 +14,6 @@ import org.springframework.data.annotation.CreatedDate;
 @Getter
 @Setter
 @AllArgsConstructor
-@NoArgsConstructor
 @ToString
 @Entity(name = "BOOKDESCRIPTION")
 @Table(name = "BOOKDESCRIPTION", catalog = "virtualbookcase")

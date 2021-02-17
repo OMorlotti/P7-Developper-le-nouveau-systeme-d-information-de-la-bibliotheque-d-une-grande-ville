@@ -1,4 +1,4 @@
-package xyz.morlotti.virtualbookcase.webapi.daos.custom;
+package xyz.morlotti.virtualbookcase.webapi.daos.customJpaRepositories;
 
 import java.util.Set;
 import java.util.List;
@@ -10,7 +10,7 @@ import javax.persistence.PersistenceContext;
 
 import org.springframework.stereotype.Repository;
 
-import xyz.morlotti.virtualbookcase.webapi.beans.BookDescription;
+import xyz.morlotti.virtualbookcase.webapi.models.BookDescription;
 import xyz.morlotti.virtualbookcase.webapi.daos.beans.Search;
 
 @Repository

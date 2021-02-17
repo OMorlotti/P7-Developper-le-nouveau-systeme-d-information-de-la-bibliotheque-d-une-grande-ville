@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
-import xyz.morlotti.virtualbookcase.webapi.beans.BookDescription;
+import xyz.morlotti.virtualbookcase.webapi.models.BookDescription;
 import xyz.morlotti.virtualbookcase.webapi.daos.BookDescriptionDAO;
 import xyz.morlotti.virtualbookcase.webapi.daos.beans.Search;
 import xyz.morlotti.virtualbookcase.webapi.exceptions.APINotCreatedException;
