@@ -3,20 +3,20 @@ package xyz.morlotti.virtualbookcase.webapi.controllers;
 import java.net.URI;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.security.core.Authentication;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import xyz.morlotti.virtualbookcase.webapi.exceptions.APiNotAuthorizedException;
 import xyz.morlotti.virtualbookcase.webapi.models.Loan;
-import xyz.morlotti.virtualbookcase.webapi.exceptions.APINotFoundException;
 import xyz.morlotti.virtualbookcase.webapi.models.User;
-import xyz.morlotti.virtualbookcase.webapi.security.services.UserDetailsImpl;
 import xyz.morlotti.virtualbookcase.webapi.services.interfaces.LoanService;
+import xyz.morlotti.virtualbookcase.webapi.exceptions.APINotFoundException;
+import xyz.morlotti.virtualbookcase.webapi.security.services.UserDetailsImpl;
+import xyz.morlotti.virtualbookcase.webapi.exceptions.APiNotAuthorizedException;
 
 @RestController
 public class LoanController

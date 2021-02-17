@@ -1,7 +1,6 @@
 package xyz.morlotti.virtualbookcase.webapi.controllers;
 
 import java.util.Optional;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,11 +11,11 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 
-import xyz.morlotti.virtualbookcase.webapi.controllers.beans.Auth;
 import xyz.morlotti.virtualbookcase.webapi.models.User;
 import xyz.morlotti.virtualbookcase.webapi.daos.UserDAO;
 import xyz.morlotti.virtualbookcase.webapi.EmailSingleton;
 import xyz.morlotti.virtualbookcase.webapi.security.jwt.JwtUtils;
+import xyz.morlotti.virtualbookcase.webapi.controllers.beans.Auth;
 import xyz.morlotti.virtualbookcase.webapi.security.services.UserDetailsImpl;
 
 @RestController
