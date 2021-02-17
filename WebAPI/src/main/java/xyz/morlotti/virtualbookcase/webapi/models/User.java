@@ -17,6 +17,7 @@ import org.springframework.data.annotation.CreatedDate;
 @Getter
 @Setter
 @AllArgsConstructor
+@NoArgsConstructor
 @ToString
 @Entity(name = "USER")
 @Table(name = "USER", catalog = "virtualbookcase")

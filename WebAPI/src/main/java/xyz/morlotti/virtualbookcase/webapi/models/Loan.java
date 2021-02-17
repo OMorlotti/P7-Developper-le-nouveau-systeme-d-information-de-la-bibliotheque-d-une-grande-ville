@@ -10,6 +10,7 @@ import lombok.*;
 @Getter
 @Setter
 @AllArgsConstructor
+@NoArgsConstructor
 @ToString
 @Entity(name = "LOAN")
 @Table(name = "LOAN", catalog = "virtualbookcase")
