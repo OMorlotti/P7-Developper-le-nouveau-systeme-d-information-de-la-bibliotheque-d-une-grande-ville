@@ -1,7 +1,6 @@
 package xyz.morlotti.virtualbookcase.webapi.controllers;
 
 import java.util.Optional;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,12 +11,10 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 
-import xyz.morlotti.virtualbookcase.webapi.controllers.beans.Auth;
 import xyz.morlotti.virtualbookcase.webapi.models.User;
 import xyz.morlotti.virtualbookcase.webapi.daos.UserDAO;
 import xyz.morlotti.virtualbookcase.webapi.EmailSingleton;
 import xyz.morlotti.virtualbookcase.webapi.security.jwt.JwtUtils;
-import xyz.morlotti.virtualbookcase.webapi.security.services.UserDetailsImpl;
 
 @RestController
 public class AuthController
@@ -32,7 +29,7 @@ public class AuthController
     AuthenticationManager authenticationManager;
 
     @RequestMapping(path = "/auth/login", method = RequestMethod.GET)
-    public Auth login(
+    public String login(
         @RequestParam("login") String login,
         @RequestParam("password") String password
     ) throws Exception
@@ -43,15 +40,7 @@ public class AuthController
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
-
-        return new Auth(
-            userDetails.getId(),
-            userDetails.getUsername(),
-            userDetails.getEmail(),
-            userDetails.getAuthority(),
-            "Token:" + jwtUtils.generateJwtToken(authentication)
-        );
+        return "Token:" + jwtUtils.generateJwtToken(authentication);
     }
 
     @RequestMapping(path = "/auth/remind-password", method = RequestMethod.GET)
