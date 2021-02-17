@@ -18,9 +18,9 @@ import xyz.morlotti.virtualbookcase.webapi.security.jwt.AuthTokenFilter;
 import xyz.morlotti.virtualbookcase.webapi.security.jwt.AuthEntryPointJwt;
 import xyz.morlotti.virtualbookcase.webapi.security.services.UserDetailsServiceImpl;
 
-// https://github.com/bezkoder/spring-boot-spring-security-jwt-authentication/
+// https://bezkoder.com/spring-boot-jwt-authentication/
 
-// https://blog.softtek.com/en/token-based-api-authentication-with-spring-and-jwt/
+// https://github.com/bezkoder/spring-boot-spring-security-jwt-authentication/
 
 @Configuration
 @EnableWebSecurity
