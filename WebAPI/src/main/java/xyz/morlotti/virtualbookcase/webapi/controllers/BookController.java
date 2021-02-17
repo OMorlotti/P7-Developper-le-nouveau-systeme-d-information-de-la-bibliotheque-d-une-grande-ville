@@ -3,11 +3,11 @@ package xyz.morlotti.virtualbookcase.webapi.controllers;
 import java.net.URI;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import xyz.morlotti.virtualbookcase.webapi.models.Book;
@@ -39,7 +39,7 @@ public class BookController
 		return optional.get();
 	}
 
-	@PreAuthorize("hasRole('ADMIN') or hasRole('EMPLOYEE')")
+	@PreAuthorize("hasAuthority('ADMIN') or hasAuthority('EMPLOYEE')")
 	@RequestMapping(value = "/book", method = RequestMethod.POST)
 	public ResponseEntity<Void> addBook(@RequestBody Book book)
 	{
@@ -55,7 +55,7 @@ public class BookController
 		return ResponseEntity.created(location).build();
 	}
 
-	@PreAuthorize("hasRole('ADMIN') or hasRole('EMPLOYEE')")
+	@PreAuthorize("hasAuthority('ADMIN') or hasAuthority('EMPLOYEE')")
 	@RequestMapping(value = "/book/{id}", method = RequestMethod.PUT)
 	public ResponseEntity<Void> updateBook(@PathVariable int id, @RequestBody Book book)
 	{
@@ -71,7 +71,7 @@ public class BookController
 		return ResponseEntity.created(location).build();
 	}
 
-	@PreAuthorize("hasRole('ADMIN')")
+	@PreAuthorize("hasAuthority('ADMIN')")
 	@RequestMapping(value = "/book/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<Void> deleteBook(@PathVariable int id)
 	{

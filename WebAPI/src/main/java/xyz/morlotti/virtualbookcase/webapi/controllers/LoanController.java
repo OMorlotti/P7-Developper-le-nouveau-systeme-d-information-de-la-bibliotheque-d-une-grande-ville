@@ -24,14 +24,14 @@ public class LoanController
 	@Autowired
 	LoanService loanService;
 
-	@PreAuthorize("hasRole('ADMIN') or hasRole('EMPLOYEE')")
+	@PreAuthorize("hasAuthority('ADMIN') or hasAuthority('EMPLOYEE')")
 	@RequestMapping(value = "/loans", method = RequestMethod.GET)
 	public Iterable<Loan> listLoans()
 	{
 		return loanService.listLoans();
 	}
 
-	@PreAuthorize("hasRole('ADMIN') or hasRole('EMPLOYEE') or hasRole('USER')")
+	@PreAuthorize("hasAuthority('ADMIN') or hasAuthority('EMPLOYEE') or hasAuthority('USER')")
 	@RequestMapping(value = "/loan/{id}", method = RequestMethod.GET)
 	public Loan getLoan(@PathVariable int id, Authentication authentication)
 	{
@@ -45,7 +45,7 @@ public class LoanController
 		return checkRole(optional.get(), authentication);
 	}
 
-	@PreAuthorize("hasRole('ADMIN') or hasRole('EMPLOYEE')")
+	@PreAuthorize("hasAuthority('ADMIN') or hasAuthority('EMPLOYEE')")
 	@RequestMapping(value = "/loan", method = RequestMethod.POST)
 	public ResponseEntity<Void> addLoan(@RequestBody Loan loan)
 	{
@@ -61,7 +61,7 @@ public class LoanController
 		return ResponseEntity.created(location).build();
 	}
 
-	@PreAuthorize("hasRole('ADMIN') or hasRole('EMPLOYEE')")
+	@PreAuthorize("hasAuthority('ADMIN') or hasAuthority('EMPLOYEE')")
 	@RequestMapping(value = "/loan/{id}", method = RequestMethod.PUT)
 	public ResponseEntity<Void> updateLoan(@PathVariable int id, @RequestBody Loan loan, Authentication authentication)
 	{
@@ -77,7 +77,7 @@ public class LoanController
 		return ResponseEntity.created(location).build();
 	}
 
-	@PreAuthorize("hasRole('ADMIN')")
+	@PreAuthorize("hasAuthority('ADMIN')")
 	@RequestMapping(value = "/loan/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<Void> deleteLoan(@PathVariable int id)
 	{

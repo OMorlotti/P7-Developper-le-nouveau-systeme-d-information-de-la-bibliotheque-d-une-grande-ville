@@ -24,7 +24,7 @@ import xyz.morlotti.virtualbookcase.webapi.security.services.UserDetailsServiceI
 
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true)
+@EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter
 {
 	@Autowired

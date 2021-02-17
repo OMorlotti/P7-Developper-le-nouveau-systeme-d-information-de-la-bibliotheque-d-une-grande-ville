@@ -13,8 +13,8 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import xyz.morlotti.virtualbookcase.webapi.models.User;
 import xyz.morlotti.virtualbookcase.webapi.exceptions.APINotFoundException;
-import xyz.morlotti.virtualbookcase.webapi.security.services.UserDetailsImpl;
 import xyz.morlotti.virtualbookcase.webapi.services.interfaces.UserService;
+import xyz.morlotti.virtualbookcase.webapi.security.services.UserDetailsImpl;
 
 @RestController
 public class UserController
@@ -22,23 +22,25 @@ public class UserController
 	@Autowired
 	UserService userService;
 
-	@PreAuthorize("hasRole('ADMIN') or hasRole('EMPLOYEE')")
+	@PreAuthorize("hasAuthority('ADMIN') or hasAuthority('EMPLOYEE')")
 	@RequestMapping(value = "/users", method = RequestMethod.GET)
 	public Iterable<User> listUsers()
 	{
 		return userService.listUsers();
 	}
 
-	@PreAuthorize("hasRole('ADMIN') or hasRole('EMPLOYEE') or hasRole('USER')")
+	@PreAuthorize("hasAuthority('ADMIN') or hasAuthority('EMPLOYEE') or hasAuthority('USER')")
 	@RequestMapping(value = "/user", method = RequestMethod.GET)
 	public User getCurrentUser(Authentication authentication)
 	{
 		UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
 
+		System.out.println("gogo : " + userDetails.getAuthorities());
+
 		return getUser(userDetails.getId());
 	}
 
-	@PreAuthorize("hasRole('ADMIN') or hasRole('EMPLOYEE')")
+	@PreAuthorize("hasAuthority('ADMIN') or hasAuthority('EMPLOYEE')")
 	@RequestMapping(value = "/user/{id}", method = RequestMethod.GET)
 	public User getUser(@PathVariable int id)
 	{
@@ -52,7 +54,7 @@ public class UserController
 		return optional.get();
 	}
 
-	@PreAuthorize("hasRole('ADMIN') or hasRole('EMPLOYEE')")
+	@PreAuthorize("hasAuthority('ADMIN') or hasAuthority('EMPLOYEE')")
 	@RequestMapping(value = "/user", method = RequestMethod.POST)
 	public ResponseEntity<Void> addUser(@RequestBody User user)
 	{
@@ -68,7 +70,7 @@ public class UserController
 		return ResponseEntity.created(location).build();
 	}
 
-	@PreAuthorize("hasRole('ADMIN') or hasRole('EMPLOYEE') or hasRole('USER')")
+	@PreAuthorize("hasAuthority('ADMIN') or hasAuthority('EMPLOYEE') or hasAuthority('USER')")
 	@RequestMapping(value = "/user", method = RequestMethod.PUT)
 	public ResponseEntity<Void> updateCurrentUser(@RequestBody User user, Authentication authentication)
 	{
@@ -86,7 +88,7 @@ public class UserController
 		return ResponseEntity.created(location).build();
 	}
 
-	@PreAuthorize("hasRole('ADMIN') or hasRole('EMPLOYEE')")
+	@PreAuthorize("hasAuthority('ADMIN') or hasAuthority('EMPLOYEE')")
 	@RequestMapping(value = "/user/{id}", method = RequestMethod.PUT)
 	public ResponseEntity<Void> updateUser(@PathVariable int id, @RequestBody User user)
 	{
@@ -102,7 +104,7 @@ public class UserController
 		return ResponseEntity.created(location).build();
 	}
 
-	@PreAuthorize("hasRole('ADMIN')")
+	@PreAuthorize("hasAuthority('ADMIN')")
 	@RequestMapping(value = "/user/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<Void> deleteUser(@PathVariable int id)
 	{

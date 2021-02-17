@@ -41,7 +41,7 @@ public class BookDescriptionController
 		return optional.get();
 	}
 
-	@PreAuthorize("hasRole('ADMIN') or hasRole('EMPLOYEE')")
+	@PreAuthorize("hasAuthority('ADMIN') or hasAuthority('EMPLOYEE')")
 	@RequestMapping(value = "/bookDescription", method = RequestMethod.POST)
 	public ResponseEntity<Void> addBookDescription(@RequestBody BookDescription bookDescription)
 	{
@@ -57,7 +57,7 @@ public class BookDescriptionController
 		return ResponseEntity.created(location).build();
 	}
 
-	@PreAuthorize("hasRole('ADMIN') or hasRole('EMPLOYEE')")
+	@PreAuthorize("hasAuthority('ADMIN') or hasAuthority('EMPLOYEE')")
 	@RequestMapping(value = "/bookDescription/{id}", method = RequestMethod.PUT)
 	public ResponseEntity<Void> updateBookDescription(@PathVariable int id, @RequestBody BookDescription bookDescription)
 	{
@@ -73,7 +73,7 @@ public class BookDescriptionController
 		return ResponseEntity.created(location).build();
 	}
 
-	@PreAuthorize("hasRole('ADMIN')")
+	@PreAuthorize("hasAuthority('ADMIN')")
 	@RequestMapping(value = "/bookDescription/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<Void> deleteBookDescription(@PathVariable int id)
 	{

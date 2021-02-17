@@ -2,6 +2,8 @@ package xyz.morlotti.virtualbookcase.webapi.controllers.beans;
 
 import lombok.*;
 
+import xyz.morlotti.virtualbookcase.webapi.models.User;
+
 @Getter // génère automatiquement les getters
 @Setter // génère automatiquement les setters
 @AllArgsConstructor
@@ -14,7 +16,7 @@ public class Auth
 
 	private String email;
 
-	private String role;
+	private User.Role role;
 
 	private String token;
 }

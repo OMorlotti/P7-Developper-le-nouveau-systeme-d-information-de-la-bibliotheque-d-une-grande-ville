@@ -49,8 +49,8 @@ public class AuthController
             userDetails.getId(),
             userDetails.getUsername(),
             userDetails.getEmail(),
-            userDetails.getAuthority().toString(),
-            jwtUtils.generateJwtToken(authentication)
+            userDetails.getAuthority(),
+            "Token:" + jwtUtils.generateJwtToken(authentication)
         );
     }
 
