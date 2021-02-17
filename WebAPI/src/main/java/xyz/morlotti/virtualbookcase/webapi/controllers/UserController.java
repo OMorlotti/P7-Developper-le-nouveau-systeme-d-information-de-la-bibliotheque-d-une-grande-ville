@@ -35,8 +35,6 @@ public class UserController
 	{
 		UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
 
-		System.out.println("gogo : " + userDetails.getAuthorities());
-
 		return getUser(userDetails.getId());
 	}
 

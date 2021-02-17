@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import xyz.morlotti.virtualbookcase.userwebsite.MyFeignProxy;
+import xyz.morlotti.virtualbookcase.userwebsite.beans.forms.Auth;
 import xyz.morlotti.virtualbookcase.userwebsite.beans.forms.Credentials;
 
 import javax.servlet.http.Cookie;
@@ -19,18 +20,25 @@ public class AuthController
 	@Autowired
 	MyFeignProxy feignProxy;
 
-	@RequestMapping(value="/login", method = RequestMethod.GET)
+	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String login()
 	{
 		return "login";
 	}
 
-	@RequestMapping(value="/login", method = RequestMethod.POST, consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE})
-	public String login(Credentials credentials, HttpServletResponse httpServletResponse, Model model)
+	@RequestMapping(value = "/login", method = RequestMethod.POST, consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE})
+	public String login(Credentials credentials, Model model, HttpServletResponse httpServletResponse)
 	{
 		try
 		{
-			feignProxy.login(credentials.getLogin(), credentials.getPassword());
+			Auth auth = feignProxy.login(credentials.getLogin(), credentials.getPassword());
+
+			String value = auth.getLogin() + "|" + auth.getEmail() + "|" + auth.getRole() + "|" + auth.getToken();
+
+			Cookie cookie = new Cookie("auth", value);
+			cookie.setMaxAge(60 * 60 * 24 * 30);
+
+			httpServletResponse.addCookie(cookie);
 
 			return "home";
 		}
@@ -43,22 +51,15 @@ public class AuthController
 		}
 	}
 
-	@RequestMapping(value="/logout", method = RequestMethod.GET)
-	public String logout(Model model)
+	@RequestMapping(value = "/logout", method = RequestMethod.GET)
+	public String logout(HttpServletResponse httpServletResponse)
 	{
-		try
-		{
-			feignProxy.logout();
+		Cookie cookie = new Cookie("auth", "");
+		cookie.setMaxAge(60 * 60 * 24 * 30);
 
-			return "home";
-		}
-		catch(Exception e)
-		{
-			model.addAttribute("messageType", "danger");
-			model.addAttribute("message", e.getMessage());
+		httpServletResponse.addCookie(cookie);
 
-			return "home";
-		}
+		return "home";
 	}
 
 	@RequestMapping(value="/remind-password", method = RequestMethod.GET)
