@@ -46,12 +46,12 @@ public class Book implements java.io.Serializable
 
         public static Condition parseString(String value) /* Pour convertir une chaîne en une valeur d'enum */
         {
-            return Stream.of(values()).filter(x -> x.value.equalsIgnoreCase(value)).findFirst().orElse(null);
+            return Stream.of(values()).filter(x -> x.value.equalsIgnoreCase(value)).findFirst().orElse(NEW);
         }
 
         public static Condition parseCode(int code) /* Pour convertir un entier en une valeur d'enum */
         {
-            return Stream.of(values()).filter(x -> x.code == code).findFirst().orElse(null);
+            return Stream.of(values()).filter(x -> x.code == code).findFirst().orElse(NEW);
         }
     }
 

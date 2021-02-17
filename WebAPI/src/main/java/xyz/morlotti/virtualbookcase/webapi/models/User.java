@@ -1,18 +1,18 @@
 package xyz.morlotti.virtualbookcase.webapi.models;
 
-import java.time.LocalDate;
 import java.util.Set;
 import java.util.Date;
-import java.util.HashSet;
+import java.time.LocalDate;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
 import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.*;
 
 import org.springframework.data.annotation.CreatedDate;
+
+import lombok.*;
 
 @Getter
 @Setter
