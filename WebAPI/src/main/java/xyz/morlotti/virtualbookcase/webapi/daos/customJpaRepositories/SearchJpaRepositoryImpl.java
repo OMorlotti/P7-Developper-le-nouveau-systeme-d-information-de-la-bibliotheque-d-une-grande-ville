@@ -20,7 +20,7 @@ public class SearchJpaRepositoryImpl implements SearchJpaRepository
 	private EntityManager entityManager;
 
 	@Override
-	public List<BookDescription> advancedSearch(Search search)
+	public List<BookDescription> search(Search search)
 	{
 		System.out.println(search);
 

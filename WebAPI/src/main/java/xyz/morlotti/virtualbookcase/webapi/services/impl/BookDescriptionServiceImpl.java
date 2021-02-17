@@ -84,7 +84,7 @@ public class BookDescriptionServiceImpl implements BookDescriptionService
 
 	public Iterable<BookDescription> searchBookDescriptions(Search search)
 	{
-		Iterable<BookDescription> bookDescriptions = bookDescriptionDAO.advancedSearch(search);
+		Iterable<BookDescription> bookDescriptions = bookDescriptionDAO.search(search);
 
 		return bookDescriptions;
 	}

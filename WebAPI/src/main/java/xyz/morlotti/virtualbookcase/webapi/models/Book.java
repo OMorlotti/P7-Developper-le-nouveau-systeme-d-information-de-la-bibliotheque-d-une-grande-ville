@@ -11,6 +11,7 @@ import com.fasterxml.jackson.annotation.*;
 import lombok.*;
 
 import org.springframework.data.annotation.CreatedDate;
+import xyz.morlotti.virtualbookcase.webapi.exceptions.APIInvalidValueException;
 
 @Getter // génère automatiquement les getters
 @Setter // génère automatiquement les setters
@@ -23,7 +24,7 @@ public class Book implements java.io.Serializable
 {
     private enum Condition
     {
-        NEW("NEW", 0), GOOD("GOOD", 1), BAD("BAD", 2), DEAD("DEAD", 3);
+        NEW("NEW", 0), GOOD("GOOD", 1), BAD("BAD", 2), DEAD("DEAD", 3), TRASHED("TRASHED", 4);
 
         private final String value;
         private final int code;
@@ -46,12 +47,12 @@ public class Book implements java.io.Serializable
 
         public static Condition parseString(String value) /* Pour convertir une chaîne en une valeur d'enum */
         {
-            return Stream.of(values()).filter(x -> x.value.equalsIgnoreCase(value)).findFirst().orElse(NEW);
+            return Stream.of(values()).filter(x -> x.value.equalsIgnoreCase(value)).findFirst().orElseThrow(() -> new APIInvalidValueException("Invalid book condition name " + value));
         }
 
         public static Condition parseCode(int code) /* Pour convertir un entier en une valeur d'enum */
         {
-            return Stream.of(values()).filter(x -> x.code == code).findFirst().orElse(NEW);
+            return Stream.of(values()).filter(x -> x.code == code).findFirst().orElseThrow(() -> new APIInvalidValueException("Invalid book condition code " + code));
         }
     }
 

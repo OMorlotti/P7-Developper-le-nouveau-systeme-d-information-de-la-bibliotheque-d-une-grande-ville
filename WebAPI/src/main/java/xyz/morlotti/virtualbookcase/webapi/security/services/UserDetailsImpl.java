@@ -71,9 +71,10 @@ public class UserDetailsImpl implements UserDetails
 	}
 
 	/////////
-	public String getAuthority()
+	public User.Role getAuthority()
 	{
-		return this.authorities.stream().map(x -> x.getAuthority()).findFirst().get();
+		// On transforme la liste en flux, pour chaque élément du flux (de type GrantedAuthority) on, récupère le nom associé et on retourne le role (de type User.Role).
+		return this.authorities.stream().map(x -> User.Role.parseString(x.getAuthority())).findFirst().get();
 	}
 
 	@Override

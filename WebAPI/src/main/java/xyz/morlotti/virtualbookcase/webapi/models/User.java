@@ -13,6 +13,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.data.annotation.CreatedDate;
 
 import lombok.*;
+import xyz.morlotti.virtualbookcase.webapi.exceptions.APIInvalidValueException;
 
 @Getter
 @Setter
@@ -52,12 +53,12 @@ public class User implements java.io.Serializable
 
         public static Sex parseString(String value) /* Pour convertir une chaîne en une valeur d'enum */
         {
-            return Stream.of(values()).filter(x -> x.value.equalsIgnoreCase(value)).findFirst().orElse(F);
+            return Stream.of(values()).filter(x -> x.value.equalsIgnoreCase(value)).findFirst().orElseThrow(() -> new APIInvalidValueException("Invalid sex name " + value));
         }
 
         public static Sex parseCode(int code) /* Pour convertir un entier en une valeur d'enum */
         {
-            return Stream.of(values()).filter(x -> x.code == code).findFirst().orElse(F);
+            return Stream.of(values()).filter(x -> x.code == code).findFirst().orElseThrow(() -> new APIInvalidValueException("Invalid sex code " + code));
         }
     }
 
@@ -67,8 +68,7 @@ public class User implements java.io.Serializable
     {
         ADMIN("ADMIN", 0),
         EMPLOYEE("EMPLOYEE", 1),
-        USER("USER", 2),
-        GUEST("GUEST", 3);
+        USER("USER", 2);
 
         private final String value;
         private final int code;
@@ -91,12 +91,12 @@ public class User implements java.io.Serializable
 
         public static Role parseString(String value) /* Pour convertir une chaîne en une valeur d'enum */
         {
-            return Stream.of(values()).filter(x -> x.value.equalsIgnoreCase(value)).findFirst().orElse(GUEST);
+            return Stream.of(values()).filter(x -> x.value.equalsIgnoreCase(value)).findFirst().orElseThrow(() -> new APIInvalidValueException("Invalid role name " + value));
         }
 
         public static Role parseCode(int code) /* Pour convertir un entier en une valeur d'enum */
         {
-            return Stream.of(values()).filter(x -> x.code == code).findFirst().orElse(GUEST);
+            return Stream.of(values()).filter(x -> x.code == code).findFirst().orElseThrow(() -> new APIInvalidValueException("Invalid role code " + code));
         }
     }
 

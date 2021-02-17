@@ -3,15 +3,16 @@ package xyz.morlotti.virtualbookcase.webapi.controllers;
 import java.net.URI;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import xyz.morlotti.virtualbookcase.webapi.models.BookDescription;
 import xyz.morlotti.virtualbookcase.webapi.daos.beans.Search;
+import xyz.morlotti.virtualbookcase.webapi.models.BookDescription;
 import xyz.morlotti.virtualbookcase.webapi.exceptions.APINotFoundException;
 import xyz.morlotti.virtualbookcase.webapi.services.interfaces.BookDescriptionService;
 
@@ -40,6 +41,7 @@ public class BookDescriptionController
 		return optional.get();
 	}
 
+	@PreAuthorize("hasRole('ADMIN') or hasRole('EMPLOYEE')")
 	@RequestMapping(value = "/bookDescription", method = RequestMethod.POST)
 	public ResponseEntity<Void> addBookDescription(@RequestBody BookDescription bookDescription)
 	{
@@ -55,6 +57,7 @@ public class BookDescriptionController
 		return ResponseEntity.created(location).build();
 	}
 
+	@PreAuthorize("hasRole('ADMIN') or hasRole('EMPLOYEE')")
 	@RequestMapping(value = "/bookDescription/{id}", method = RequestMethod.PUT)
 	public ResponseEntity<Void> updateBookDescription(@PathVariable int id, @RequestBody BookDescription bookDescription)
 	{
@@ -70,6 +73,7 @@ public class BookDescriptionController
 		return ResponseEntity.created(location).build();
 	}
 
+	@PreAuthorize("hasRole('ADMIN')")
 	@RequestMapping(value = "/bookDescription/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<Void> deleteBookDescription(@PathVariable int id)
 	{

@@ -34,8 +34,7 @@ public class AuthController
     @RequestMapping(path = "/auth/login", method = RequestMethod.GET)
     public Auth login(
         @RequestParam("login") String login,
-        @RequestParam("password") String password,
-        HttpSession httpSession
+        @RequestParam("password") String password
     ) throws Exception
     {
         Authentication authentication = authenticationManager.authenticate(
@@ -50,7 +49,7 @@ public class AuthController
             userDetails.getId(),
             userDetails.getUsername(),
             userDetails.getEmail(),
-            userDetails.getAuthority(),
+            userDetails.getAuthority().toString(),
             jwtUtils.generateJwtToken(authentication)
         );
     }

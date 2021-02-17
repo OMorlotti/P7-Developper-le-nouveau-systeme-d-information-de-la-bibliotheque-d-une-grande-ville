@@ -3,18 +3,18 @@ package xyz.morlotti.virtualbookcase.webapi.controllers;
 import java.net.URI;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.security.core.Authentication;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import xyz.morlotti.virtualbookcase.webapi.models.User;
 import xyz.morlotti.virtualbookcase.webapi.exceptions.APINotFoundException;
+import xyz.morlotti.virtualbookcase.webapi.security.services.UserDetailsImpl;
 import xyz.morlotti.virtualbookcase.webapi.services.interfaces.UserService;
-
-import javax.servlet.http.HttpSession;
 
 @RestController
 public class UserController
@@ -22,19 +22,23 @@ public class UserController
 	@Autowired
 	UserService userService;
 
-	@PreAuthorize("hasRole('ADMIN')")
+	@PreAuthorize("hasRole('ADMIN') or hasRole('EMPLOYEE')")
 	@RequestMapping(value = "/users", method = RequestMethod.GET)
 	public Iterable<User> listUsers()
 	{
 		return userService.listUsers();
 	}
 
+	@PreAuthorize("hasRole('ADMIN') or hasRole('EMPLOYEE') or hasRole('USER')")
 	@RequestMapping(value = "/user", method = RequestMethod.GET)
-	public User getCurrentUser(HttpSession httpSession)
+	public User getCurrentUser(Authentication authentication)
 	{
-		return (User) httpSession.getAttribute("currentUser");
+		UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+
+		return getUser(userDetails.getId());
 	}
 
+	@PreAuthorize("hasRole('ADMIN') or hasRole('EMPLOYEE')")
 	@RequestMapping(value = "/user/{id}", method = RequestMethod.GET)
 	public User getUser(@PathVariable int id)
 	{
@@ -48,6 +52,7 @@ public class UserController
 		return optional.get();
 	}
 
+	@PreAuthorize("hasRole('ADMIN') or hasRole('EMPLOYEE')")
 	@RequestMapping(value = "/user", method = RequestMethod.POST)
 	public ResponseEntity<Void> addUser(@RequestBody User user)
 	{
@@ -63,12 +68,13 @@ public class UserController
 		return ResponseEntity.created(location).build();
 	}
 
+	@PreAuthorize("hasRole('ADMIN') or hasRole('EMPLOYEE') or hasRole('USER')")
 	@RequestMapping(value = "/user", method = RequestMethod.PUT)
-	public ResponseEntity<Void> updateCurrentUser(@RequestBody User user, HttpSession httpSession)
+	public ResponseEntity<Void> updateCurrentUser(@RequestBody User user, Authentication authentication)
 	{
-		User currentUser = (User) httpSession.getAttribute("currentUser");
+		UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
 
-		User newUser = userService.updateUser(currentUser.getId(), user);
+		User newUser = userService.updateUser(userDetails.getId(), user);
 
 		URI location = ServletUriComponentsBuilder
 			.fromCurrentRequest()
@@ -80,6 +86,7 @@ public class UserController
 		return ResponseEntity.created(location).build();
 	}
 
+	@PreAuthorize("hasRole('ADMIN') or hasRole('EMPLOYEE')")
 	@RequestMapping(value = "/user/{id}", method = RequestMethod.PUT)
 	public ResponseEntity<Void> updateUser(@PathVariable int id, @RequestBody User user)
 	{

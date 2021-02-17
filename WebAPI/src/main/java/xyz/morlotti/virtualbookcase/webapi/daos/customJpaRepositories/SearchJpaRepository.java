@@ -7,5 +7,5 @@ import xyz.morlotti.virtualbookcase.webapi.daos.beans.Search;
 
 public interface SearchJpaRepository
 {
-	public List<BookDescription> advancedSearch(Search search);
+	public List<BookDescription> search(Search search);
 }
