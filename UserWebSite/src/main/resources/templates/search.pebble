@@ -90,11 +90,17 @@
 				</tr>
     		</thead>
     		<tbody>
-			{% for bookDescription in bookDescriptions %}
+			{% for book in books %}
 				<tr>
-					<td>★ {{ bookDescription.title }}</td>
-					<td>{{ bookDescription.authorFirstname }} {{ bookDescription.authorLastname }}</td>
-					<td></td>
+					<td><a href="{{ href("/book/" + book.id) }}" target="_blank">★ {{ book.bookDescription.title }}</a></td>
+					<td>{{ book.bookDescription.authorFirstname }} {{ book.bookDescription.authorLastname }}</td>
+					<td>
+                        {% if book.available %}
+                        <span class="badge badge-success">Disponible</span>
+                        {% else %}
+                        <span class="badge badge-danger">Indisponible</span>
+                        {% endif %}
+					</td>
 				</tr>
 				{% endfor %}
 			</tbody>

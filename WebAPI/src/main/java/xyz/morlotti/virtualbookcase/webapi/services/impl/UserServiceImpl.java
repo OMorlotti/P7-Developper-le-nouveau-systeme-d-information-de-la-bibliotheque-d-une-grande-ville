@@ -61,10 +61,7 @@ public class UserServiceImpl implements UserService
 
 		existingUser.setMembership(user.getMembership());
 
-		if(!user.getPassword().isEmpty())
-		{
-			existingUser.setPassword(user.getPassword());
-		}
+		existingUser.setPassword(user.getPassword());
 
 		existingUser.setPostalCode(user.getPostalCode());
 

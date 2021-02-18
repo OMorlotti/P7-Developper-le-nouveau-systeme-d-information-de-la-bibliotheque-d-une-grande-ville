@@ -81,11 +81,4 @@ public class BookDescriptionServiceImpl implements BookDescriptionService
 			throw new APINotDeletedException("BookDescription " + id + " not deleted: " + e.getMessage());
 		}
 	}
-
-	public Iterable<BookDescription> searchBookDescriptions(Search search)
-	{
-		Iterable<BookDescription> bookDescriptions = bookDescriptionDAO.search(search);
-
-		return bookDescriptions;
-	}
 }

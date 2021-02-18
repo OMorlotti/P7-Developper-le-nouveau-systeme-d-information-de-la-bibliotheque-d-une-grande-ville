@@ -8,7 +8,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class UserInfo implements java.io.Serializable
+public class FullUserInfo implements java.io.Serializable
 {
      private String password;
 

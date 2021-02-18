@@ -81,10 +81,4 @@ public class BookDescriptionController
 
 		return ResponseEntity.status(HttpStatus.OK).build();
 	}
-
-	@RequestMapping(value = "/bookDescription/search", method = RequestMethod.POST, consumes = {MediaType.APPLICATION_JSON_VALUE})
-	public Iterable<BookDescription> searchBook(@RequestBody Search search)
-	{
-		return bookDescriptionService.searchBookDescriptions(search);
-	}
 }

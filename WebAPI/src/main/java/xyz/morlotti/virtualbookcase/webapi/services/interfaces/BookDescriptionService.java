@@ -16,6 +16,4 @@ public interface BookDescriptionService
 	public BookDescription updateBookDescription(int id, BookDescription genre);
 
 	public void deleteBookDescription(int id);
-
-	public Iterable<BookDescription> searchBookDescriptions(Search search);
 }

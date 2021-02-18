@@ -3,7 +3,6 @@ package xyz.morlotti.virtualbookcase.webapi.models;
 import java.util.Set;
 import java.util.Date;
 import java.time.LocalDate;
-import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
 import javax.persistence.*;
@@ -13,6 +12,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.data.annotation.CreatedDate;
 
 import lombok.*;
+
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 import xyz.morlotti.virtualbookcase.webapi.exceptions.APIInvalidValueException;
 
 @Getter
@@ -24,10 +26,6 @@ import xyz.morlotti.virtualbookcase.webapi.exceptions.APIInvalidValueException;
 @Table(name = "USER", catalog = "virtualbookcase")
 public class User implements java.io.Serializable
 {
-    // According BCryptPasswordEncoder class from Spring, you could check if a String is encoded or not using this regex pattern
-
-    static Pattern BCRYPT_PATTERN = Pattern.compile("\\A\\$2a?\\$\\d\\d\\$[./0-9A-Za-z]{53}");
-
     public enum Sex
     {
         F("F", 0), H("H", 1);
@@ -180,18 +178,25 @@ public class User implements java.io.Serializable
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
     private Set<Loan> loans;
-/*
+
     ////////
 
     public String getPassword()
     {
-        if(!BCRYPT_PATTERN.matcher(this.password).matches())
+        if(this.password != null)
         {
-            return new BCryptPasswordEncoder().encode(password);
+            if(this.password.startsWith("$2a$")) // Check if the password is crypted
+            {
+                return this.password;
+            }
+            else
+            {
+                return new BCryptPasswordEncoder().encode(this.password);
+            }
         }
         else
         {
-            return this.password;
+            return null;
         }
     }
 
@@ -199,21 +204,24 @@ public class User implements java.io.Serializable
     {
         if(password != null)
         {
-            if(!BCRYPT_PATTERN.matcher(password).matches())
+            if(password.startsWith("$2a$")) // Check if the password is crypted
             {
                 if(!new BCryptPasswordEncoder().matches("", password))
                 {
-                    this.password = new BCryptPasswordEncoder().encode(password);
+                    this.password = password;
                 }
             }
             else
             {
                 if(!password.isEmpty())
                 {
-                    this.password = password;
+                    this.password = new BCryptPasswordEncoder().encode(password);
                 }
             }
         }
+        else
+        {
+            return;
+        }
     }
-*/
 }

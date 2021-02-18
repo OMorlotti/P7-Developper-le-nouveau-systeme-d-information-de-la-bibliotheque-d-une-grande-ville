@@ -1,7 +1,17 @@
 {% extends "base" %}
 
 {% block content %}
-<form class="card mt-0" action="{{ href('/user/' + user.id) }}" method="POST">
+<script language="javascript" type="text/javascript">
+    function check()
+    {
+        var password1 = document.getElementById('password1');
+        var password2 = document.getElementById('password2');
+
+        password2.setCustomValidity(password1.value != password2.value ? 'Les mots de passe doivent être identiques.' : '');
+    }
+</script>
+
+<form class="card mt-0" action="{{ href('/user') }}" method="POST">
     <h3 class="card-header" data-toggle="collapse" data-target="#collapseOne">{{ user.firstname }} {{ user.lastname }} <small>(cliquer pour voir les détails)</small></h3>
     <div class="card-body collapse {{ show }}" id="collapseOne">
         <table class="table table-sm table-strip">
@@ -17,7 +27,16 @@
 			</tr>
             <tr>
                 <td>Mot de passe :</td>
-                <td><input class="form-control form-control-sm" type="password" name="password" value="{{ user.password }}" xxxxxxxx="xxxxxxxx" /></td>
+                <td>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <input class="form-control form-control-sm" type="password" name="password" id="password1" placeholder="Mot de passe" oninput="check();" />
+                        </div>
+                        <div class="col-md-6">
+                            <input class="form-control form-control-sm" type="password" xxxx="password" id="password2" placeholder="Mot de passe (répéter)" oninput="check();" />
+                        </div>
+                    </div>
+                </td>
 			</tr>
 			<tr>
 				<td>Prénom :</td>
@@ -89,7 +108,7 @@
 				</tr>
     		</thead>
     		<tbody>
-			{% for loan in user.loans %}
+			    {% for loan in user.loans %}
 				<tr>
 					<td><a href="{{ href("/book/" + loan.book.id) }}" target="_blank">★ {{ loan.book.bookDescription.title }}</a></td>
 					<td>{{ loan.loanStartDate | date("dd/MM/yyyy") }}</td>

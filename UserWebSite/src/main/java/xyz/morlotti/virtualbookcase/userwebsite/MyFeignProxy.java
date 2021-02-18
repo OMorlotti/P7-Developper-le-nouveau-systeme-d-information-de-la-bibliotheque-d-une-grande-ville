@@ -17,14 +17,14 @@ public interface MyFeignProxy
 	public String login(@RequestParam("login") String login, @RequestParam("password") String password);
 
 	@GetMapping("/user")
-	public User getUser();
+	public User getUser(@RequestHeader("Authorization") String token);
 
 	@PutMapping("/user")
-	public ResponseEntity<Void> updateUser(@RequestBody User user);
+	public ResponseEntity<Void> updateUser(@RequestHeader("Authorization") String token, @RequestBody User user);
 
 	@GetMapping("/book/{id}")
 	public Book getBook(@PathVariable("id") int id);
 
-	@PostMapping("/bookDescription/search")
-	public Iterable<BookDescription> searchBook(@RequestBody Search search);
+	@PostMapping("/book/search")
+	public Iterable<Book> searchBook(@RequestBody Search search);
 }
