@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import xyz.morlotti.virtualbookcase.userwebsite.MyFeignProxy;
 import xyz.morlotti.virtualbookcase.userwebsite.beans.forms.Auth;
 import xyz.morlotti.virtualbookcase.userwebsite.beans.forms.Credentials;
+import xyz.morlotti.virtualbookcase.userwebsite.security.TokenUtils;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
@@ -33,10 +34,7 @@ public class AuthController
 		{
 			String token = feignProxy.login(credentials.getLogin(), credentials.getPassword());
 
-			Cookie cookie = new Cookie("token", token);
-			cookie.setMaxAge(60 * 60 * 24 * 30);
-
-			httpServletResponse.addCookie(cookie);
+			TokenUtils.createTokenCookie(httpServletResponse, token);
 
 			return "home";
 		}
@@ -52,10 +50,7 @@ public class AuthController
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
 	public String logout(HttpServletResponse httpServletResponse)
 	{
-		Cookie cookie = new Cookie("token", null);
-		cookie.setMaxAge(60 * 60 * 24 * 30);
-
-		httpServletResponse.addCookie(cookie);
+		TokenUtils.deleteTokenCookie(httpServletResponse);
 
 		return "home";
 	}

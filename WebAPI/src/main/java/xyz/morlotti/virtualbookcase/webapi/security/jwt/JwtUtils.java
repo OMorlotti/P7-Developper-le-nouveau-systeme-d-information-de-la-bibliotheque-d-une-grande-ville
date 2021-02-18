@@ -1,6 +1,9 @@
 package xyz.morlotti.virtualbookcase.webapi.security.jwt;
 
 import java.util.Date;
+import java.util.Base64;
+import java.security.Key;
+import javax.crypto.spec.SecretKeySpec;
 
 import io.jsonwebtoken.*;
 
@@ -24,36 +27,34 @@ public class JwtUtils
 	@Value("${virtualbookcase.app.jwtExpirationMs}")
 	private int jwtExpirationMs;
 
-	public String generateJwtToken(Authentication authentication) {
-
+	public String generateJwtToken(Authentication authentication)
+	{
 		UserDetailsImpl userPrincipal = (UserDetailsImpl) authentication.getPrincipal();
+
+		Key hmacKey = new SecretKeySpec(Base64.getDecoder().decode(jwtSecret), SignatureAlgorithm.HS256.getJcaName());
 
 		return Jwts.builder()
 			.setSubject(userPrincipal.getUsername())
 			.setIssuer(userPrincipal.getId() + "|" + userPrincipal.getEmail() + "|" + userPrincipal.getAuthority())
 			.setIssuedAt(new Date())
 			.setExpiration(new Date(new Date().getTime() + jwtExpirationMs))
-			.signWith(SignatureAlgorithm.HS256, jwtSecret)
+			.signWith(hmacKey)
 			.compact()
 		;
 	}
 
 	public String getUserNameFromJwtToken(String token)
 	{
-		return Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody().getSubject();
+		return Jwts.parserBuilder().setSigningKey(jwtSecret).build().parseClaimsJws(token).getBody().getSubject();
 	}
 
 	public boolean validateJwtToken(String token)
 	{
 		try
 		{
-			Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token);
+			Jwts.parserBuilder().setSigningKey(jwtSecret).build().parseClaimsJws(token);
 
 			return true;
-		}
-		catch(SignatureException e)
-		{
-			logger.error("Invalid JWT signature: {}", e.getMessage());
 		}
 		catch(MalformedJwtException e)
 		{

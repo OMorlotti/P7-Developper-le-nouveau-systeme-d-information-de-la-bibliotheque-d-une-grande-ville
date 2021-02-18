@@ -18,7 +18,7 @@ public class HomeController
 
 		System.out.println(userInfo);
 
-		model.addAttribute("userInfo", userInfo.toString());
+		model.addAttribute("userInfo", userInfo);
 
 		return "home";
 	}

@@ -1,7 +1,6 @@
 package xyz.morlotti.virtualbookcase.userwebsite.security;
 
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.*;
 import org.springframework.beans.factory.annotation.Value;
 
 import javax.servlet.http.Cookie;
@@ -12,29 +11,36 @@ public class TokenUtils
 	public static final String TOKEN_COOKIE_NAME = "token";
 
 	//@Value("${virtualbookcase.app.jwtSecret}")
-	private static String jwtSecret = "1357";
+	private static String jwtSecret = "asdfSFS34wfsdfsdfSDSD32dfsddDDerQSNCK34SOWEK5354fdgdf4";
 
 	public static UserInfo getUserInfoFromJwtToken(String token)
 	{
 		if(token != null && token.startsWith("Token:"))
 		{
-			System.out.println(token);
-			System.out.println(token.substring(6));
-			Claims body = Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token.substring(6)).getBody();
+			Claims body;
 
-			String login = body.getSubject();
-
-			String[] parts = body.getIssuer().split("\\|");
-
-			if(parts.length == 3)
+			try
 			{
-				return new UserInfo(
-					parts[0],   // id
-					login,
-					parts[1],   // email
-					parts[2],   // role
-					token
-				);
+				body = Jwts.parserBuilder().setSigningKey(jwtSecret).build().parseClaimsJws(token.substring(6)).getBody();
+
+				String login = body.getSubject();
+
+				String[] parts = body.getIssuer().split("\\|");
+
+				if(parts.length == 3)
+				{
+					return new UserInfo(
+						parts[0],   // id
+						login,
+						parts[1],   // email
+						parts[2],   // role
+						token
+					);
+				}
+			}
+			catch(Exception e)
+			{
+				/* to nothing */
 			}
 		}
 
