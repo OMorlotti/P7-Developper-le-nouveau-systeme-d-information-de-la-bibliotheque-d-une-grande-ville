@@ -4,8 +4,8 @@
 
 {% block content %}
 <div class="card mt-1" id="searchform">
-    <h3 class="card-header">Sélectionnez vos critères de recherche</h3>
-    <div class="card-body">
+    <h3 class="card-header" data-toggle="collapse" data-target="#collapseOne">Sélectionnez vos critères de recherche</h3>
+    <div class="card-body collapse show" id="collapseOne">
 
         <form method="POST" action="{{ href('/search') }}">
 
