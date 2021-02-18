@@ -1,17 +1,18 @@
 package xyz.morlotti.virtualbookcase.userwebsite.security;
 
-import io.jsonwebtoken.*;
-import org.springframework.beans.factory.annotation.Value;
+import java.util.Properties;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 
+import io.jsonwebtoken.*;
+
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.support.PropertiesLoaderUtils;
+
 public class TokenUtils
 {
 	public static final String TOKEN_COOKIE_NAME = "token";
-
-	//@Value("${virtualbookcase.app.jwtSecret}")
-	private static String jwtSecret = "asdfSFS34wfsdfsdfSDSD32dfsddDDerQSNCK34SOWEK5354fdgdf4";
 
 	public static UserInfo getUserInfoFromJwtToken(String token)
 	{
@@ -21,7 +22,15 @@ public class TokenUtils
 
 			try
 			{
+				Properties properties = PropertiesLoaderUtils.loadProperties(new ClassPathResource("/application.properties"));
+
+				String jwtSecret = properties.getProperty("virtualbookcase.app.jwtSecret");
+
+				/**/
+
 				body = Jwts.parserBuilder().setSigningKey(jwtSecret).build().parseClaimsJws(token.substring(6)).getBody();
+
+				/**/
 
 				String login = body.getSubject();
 
@@ -40,7 +49,7 @@ public class TokenUtils
 			}
 			catch(Exception e)
 			{
-				/* to nothing */
+				/* do nothing */
 			}
 		}
 

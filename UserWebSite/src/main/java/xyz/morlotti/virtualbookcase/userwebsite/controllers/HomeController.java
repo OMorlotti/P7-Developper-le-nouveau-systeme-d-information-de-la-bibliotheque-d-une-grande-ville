@@ -16,8 +16,6 @@ public class HomeController
 	{
 		UserInfo userInfo = TokenUtils.getUserInfoFromJwtToken(token);
 
-		System.out.println(userInfo);
-
 		model.addAttribute("userInfo", userInfo);
 
 		return "home";

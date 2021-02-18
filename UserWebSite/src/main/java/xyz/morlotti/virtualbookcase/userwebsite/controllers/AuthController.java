@@ -10,6 +10,7 @@ import xyz.morlotti.virtualbookcase.userwebsite.MyFeignProxy;
 import xyz.morlotti.virtualbookcase.userwebsite.beans.forms.Auth;
 import xyz.morlotti.virtualbookcase.userwebsite.beans.forms.Credentials;
 import xyz.morlotti.virtualbookcase.userwebsite.security.TokenUtils;
+import xyz.morlotti.virtualbookcase.userwebsite.security.UserInfo;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
@@ -34,7 +35,11 @@ public class AuthController
 		{
 			String token = feignProxy.login(credentials.getLogin(), credentials.getPassword());
 
+			UserInfo userInfo = TokenUtils.getUserInfoFromJwtToken(token);
+
 			TokenUtils.createTokenCookie(httpServletResponse, token);
+
+			model.addAttribute("userInfo", userInfo);
 
 			return "home";
 		}
