@@ -43,11 +43,11 @@ public class JwtUtils
 		return Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody().getSubject();
 	}
 
-	public boolean validateJwtToken(String authToken)
+	public boolean validateJwtToken(String token)
 	{
 		try
 		{
-			Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(authToken);
+			Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token);
 
 			return true;
 		}

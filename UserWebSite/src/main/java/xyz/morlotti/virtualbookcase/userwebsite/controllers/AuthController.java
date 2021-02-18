@@ -52,7 +52,7 @@ public class AuthController
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
 	public String logout(HttpServletResponse httpServletResponse)
 	{
-		Cookie cookie = new Cookie("auth", null);
+		Cookie cookie = new Cookie("token", null);
 		cookie.setMaxAge(60 * 60 * 24 * 30);
 
 		httpServletResponse.addCookie(cookie);
