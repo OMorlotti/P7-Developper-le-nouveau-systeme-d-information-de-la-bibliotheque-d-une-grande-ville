@@ -1,19 +1,19 @@
 package xyz.morlotti.virtualbookcase.userwebsite.controllers;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import xyz.morlotti.virtualbookcase.userwebsite.beans.Book;
 import xyz.morlotti.virtualbookcase.userwebsite.MyFeignProxy;
-import xyz.morlotti.virtualbookcase.userwebsite.beans.BookDescription;
+import xyz.morlotti.virtualbookcase.userwebsite.security.UserInfo;
 import xyz.morlotti.virtualbookcase.userwebsite.beans.forms.Search;
 import xyz.morlotti.virtualbookcase.userwebsite.security.TokenUtils;
-import xyz.morlotti.virtualbookcase.userwebsite.security.UserInfo;
 
 @Controller
 public class BookController

@@ -5,8 +5,8 @@ import java.util.Set;
 
 import lombok.*;
 
-@Setter // création automatique des setters
-@Getter // création automatique des getters
+@Setter
+@Getter
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString

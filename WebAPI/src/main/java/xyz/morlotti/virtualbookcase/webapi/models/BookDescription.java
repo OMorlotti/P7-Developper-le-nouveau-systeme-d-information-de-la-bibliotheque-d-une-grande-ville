@@ -5,11 +5,11 @@ import java.util.Date;
 
 import javax.persistence.*;
 
+import lombok.*;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import org.springframework.data.annotation.CreatedDate;
-
-import lombok.*;
 
 @Getter
 @Setter

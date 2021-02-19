@@ -1,16 +1,16 @@
 package xyz.morlotti.virtualbookcase.userwebsite.controllers;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import xyz.morlotti.virtualbookcase.userwebsite.beans.User;
 import xyz.morlotti.virtualbookcase.userwebsite.MyFeignProxy;
-import xyz.morlotti.virtualbookcase.userwebsite.beans.forms.FullUserInfo;
-import xyz.morlotti.virtualbookcase.userwebsite.security.TokenUtils;
 import xyz.morlotti.virtualbookcase.userwebsite.security.UserInfo;
+import xyz.morlotti.virtualbookcase.userwebsite.security.TokenUtils;
+import xyz.morlotti.virtualbookcase.userwebsite.beans.forms.FullUserInfo;
 
 @Controller
 public class UserController

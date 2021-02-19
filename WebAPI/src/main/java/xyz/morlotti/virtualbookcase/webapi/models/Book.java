@@ -6,9 +6,9 @@ import java.util.stream.Stream;
 
 import javax.persistence.*;
 
-import com.fasterxml.jackson.annotation.*;
-
 import lombok.*;
+
+import com.fasterxml.jackson.annotation.*;
 
 import org.springframework.data.annotation.CreatedDate;
 import xyz.morlotti.virtualbookcase.webapi.exceptions.APIInvalidValueException;

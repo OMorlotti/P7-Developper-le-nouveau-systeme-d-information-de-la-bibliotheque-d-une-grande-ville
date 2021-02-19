@@ -3,6 +3,7 @@ package xyz.morlotti.virtualbookcase.webapi;
 import org.simplejavamail.email.Email;
 import org.simplejavamail.email.EmailBuilder;
 import org.simplejavamail.email.EmailPopulatingBuilder;
+
 import org.simplejavamail.mailer.Mailer;
 import org.simplejavamail.mailer.MailerBuilder;
 import org.simplejavamail.mailer.config.TransportStrategy;
