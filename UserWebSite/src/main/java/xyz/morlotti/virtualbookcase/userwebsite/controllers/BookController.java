@@ -39,7 +39,7 @@ public class BookController
 		catch(Exception e)
 		{
 			model.addAttribute("messageType", "danger");
-			model.addAttribute("message", "Livre inconnu : " + e.getMessage());
+			model.addAttribute("message", "Livre #" + id + " inconnu");
 
 			return "error";
 		}
@@ -62,9 +62,17 @@ public class BookController
 
 		model.addAttribute("userInfo", userInfo);
 
-		Iterable<Book> books = feignProxy.searchBook(search);
+		try
+		{
+			Iterable<Book> books = feignProxy.searchBook(search);
 
-		model.addAttribute("books", books);
+			model.addAttribute("books", books);
+		}
+		catch(Exception e)
+		{
+			model.addAttribute("messageType", "danger");
+			model.addAttribute("message", "Erreur interne : " + e.getMessage());
+		}
 
 		return "search";
 	}

@@ -37,7 +37,7 @@ public class UserController
 		catch(Exception e)
 		{
 			model.addAttribute("messageType", "danger");
-			model.addAttribute("message", "Utilisateur inconnu : " + e.getMessage());
+			model.addAttribute("message", "Impossible de réucpérer les informations de l'utilisateur");
 
 			return "error";
 		}
@@ -78,7 +78,7 @@ public class UserController
 			catch(Exception e)
 			{
 				model.addAttribute("messageType", "danger");
-				model.addAttribute("message", "Impossible de mettre à jour l'utilisateur : " + e.getMessage());
+				model.addAttribute("message", "Impossible de mettre à jour l'utilisateur.");
 			}
 
 			return "user";
@@ -86,7 +86,7 @@ public class UserController
 		catch(Exception e)
 		{
 			model.addAttribute("messageType", "danger");
-			model.addAttribute("message", "Utilisateur inconnu : " + e.getMessage());
+			model.addAttribute("message", "Impossible de réucpérer les informations de l'utilisateur");
 
 			return "error";
 		}
