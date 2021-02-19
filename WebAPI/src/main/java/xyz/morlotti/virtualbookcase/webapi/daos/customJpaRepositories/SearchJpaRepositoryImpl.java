@@ -11,7 +11,6 @@ import javax.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
 
 import xyz.morlotti.virtualbookcase.webapi.models.Book;
-import xyz.morlotti.virtualbookcase.webapi.models.BookDescription;
 import xyz.morlotti.virtualbookcase.webapi.daos.beans.Search;
 
 @Repository

@@ -1,15 +1,18 @@
 package xyz.morlotti.virtualbookcase.webapi;
 
+import java.io.IOException;
+
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
+
+import xyz.morlotti.virtualbookcase.webapi.exceptions.APINotFoundException;
 import xyz.morlotti.virtualbookcase.webapi.exceptions.APINotCreatedException;
 import xyz.morlotti.virtualbookcase.webapi.exceptions.APINotDeletedException;
-import xyz.morlotti.virtualbookcase.webapi.exceptions.APINotFoundException;
 
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 
 @ControllerAdvice
 public class MyExceptionHandler extends ResponseEntityExceptionHandler

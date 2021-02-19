@@ -6,11 +6,11 @@ import java.util.Date;
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 
+import lombok.*;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import org.springframework.data.annotation.CreatedDate;
-
-import lombok.*;
 
 @Getter
 @Setter

@@ -11,10 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import xyz.morlotti.virtualbookcase.webapi.daos.beans.Search;
 import xyz.morlotti.virtualbookcase.webapi.models.Book;
+import xyz.morlotti.virtualbookcase.webapi.daos.beans.Search;
 import xyz.morlotti.virtualbookcase.webapi.exceptions.APINotFoundException;
-import xyz.morlotti.virtualbookcase.webapi.models.BookDescription;
 import xyz.morlotti.virtualbookcase.webapi.services.interfaces.BookService;
 
 @RestController

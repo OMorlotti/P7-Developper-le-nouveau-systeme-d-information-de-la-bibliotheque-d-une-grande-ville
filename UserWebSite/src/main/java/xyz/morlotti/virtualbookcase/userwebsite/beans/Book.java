@@ -1,12 +1,12 @@
 package xyz.morlotti.virtualbookcase.userwebsite.beans;
 
-import java.util.Date;
 import java.util.Set;
+import java.util.Date;
 
 import lombok.*;
 
-@Setter // création automatique des setters
-@Getter // création automatique des getters
+@Setter
+@Getter
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString

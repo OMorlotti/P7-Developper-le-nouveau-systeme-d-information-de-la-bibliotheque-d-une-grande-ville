@@ -7,12 +7,11 @@ import java.util.stream.Stream;
 
 import javax.persistence.*;
 
+import lombok.*;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import org.springframework.data.annotation.CreatedDate;
-
-import lombok.*;
-
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import xyz.morlotti.virtualbookcase.webapi.exceptions.APIInvalidValueException;

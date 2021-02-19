@@ -1,16 +1,16 @@
 package xyz.morlotti.virtualbookcase.userwebsite.controllers;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import xyz.morlotti.virtualbookcase.userwebsite.beans.User;
 import xyz.morlotti.virtualbookcase.userwebsite.MyFeignProxy;
-import xyz.morlotti.virtualbookcase.userwebsite.beans.forms.FullUserInfo;
-import xyz.morlotti.virtualbookcase.userwebsite.security.TokenUtils;
 import xyz.morlotti.virtualbookcase.userwebsite.security.UserInfo;
+import xyz.morlotti.virtualbookcase.userwebsite.security.TokenUtils;
+import xyz.morlotti.virtualbookcase.userwebsite.beans.forms.FullUserInfo;
 
 @Controller
 public class UserController
@@ -37,7 +37,7 @@ public class UserController
 		catch(Exception e)
 		{
 			model.addAttribute("messageType", "danger");
-			model.addAttribute("message", "Utilisateur inconnu : " + e.getMessage());
+			model.addAttribute("message", "Impossible de réucpérer les informations de l'utilisateur.");
 
 			return "error";
 		}
@@ -78,7 +78,7 @@ public class UserController
 			catch(Exception e)
 			{
 				model.addAttribute("messageType", "danger");
-				model.addAttribute("message", "Impossible de mettre à jour l'utilisateur : " + e.getMessage());
+				model.addAttribute("message", "Impossible de mettre à jour l'utilisateur.");
 			}
 
 			return "user";
@@ -86,7 +86,7 @@ public class UserController
 		catch(Exception e)
 		{
 			model.addAttribute("messageType", "danger");
-			model.addAttribute("message", "Utilisateur inconnu : " + e.getMessage());
+			model.addAttribute("message", "Impossible de réucpérer les informations de l'utilisateur.");
 
 			return "error";
 		}

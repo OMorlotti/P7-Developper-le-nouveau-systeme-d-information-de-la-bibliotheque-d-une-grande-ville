@@ -6,9 +6,7 @@ import org.springframework.cloud.openfeign.FeignClient;
 
 import xyz.morlotti.virtualbookcase.userwebsite.beans.Book;
 import xyz.morlotti.virtualbookcase.userwebsite.beans.User;
-import xyz.morlotti.virtualbookcase.userwebsite.beans.forms.Auth;
 import xyz.morlotti.virtualbookcase.userwebsite.beans.forms.Search;
-import xyz.morlotti.virtualbookcase.userwebsite.beans.BookDescription;
 
 @FeignClient(name = "myFeignProxy", url = "localhost:9090")
 public interface MyFeignProxy
