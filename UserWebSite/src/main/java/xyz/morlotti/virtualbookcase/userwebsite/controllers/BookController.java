@@ -39,7 +39,7 @@ public class BookController
 		catch(Exception e)
 		{
 			model.addAttribute("messageType", "danger");
-			model.addAttribute("message", "Livre #" + id + " inconnu");
+			model.addAttribute("message", "Livre #" + id + " inconnu.");
 
 			return "error";
 		}
@@ -71,7 +71,7 @@ public class BookController
 		catch(Exception e)
 		{
 			model.addAttribute("messageType", "danger");
-			model.addAttribute("message", "Erreur interne : " + e.getMessage());
+			model.addAttribute("message", "Erreur interne : " + e.getMessage() + ".");
 		}
 
 		return "search";
