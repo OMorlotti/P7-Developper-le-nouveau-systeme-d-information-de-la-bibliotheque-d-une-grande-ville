@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.stream.Stream;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 
 import lombok.*;
 
