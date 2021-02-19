@@ -4,6 +4,7 @@ import java.util.Set;
 import java.util.Date;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -25,7 +26,8 @@ public class BookDescription implements java.io.Serializable
     @Column(name = "id", unique = true, nullable = false)
     private Integer id;
 
-    @Column(name = "isbn", nullable = false, length = 64)
+    @Column(name = "isbn", nullable = false, length = 13)
+    @Size(min = 10, max = 13, message = "L'ISBN doit comporter entre 10 et 13 caractères")
     private String isbn;
 
     @Column(name = "title", nullable = false, length = 256)
@@ -44,6 +46,7 @@ public class BookDescription implements java.io.Serializable
     private Integer editionNumber;
 
     @Column(name = "editionYear", nullable = false, columnDefinition = "YEAR")
+    @Size(min = 4, max = 4, message = "L'année d'édition doit compter 4 chiffres")
     private Integer editionYear;
 
     @Column(name = "genre", nullable = false, length = 64)
