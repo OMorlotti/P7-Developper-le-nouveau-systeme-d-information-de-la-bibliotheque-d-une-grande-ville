@@ -1,5 +1,15 @@
 {% extends "base" %}
 
 {% block content %}
-	<h1>Bienvenue</h1>
+	<h1>Bienvenue sur le site de votre bibliothèque</h1>
+
+	{% if userInfo is not null %}
+	<br />
+	<br />
+	<div class="text-center">
+		<a class="btn btn-primary" href="{{ href('/user') }}">Voir mes locations</a>
+	</div>
+	<br />
+	<br />
+	{% endif %}
 {% endblock %}
