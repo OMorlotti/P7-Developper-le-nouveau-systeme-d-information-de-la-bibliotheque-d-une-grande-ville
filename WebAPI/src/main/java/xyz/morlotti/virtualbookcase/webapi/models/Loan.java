@@ -1,12 +1,17 @@
 package xyz.morlotti.virtualbookcase.webapi.models;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 import javax.persistence.*;
 
 import lombok.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import static java.time.temporal.ChronoUnit.DAYS;
 
 @Getter
 @Setter
@@ -42,4 +47,43 @@ public class Loan implements java.io.Serializable
 
     @Column(name = "comment", columnDefinition = "TEXT")
     private String comment;
+
+    public String getState()
+    {
+        if(loanEndDate == null)
+        {
+            long delta = DAYS.between(loanStartDate, LocalDate.now());
+
+            if(extensionAsked == false)
+            {
+                /**/ if(delta >= 30)
+                {
+                    return "NO_EXTENSION_IN_LATE";
+                }
+                else if(delta >= 15)
+                {
+                    return "ASK_EXTENSION";
+                }
+                else
+                {
+                    return "NO_EXTENSION";
+                }
+            }
+            else
+            {
+                /**/ if(delta >= 60)
+                {
+                    return "EXTENSION_ASKED_IN_LATE";
+                }
+                else
+                {
+                    return "EXTENSION_ASKED";
+                }
+            }
+        }
+        else
+        {
+            return "RETURNED";
+        }
+    }
 }

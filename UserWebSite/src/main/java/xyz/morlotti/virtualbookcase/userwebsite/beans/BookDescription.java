@@ -1,6 +1,6 @@
 package xyz.morlotti.virtualbookcase.userwebsite.beans;
 
-import java.util.Set;
+import java.util.List;
 import java.util.Date;
 
 import lombok.*;
@@ -38,5 +38,5 @@ public class BookDescription implements java.io.Serializable
 
      ////////
 
-     private Set<Book> books;
+     private List<Book> books;
 }

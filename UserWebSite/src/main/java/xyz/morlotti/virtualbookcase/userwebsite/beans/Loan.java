@@ -9,7 +9,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class Loan implements java.io.Serializable
+public class Loan implements java.io.Serializable, Comparable
 {
      private Integer id;
 
@@ -24,4 +24,12 @@ public class Loan implements java.io.Serializable
      private Boolean extensionAsked;
 
      private String comment;
+
+     private String state;
+
+     @Override
+     public int compareTo(Object o)
+     {
+          return this.loanStartDate.compareTo(((Loan) o).loanStartDate);
+     }
 }

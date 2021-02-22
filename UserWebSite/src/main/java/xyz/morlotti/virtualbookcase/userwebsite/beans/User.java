@@ -1,6 +1,6 @@
 package xyz.morlotti.virtualbookcase.userwebsite.beans;
 
-import java.util.Set;
+import java.util.List;
 import java.time.LocalDate;
 
 import lombok.*;
@@ -47,5 +47,5 @@ public class User implements java.io.Serializable
 
      ////////
 
-     private Set<Loan> loans;
+     private List<Loan> loans;
 }

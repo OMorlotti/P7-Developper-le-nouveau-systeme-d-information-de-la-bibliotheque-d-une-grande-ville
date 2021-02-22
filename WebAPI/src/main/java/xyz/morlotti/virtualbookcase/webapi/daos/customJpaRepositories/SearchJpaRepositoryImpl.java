@@ -58,7 +58,7 @@ public class SearchJpaRepositoryImpl implements SearchJpaRepository
 			conds.add("bd.isbn LIKE :isbn");
 		}
 
-		String sql = "SELECT b FROM BOOK b, BOOKDESCRIPTION bd WHERE b.bookDescription.id = bd.id AND " + String.join(" AND ", conds);
+		String sql = "SELECT b FROM BOOK b, BOOKDESCRIPTION bd WHERE b.bookDescription.id = bd.id AND " + String.join(" AND ", conds) + " ORDER BY bd.title ASC, b.id DESC";
 
 		TypedQuery<Book> query = entityManager.createQuery(sql, Book.class);
 
