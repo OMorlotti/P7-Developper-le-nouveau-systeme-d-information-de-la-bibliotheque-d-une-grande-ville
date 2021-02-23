@@ -1,4 +1,4 @@
-package xyz.morlotti.virtualbookcase.webapi;
+package xyz.morlotti.virtualbookcase.batch;
 
 import java.util.Properties;
 
@@ -32,14 +32,14 @@ public class EmailSingleton
 		String pass = properties.getProperty("virtualbookcase.app.pass");
 
 		if(host.isEmpty()
-		   ||
-		   port.isEmpty()
-		   ||
-		   mode.isEmpty()
-		   ||
-		   user.isEmpty()
-		   ||
-		   pass.isEmpty()
+			   ||
+			   port.isEmpty()
+			   ||
+			   mode.isEmpty()
+			   ||
+			   user.isEmpty()
+			   ||
+			   pass.isEmpty()
 		) {
 			return;
 		}

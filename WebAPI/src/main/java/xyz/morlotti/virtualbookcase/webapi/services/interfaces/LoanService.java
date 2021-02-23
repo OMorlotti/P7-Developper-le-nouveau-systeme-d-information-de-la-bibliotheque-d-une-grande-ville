@@ -8,6 +8,8 @@ public interface LoanService
 {
 	public Iterable<Loan> listLoans();
 
+	public Iterable<Loan> listLoansInLate();
+
 	public Optional<Loan> getLoan(int id);
 
 	public Loan addLoan(Loan genre);

@@ -24,6 +24,13 @@ public class LoanServiceImpl implements LoanService
 		return loans;
 	}
 
+	public Iterable<Loan> listLoansInLate()
+	{
+		Iterable<Loan> loans = loanDAO.findInLate();
+
+		return loans;
+	}
+
 	public Optional<Loan> getLoan(int id)
 	{
 		Optional<Loan> optional = loanDAO.findById(id);

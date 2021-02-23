@@ -86,4 +86,14 @@ public class Loan implements java.io.Serializable
             return "RETURNED";
         }
     }
+
+    public String getLogin() // getUser() is not present in the JSON for avoiding recursivity error
+    {
+        return user.getLogin();
+    }
+
+    public String getEmail() // getUser() is not present in the JSON for avoiding recursivity error
+    {
+        return user.getEmail();
+    }
 }

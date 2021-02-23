@@ -1,20 +1,55 @@
 package xyz.morlotti.virtualbookcase.batch.services;
 
-import org.springframework.stereotype.Service;
+import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import org.springframework.stereotype.Service;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.EnableScheduling;
+
+import xyz.morlotti.virtualbookcase.batch.beans.Loan;
+import xyz.morlotti.virtualbookcase.batch.MyFeignProxy;
+import xyz.morlotti.virtualbookcase.batch.EmailSingleton;
 
 @Service
 @EnableAsync
 @EnableScheduling
 public class TaskService
 {
+	@Autowired
+	MyFeignProxy myFeignProxy;
+
+	private static final Logger logger = LoggerFactory.getLogger(TaskService.class);
+
 	// See: https://riptutorial.com/spring/example/21209/cron-expression
 	@Scheduled(cron = "0 10 * * * *") // Tous les jours à 10h
 	public void mainTask()
 	{
-		/* TODO */
+		List<Loan> loans = myFeignProxy.listLoansInLate();
+
+		for(Loan loan: loans)
+		{
+			try
+			{
+				EmailSingleton.sendMessage(
+					loan.getEmail(),
+					loan.getEmail(),
+					"",
+					"Retour de livre en retard",
+					"Bonjour " + loan.getLogin() + "\nLe retour du livre " + loan.getBook().getBookDescription().getTitle() + " est hors délais.\n" +
+						"Veuillez effectuer le retour au plus vite !,\n" +
+						"Cordialement,\n" +
+						"Votre bibliothèque"
+				);
+			}
+			catch(Exception e)
+			{
+				logger.error("L'email " + loan.getEmail() + " destiné à " + loan.getLogin() + " n'a pas pu être envoyé (livre #" + loan.getBook().getId() + ")", e);
+			}
+		}
 	}
 }

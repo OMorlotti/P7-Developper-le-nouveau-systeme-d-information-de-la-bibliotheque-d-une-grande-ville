@@ -31,6 +31,13 @@ public class LoanController
 		return loanService.listLoans();
 	}
 
+	@PreAuthorize("hasAuthority('ADMIN') or hasAuthority('EMPLOYEE')")
+	@RequestMapping(value = "/loans/in-late", method = RequestMethod.GET)
+	public Iterable<Loan> listLoansInLate()
+	{
+		return loanService.listLoansInLate();
+	}
+
 	@PreAuthorize("hasAuthority('ADMIN') or hasAuthority('EMPLOYEE') or hasAuthority('USER')")
 	@RequestMapping(value = "/loan/{id}", method = RequestMethod.GET)
 	public Loan getLoan(@PathVariable int id, Authentication authentication)
