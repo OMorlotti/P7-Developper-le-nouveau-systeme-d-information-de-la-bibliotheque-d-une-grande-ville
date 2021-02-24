@@ -3,6 +3,8 @@ package xyz.morlotti.virtualbookcase.webapi.controllers;
 import java.net.URI;
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -40,7 +42,7 @@ public class LoanController
 
 	@PreAuthorize("hasAuthority('ADMIN') or hasAuthority('EMPLOYEE') or hasAuthority('USER')")
 	@RequestMapping(value = "/loan/{id}", method = RequestMethod.GET)
-	public Loan getLoan(@PathVariable int id, Authentication authentication)
+	public Loan getLoan(@PathVariable("id") int id, Authentication authentication)
 	{
 		Optional<Loan> optional = loanService.getLoan(id);
 
@@ -54,7 +56,7 @@ public class LoanController
 
 	@PreAuthorize("hasAuthority('ADMIN') or hasAuthority('EMPLOYEE')")
 	@RequestMapping(value = "/loan", method = RequestMethod.POST)
-	public ResponseEntity<Void> addLoan(@RequestBody Loan loan)
+	public ResponseEntity<Void> addLoan(@Valid @RequestBody Loan loan)
 	{
 		Loan newLoan = loanService.addLoan(loan);
 
@@ -70,7 +72,7 @@ public class LoanController
 
 	@PreAuthorize("hasAuthority('ADMIN') or hasAuthority('EMPLOYEE')")
 	@RequestMapping(value = "/loan/{id}", method = RequestMethod.PUT)
-	public ResponseEntity<Void> updateLoan(@PathVariable int id, @RequestBody Loan loan)
+	public ResponseEntity<Void> updateLoan(@PathVariable("id") int id, @Valid @RequestBody Loan loan)
 	{
 		Loan newLoan = loanService.updateLoan(id, loan);
 
@@ -86,7 +88,7 @@ public class LoanController
 
 	@PreAuthorize("hasAuthority('ADMIN') or hasAuthority('EMPLOYEE') or hasAuthority('USER')")
 	@RequestMapping(value = "/loan/{id}/extend", method = RequestMethod.PUT)
-	public ResponseEntity<Void> extendLoan(@PathVariable int id, Authentication authentication)
+	public ResponseEntity<Void> extendLoan(@PathVariable("id") int id, Authentication authentication)
 	{
 		Loan loan = getLoan(id, authentication);
 
@@ -109,10 +111,9 @@ public class LoanController
 		return ResponseEntity.created(location).build();
 	}
 
-
 	@PreAuthorize("hasAuthority('ADMIN')")
 	@RequestMapping(value = "/loan/{id}", method = RequestMethod.DELETE)
-	public ResponseEntity<Void> deleteLoan(@PathVariable int id)
+	public ResponseEntity<Void> deleteLoan(@PathVariable("id") int id)
 	{
 		loanService.deleteLoan(id);
 

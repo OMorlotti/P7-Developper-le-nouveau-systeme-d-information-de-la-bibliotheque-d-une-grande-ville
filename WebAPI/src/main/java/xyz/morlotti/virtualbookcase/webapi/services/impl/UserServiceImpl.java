@@ -1,15 +1,16 @@
 package xyz.morlotti.virtualbookcase.webapi.services.impl;
 
+import java.util.Optional;
+
+import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.stereotype.Service;
+
 import xyz.morlotti.virtualbookcase.webapi.models.User;
 import xyz.morlotti.virtualbookcase.webapi.daos.UserDAO;
+import xyz.morlotti.virtualbookcase.webapi.services.interfaces.UserService;
 import xyz.morlotti.virtualbookcase.webapi.exceptions.APINotCreatedException;
 import xyz.morlotti.virtualbookcase.webapi.exceptions.APINotDeletedException;
-import xyz.morlotti.virtualbookcase.webapi.services.interfaces.UserService;
-
-import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService

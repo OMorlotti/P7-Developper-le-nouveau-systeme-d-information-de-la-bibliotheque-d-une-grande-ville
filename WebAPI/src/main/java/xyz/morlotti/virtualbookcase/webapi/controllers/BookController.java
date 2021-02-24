@@ -3,8 +3,10 @@ package xyz.morlotti.virtualbookcase.webapi.controllers;
 import java.net.URI;
 import java.util.Optional;
 
-import org.springframework.http.HttpStatus;
+import javax.validation.Valid;
+
 import org.springframework.http.MediaType;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +31,7 @@ public class BookController
 	}
 
 	@RequestMapping(value = "/book/{id}", method = RequestMethod.GET)
-	public Book getBook(@PathVariable int id)
+	public Book getBook(@PathVariable("id") int id)
 	{
 		Optional<Book> optional = bookService.getBook(id);
 
@@ -43,7 +45,7 @@ public class BookController
 
 	@PreAuthorize("hasAuthority('ADMIN') or hasAuthority('EMPLOYEE')")
 	@RequestMapping(value = "/book", method = RequestMethod.POST)
-	public ResponseEntity<Void> addBook(@RequestBody Book book)
+	public ResponseEntity<Void> addBook(@Valid @RequestBody Book book)
 	{
 		Book newBook = bookService.addBook(book);
 
@@ -59,7 +61,7 @@ public class BookController
 
 	@PreAuthorize("hasAuthority('ADMIN') or hasAuthority('EMPLOYEE')")
 	@RequestMapping(value = "/book/{id}", method = RequestMethod.PUT)
-	public ResponseEntity<Void> updateBook(@PathVariable int id, @RequestBody Book book)
+	public ResponseEntity<Void> updateBook(@PathVariable("id") int id, @Valid @RequestBody Book book)
 	{
 		Book newBook = bookService.updateBook(id, book);
 
@@ -75,7 +77,7 @@ public class BookController
 
 	@PreAuthorize("hasAuthority('ADMIN')")
 	@RequestMapping(value = "/book/{id}", method = RequestMethod.DELETE)
-	public ResponseEntity<Void> deleteBook(@PathVariable int id)
+	public ResponseEntity<Void> deleteBook(@PathVariable("id") int id)
 	{
 		bookService.deleteBook(id);
 

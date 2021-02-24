@@ -5,13 +5,13 @@ import java.util.Date;
 import java.util.stream.Stream;
 
 import javax.persistence.*;
-import javax.validation.constraints.Size;
 
 import lombok.*;
 
 import com.fasterxml.jackson.annotation.*;
 
 import org.springframework.data.annotation.CreatedDate;
+
 import xyz.morlotti.virtualbookcase.webapi.exceptions.APIInvalidValueException;
 
 @Getter // génère automatiquement les getters

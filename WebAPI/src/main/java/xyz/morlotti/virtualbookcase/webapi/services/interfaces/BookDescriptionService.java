@@ -3,7 +3,6 @@ package xyz.morlotti.virtualbookcase.webapi.services.interfaces;
 import java.util.Optional;
 
 import xyz.morlotti.virtualbookcase.webapi.models.BookDescription;
-import xyz.morlotti.virtualbookcase.webapi.daos.beans.Search;
 
 public interface BookDescriptionService
 {
