@@ -1,33 +1,51 @@
 package xyz.morlotti.virtualbookcase.userwebsite.security;
 
-import java.util.Properties;
-
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 
 import io.jsonwebtoken.*;
 
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.support.PropertiesLoaderUtils;
+import lombok.*;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
+import org.springframework.beans.factory.annotation.Value;
+
+@Component
 public class TokenUtils
 {
 	public static final String TOKEN_COOKIE_NAME = "token";
 
-	public static UserInfo getUserInfoFromJwtToken(String token)
+	public static final String TOKEN_HEADER_NAME = "Authorization";
+
+	private static final Logger logger = LoggerFactory.getLogger(TokenUtils.class);
+
+	@Setter
+	@Getter
+	@AllArgsConstructor
+	@ToString
+	public static class UserInfo
 	{
+		private String id;
+		private String login;
+		private String email;
+		private String role;
+		private String token;
+	}
+
+	@Value("${virtualbookcase.app.jwt.secret}")
+	private String jwtSecret;
+
+	public UserInfo getUserInfoFromJwtToken(String token)
+	{
+		System.out.println("jwtSecret: " + jwtSecret);
 		if(token != null && token.startsWith("Token:"))
 		{
 			Claims body;
 
 			try
 			{
-				Properties properties = PropertiesLoaderUtils.loadProperties(new ClassPathResource("/application.properties"));
-
-				String jwtSecret = properties.getProperty("virtualbookcase.app.jwtSecret");
-
-				/**/
-
 				body = Jwts.parserBuilder().setSigningKey(jwtSecret).build().parseClaimsJws(token.substring(6)).getBody();
 
 				/**/
@@ -49,7 +67,7 @@ public class TokenUtils
 			}
 			catch(Exception e)
 			{
-				/* do nothing */
+				logger.error(e.getMessage(), e);
 			}
 		}
 

@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import xyz.morlotti.virtualbookcase.userwebsite.beans.Book;
 import xyz.morlotti.virtualbookcase.userwebsite.MyFeignProxy;
-import xyz.morlotti.virtualbookcase.userwebsite.security.UserInfo;
 import xyz.morlotti.virtualbookcase.userwebsite.beans.forms.Search;
 import xyz.morlotti.virtualbookcase.userwebsite.security.TokenUtils;
 
@@ -21,10 +20,13 @@ public class BookController
 	@Autowired
 	MyFeignProxy feignProxy;
 
+	@Autowired
+	TokenUtils tokenUtils;
+
 	@RequestMapping(value="/book/{id}", method = RequestMethod.GET)
 	public String book(@CookieValue(TokenUtils.TOKEN_COOKIE_NAME) String token, @PathVariable("id") int id, Model model)
 	{
-		UserInfo userInfo = TokenUtils.getUserInfoFromJwtToken(token);
+		TokenUtils.UserInfo userInfo = tokenUtils.getUserInfoFromJwtToken(token);
 
 		model.addAttribute("userInfo", userInfo);
 
@@ -48,7 +50,7 @@ public class BookController
 	@RequestMapping(value="/search", method = RequestMethod.GET)
 	public String search1(@CookieValue(TokenUtils.TOKEN_COOKIE_NAME) String token, Model model)
 	{
-		UserInfo userInfo = TokenUtils.getUserInfoFromJwtToken(token);
+		TokenUtils.UserInfo userInfo = tokenUtils.getUserInfoFromJwtToken(token);
 
 		model.addAttribute("userInfo", userInfo);
 
@@ -58,7 +60,7 @@ public class BookController
 	@RequestMapping(value="/search", method = RequestMethod.POST, consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE})
 	public String search2(@CookieValue(TokenUtils.TOKEN_COOKIE_NAME) String token, Search search, Model model)
 	{
-		UserInfo userInfo = TokenUtils.getUserInfoFromJwtToken(token);
+		TokenUtils.UserInfo userInfo = tokenUtils.getUserInfoFromJwtToken(token);
 
 		model.addAttribute("userInfo", userInfo);
 

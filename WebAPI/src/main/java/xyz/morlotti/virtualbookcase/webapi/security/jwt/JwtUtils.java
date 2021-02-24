@@ -21,14 +21,15 @@ public class JwtUtils
 {
 	private static final Logger logger = LoggerFactory.getLogger(JwtUtils.class);
 
-	@Value("${virtualbookcase.app.jwtSecret}")
+	@Value("${virtualbookcase.app.jwt.secret}")
 	private String jwtSecret;
 
-	@Value("${virtualbookcase.app.jwtExpirationMs}")
+	@Value("${virtualbookcase.app.jwt.expirationMs}")
 	private int jwtExpirationMs;
 
 	public String generateJwtToken(Authentication authentication)
 	{
+		System.out.println("=> " + jwtSecret);
 		UserDetailsImpl userPrincipal = (UserDetailsImpl) authentication.getPrincipal();
 
 		Key hmacKey = new SecretKeySpec(Base64.getDecoder().decode(jwtSecret), SignatureAlgorithm.HS256.getJcaName());

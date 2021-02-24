@@ -13,24 +13,27 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
 import xyz.morlotti.virtualbookcase.batch.beans.Loan;
+import xyz.morlotti.virtualbookcase.batch.EmailSender;
 import xyz.morlotti.virtualbookcase.batch.MyFeignProxy;
-import xyz.morlotti.virtualbookcase.batch.EmailSingleton;
 
 @Service
 @EnableAsync
 @EnableScheduling
 public class TaskService
 {
-	@Value("${virtualbookcase.app.login}")
-	String login;
+	private static final Logger logger = LoggerFactory.getLogger(TaskService.class);
 
-	@Value("${virtualbookcase.app.password}")
-	String password;
+	@Value("${virtualbookcase.app.batch.login}")
+	private String login;
+
+	@Value("${virtualbookcase.app.batch.password}")
+	private String password;
 
 	@Autowired
-	MyFeignProxy myFeignProxy;
+	private MyFeignProxy myFeignProxy;
 
-	private static final Logger logger = LoggerFactory.getLogger(TaskService.class);
+	@Autowired
+	private EmailSender emailSender;
 
 	// See: https://riptutorial.com/spring/example/21209/cron-expression
 	@Scheduled(cron = "0 10 * * * *") // Tous les jours à 10h
@@ -44,7 +47,7 @@ public class TaskService
 		{
 			try
 			{
-				EmailSingleton.sendMessage(
+				emailSender.sendMessage(
 					loan.getEmail(),
 					loan.getEmail(),
 					"",

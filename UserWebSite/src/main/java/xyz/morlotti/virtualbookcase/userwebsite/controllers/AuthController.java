@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import xyz.morlotti.virtualbookcase.userwebsite.MyFeignProxy;
-import xyz.morlotti.virtualbookcase.userwebsite.security.UserInfo;
 import xyz.morlotti.virtualbookcase.userwebsite.security.TokenUtils;
 import xyz.morlotti.virtualbookcase.userwebsite.beans.forms.Credentials;
 
@@ -19,6 +18,9 @@ public class AuthController
 {
 	@Autowired
 	MyFeignProxy feignProxy;
+
+	@Autowired
+	TokenUtils tokenUtils;
 
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String login()
@@ -33,7 +35,7 @@ public class AuthController
 		{
 			String token = feignProxy.login(credentials.getLogin(), credentials.getPassword());
 
-			UserInfo userInfo = TokenUtils.getUserInfoFromJwtToken(token);
+			TokenUtils.UserInfo userInfo = tokenUtils.getUserInfoFromJwtToken(token);
 
 			TokenUtils.createTokenCookie(httpServletResponse, token);
 

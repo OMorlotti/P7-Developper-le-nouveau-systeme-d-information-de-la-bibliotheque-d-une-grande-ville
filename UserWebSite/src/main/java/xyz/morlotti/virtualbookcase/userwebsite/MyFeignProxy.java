@@ -7,6 +7,7 @@ import org.springframework.cloud.openfeign.FeignClient;
 import xyz.morlotti.virtualbookcase.userwebsite.beans.Book;
 import xyz.morlotti.virtualbookcase.userwebsite.beans.User;
 import xyz.morlotti.virtualbookcase.userwebsite.beans.forms.Search;
+import xyz.morlotti.virtualbookcase.userwebsite.security.TokenUtils;
 
 @FeignClient(name = "myFeignProxy", url = "localhost:9090")
 public interface MyFeignProxy
@@ -18,7 +19,7 @@ public interface MyFeignProxy
 	public User getUser(@RequestHeader("Authorization") String token);
 
 	@PutMapping("/user")
-	public ResponseEntity<Void> updateUser(@RequestHeader("Authorization") String token, @RequestBody User user);
+	public ResponseEntity<Void> updateUser(@RequestHeader(TokenUtils.TOKEN_HEADER_NAME) String token, @RequestBody User user);
 
 	@GetMapping("/book/{id}")
 	public Book getBook(@PathVariable("id") int id);

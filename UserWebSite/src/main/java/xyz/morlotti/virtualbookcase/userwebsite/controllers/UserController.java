@@ -3,12 +3,14 @@ package xyz.morlotti.virtualbookcase.userwebsite.controllers;
 import org.springframework.ui.Model;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import org.springframework.web.bind.annotation.CookieValue;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import xyz.morlotti.virtualbookcase.userwebsite.beans.User;
 import xyz.morlotti.virtualbookcase.userwebsite.MyFeignProxy;
-import xyz.morlotti.virtualbookcase.userwebsite.security.UserInfo;
 import xyz.morlotti.virtualbookcase.userwebsite.security.TokenUtils;
 import xyz.morlotti.virtualbookcase.userwebsite.beans.forms.FullUserInfo;
 
@@ -18,10 +20,13 @@ public class UserController
 	@Autowired
 	MyFeignProxy feignProxy;
 
+	@Autowired
+	TokenUtils tokenUtils;
+
 	@RequestMapping(value = "/user", method = RequestMethod.GET)
 	public String showUser(@CookieValue(TokenUtils.TOKEN_COOKIE_NAME) String token, Model model)
 	{
-		UserInfo userInfo = TokenUtils.getUserInfoFromJwtToken(token);
+		TokenUtils.UserInfo userInfo = tokenUtils.getUserInfoFromJwtToken(token);
 
 		model.addAttribute("userInfo", userInfo);
 
@@ -46,7 +51,7 @@ public class UserController
 	@RequestMapping(value = "/user", method = RequestMethod.POST, consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE})
 	public String updateUser(@CookieValue(TokenUtils.TOKEN_COOKIE_NAME) String token, FullUserInfo fullUserInfo, Model model)
 	{
-		UserInfo userInfo = TokenUtils.getUserInfoFromJwtToken(token);
+		TokenUtils.UserInfo userInfo = tokenUtils.getUserInfoFromJwtToken(token);
 
 		model.addAttribute("userInfo", userInfo);
 

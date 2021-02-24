@@ -11,22 +11,25 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 
+import xyz.morlotti.virtualbookcase.webapi.EmailSender;
 import xyz.morlotti.virtualbookcase.webapi.models.User;
 import xyz.morlotti.virtualbookcase.webapi.daos.UserDAO;
-import xyz.morlotti.virtualbookcase.webapi.EmailSingleton;
 import xyz.morlotti.virtualbookcase.webapi.security.jwt.JwtUtils;
 
 @RestController
 public class AuthController
 {
     @Autowired
-    JwtUtils jwtUtils;
-
-    @Autowired
     private UserDAO userDAO;
 
     @Autowired
-    AuthenticationManager authenticationManager;
+    private EmailSender emailSender;
+
+    @Autowired
+    private JwtUtils jwtUtils;
+
+    @Autowired
+    private AuthenticationManager authenticationManager;
 
     @RequestMapping(path = "/auth/login", method = RequestMethod.GET)
     public String login(
@@ -52,7 +55,7 @@ public class AuthController
         {
             User user = optional.get();
 
-            EmailSingleton.sendMessage(
+            emailSender.sendMessage(
                 user.getEmail(),
                 user.getEmail(),
                 "",

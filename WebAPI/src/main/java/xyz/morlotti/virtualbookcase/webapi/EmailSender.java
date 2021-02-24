@@ -1,6 +1,4 @@
-package xyz.morlotti.virtualbookcase.batch;
-
-import java.util.Properties;
+package xyz.morlotti.virtualbookcase.webapi;
 
 import org.simplejavamail.email.Email;
 import org.simplejavamail.email.EmailBuilder;
@@ -10,36 +8,42 @@ import org.simplejavamail.mailer.Mailer;
 import org.simplejavamail.mailer.MailerBuilder;
 import org.simplejavamail.mailer.config.TransportStrategy;
 
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.support.PropertiesLoaderUtils;
+import org.springframework.stereotype.Component;
+import org.springframework.beans.factory.annotation.Value;
 
-public class EmailSingleton
+@Component
+public class EmailSender
 {
 	/*----------------------------------------------------------------------------------------------------------------*/
 
-	private EmailSingleton() {}
+	@Value("${virtualbookcase.app.smtp.host}")
+	private String host;
+
+	@Value("${virtualbookcase.app.smtp.port}")
+	private String port;
+
+	@Value("${virtualbookcase.app.smtp.mode}")
+	private String mode;
+
+	@Value("${virtualbookcase.app.smtp.user}")
+	private String user;
+
+	@Value("${virtualbookcase.app.smtp.pass}")
+	private String pass;
 
 	/*----------------------------------------------------------------------------------------------------------------*/
 
-	public static void sendMessage(String from, String to, String cc, String subject, String text) throws Exception
+	public void sendMessage(String from, String to, String cc, String subject, String text) throws Exception
 	{
-		Properties properties = PropertiesLoaderUtils.loadProperties(new ClassPathResource("/application.properties"));
-
-		String host = properties.getProperty("virtualbookcase.app.smtp.host");
-		String port = properties.getProperty("virtualbookcase.app.smtp.port");
-		String mode = properties.getProperty("virtualbookcase.app.smtp.mode");
-		String user = properties.getProperty("virtualbookcase.app.smtp.user");
-		String pass = properties.getProperty("virtualbookcase.app.smtp.pass");
-
 		if(host.isEmpty()
-			   ||
-			   port.isEmpty()
-			   ||
-			   mode.isEmpty()
-			   ||
-			   user.isEmpty()
-			   ||
-			   pass.isEmpty()
+		   ||
+		   port.isEmpty()
+		   ||
+		   mode.isEmpty()
+		   ||
+		   user.isEmpty()
+		   ||
+		   pass.isEmpty()
 		) {
 			return;
 		}
