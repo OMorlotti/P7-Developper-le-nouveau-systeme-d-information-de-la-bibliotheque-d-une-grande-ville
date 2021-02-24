@@ -60,7 +60,7 @@ public class TaskService
 			}
 			catch(Exception e)
 			{
-				logger.error("L'email " + loan.getEmail() + " destiné à " + loan.getLogin() + " n'a pas pu être envoyé (livre #" + loan.getBook().getId() + ")", e);
+				logger.error("Email " + loan.getEmail() + " for user " + loan.getLogin() + " was not successfully sent (book #" + loan.getBook().getId() + "): {}", e);
 			}
 		}
 	}

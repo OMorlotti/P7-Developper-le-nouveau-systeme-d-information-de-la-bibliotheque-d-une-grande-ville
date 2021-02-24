@@ -29,7 +29,6 @@ public class JwtUtils
 
 	public String generateJwtToken(Authentication authentication)
 	{
-		System.out.println("=> " + jwtSecret);
 		UserDetailsImpl userPrincipal = (UserDetailsImpl) authentication.getPrincipal();
 
 		Key hmacKey = new SecretKeySpec(Base64.getDecoder().decode(jwtSecret), SignatureAlgorithm.HS256.getJcaName());

@@ -22,8 +22,6 @@ public class SearchJpaRepositoryImpl implements SearchJpaRepository
 	@Override
 	public List<Book> search(Search search)
 	{
-		System.out.println(search);
-
 		Set<String> conds = new LinkedHashSet<>();
 
 		conds.add("1 = 1");
