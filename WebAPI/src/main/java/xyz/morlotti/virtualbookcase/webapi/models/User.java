@@ -6,6 +6,7 @@ import java.time.LocalDate;
 import java.util.stream.Stream;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 
 import lombok.*;
 
@@ -104,35 +105,44 @@ public class User implements java.io.Serializable
     @Column(name = "id", unique = true, nullable = false)
     private Integer id;
 
+    @NotEmpty
     @Column(name = "login", nullable = false, length = 64)
     private String login;
 
+    // Peut être vide, voir plus bas
     // Pour ne pas exposer le password lors d'un GET
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @Column(name = "password", nullable = false, length = 64)
     private String password;
 
+    @NotEmpty
     @Column(name = "firstname", nullable = false, length = 256)
     private String firstname;
 
+    @NotEmpty
     @Column(name = "lastname", nullable = false, length = 256)
     private String lastname;
 
+    @NotEmpty
     @Column(name = "streetNb", nullable = false, length = 32)
     private String streetNb;
 
+    @NotEmpty
     @Column(name = "streetName", nullable = false, length = 256)
     private String streetName;
 
     @Column(name = "postalCode", nullable = false)
     private int postalCode;
 
+    @NotEmpty
     @Column(name = "city", nullable = false, length = 256)
     private String city;
 
+    @NotEmpty
     @Column(name = "country", nullable = false, length = 128)
     private String country;
 
+    @NotEmpty
     @Column(name = "email", nullable = false, length = 256)
     private String email;
 

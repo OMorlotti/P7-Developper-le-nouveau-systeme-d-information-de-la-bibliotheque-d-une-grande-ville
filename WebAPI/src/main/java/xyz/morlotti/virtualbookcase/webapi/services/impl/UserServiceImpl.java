@@ -48,6 +48,8 @@ public class UserServiceImpl implements UserService
 	{
 		User existingUser = getUser(id).get();
 
+		existingUser.setBirthdate(user.getBirthdate());
+
 		existingUser.setCity(user.getCity());
 
 		existingUser.setCountry(user.getCountry());

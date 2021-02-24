@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.stream.Stream;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 
 import lombok.*;
 
@@ -64,6 +65,7 @@ public class Book implements java.io.Serializable
     @Column(name = "id", unique = true, nullable = false)
     private Integer id;
 
+    @NotEmpty
     @Column(name = "localId", nullable = false, length = 64)
     private String localId;
 
