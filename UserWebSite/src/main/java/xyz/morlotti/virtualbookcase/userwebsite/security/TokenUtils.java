@@ -39,7 +39,6 @@ public class TokenUtils
 
 	public UserInfo getUserInfoFromJwtToken(String token)
 	{
-		System.out.println("jwtSecret: " + jwtSecret);
 		if(token != null && token.startsWith("Token:"))
 		{
 			Claims body;
