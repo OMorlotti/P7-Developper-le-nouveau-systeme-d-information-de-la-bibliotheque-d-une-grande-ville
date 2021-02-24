@@ -109,7 +109,8 @@
     		</thead>
     		<tbody>
                 <button class="btn btn-sm btn-success mr-1 mb-2" onclick="var els = document.getElementsByClassName('returned-book'); for(var i = 0; i < els.length; i++) { els[i].style['display'] = 'table-row'; }">Afficher les livres rendus</button>
-                <button class="btn btn-sm btn-danger mr-0 mb-2" onclick="var els = document.getElementsByClassName('returned-book'); for(var i = 0; i < els.length; i++) { els[i].style['display'] = 'none'; }">Cacher les livres rendus</button>
+                <button class="btn btn-sm btn-secondary mr-0 mb-2" onclick="var els = document.getElementsByClassName('returned-book'); for(var i = 0; i < els.length; i++) { els[i].style['display'] = 'none'; }">Cacher les livres rendus</button>
+
 			    {% for loan in user.loans|sort %}
 				<tr{% if loan.state == 'RETURNED' %} class="returned-book" style="display: none;"{% endif %}>
 					<td><a href="{{ href("/book/" + loan.book.id) }}" target="_blank">★ {{ loan.book.bookDescription.title }}</a></td>
@@ -123,7 +124,7 @@
                             <span class="badge badge-success">récent</span>
 					    {% elseif loan.state == 'ASK_EXTENSION' %}
                             <span class="badge badge-success">récent</span>
-                            <a href="{{ href("/loan/extend/" + loan.book.id) }}">prolonger 1 mois</a>
+                            <a href="{{ href("/loan/" + loan.book.id + "/extend") }}">prolonger 1 mois</a>
 					    {% elseif loan.state == 'EXTENSION_ASKED' %}
                             <span class="badge badge-success">prolongé</span>
 					    {% endif %}

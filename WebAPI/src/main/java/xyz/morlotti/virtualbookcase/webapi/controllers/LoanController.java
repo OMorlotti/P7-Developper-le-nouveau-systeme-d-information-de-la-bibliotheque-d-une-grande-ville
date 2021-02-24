@@ -70,7 +70,7 @@ public class LoanController
 
 	@PreAuthorize("hasAuthority('ADMIN') or hasAuthority('EMPLOYEE')")
 	@RequestMapping(value = "/loan/{id}", method = RequestMethod.PUT)
-	public ResponseEntity<Void> updateLoan(@PathVariable int id, @RequestBody Loan loan, Authentication authentication)
+	public ResponseEntity<Void> updateLoan(@PathVariable int id, @RequestBody Loan loan)
 	{
 		Loan newLoan = loanService.updateLoan(id, loan);
 
@@ -83,6 +83,32 @@ public class LoanController
 
 		return ResponseEntity.created(location).build();
 	}
+
+	@PreAuthorize("hasAuthority('ADMIN') or hasAuthority('EMPLOYEE') or hasAuthority('USER')")
+	@RequestMapping(value = "/loan/{id}/extend", method = RequestMethod.PUT)
+	public ResponseEntity<Void> extendLoan(@PathVariable int id, Authentication authentication)
+	{
+		Loan loan = getLoan(id, authentication);
+
+		if(!"ASK_EXTENSION".equals(loan.getState()))
+		{
+			throw new APiNotAuthorizedException("This loan is not available for being extended");
+		}
+
+		loan.setExtensionAsked(true);
+
+		Loan newLoan = loanService.updateLoan(id, loan);
+
+		URI location = ServletUriComponentsBuilder
+           .fromCurrentRequest()
+           .path("/{id}")
+           .buildAndExpand(newLoan.getId())
+           .toUri()
+		;
+
+		return ResponseEntity.created(location).build();
+	}
+
 
 	@PreAuthorize("hasAuthority('ADMIN')")
 	@RequestMapping(value = "/loan/{id}", method = RequestMethod.DELETE)

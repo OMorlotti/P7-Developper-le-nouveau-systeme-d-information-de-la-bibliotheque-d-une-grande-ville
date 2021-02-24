@@ -5,9 +5,7 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import org.springframework.web.bind.annotation.CookieValue;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import xyz.morlotti.virtualbookcase.userwebsite.beans.User;
 import xyz.morlotti.virtualbookcase.userwebsite.MyFeignProxy;
@@ -35,7 +33,45 @@ public class UserController
 			User user = feignProxy.getUser(token);
 
 			model.addAttribute("user", user);
-			model.addAttribute("show", "xxxx");
+			model.addAttribute("show", "xxxx"); // "show" pour déplier l'utilisateur, "xxxx" (choisi arbitrairement) pour le cacher
+
+			return "user";
+		}
+		catch(Exception e)
+		{
+			model.addAttribute("messageType", "danger");
+			model.addAttribute("message", "Impossible de récupérer les informations de l'utilisateur.");
+
+			return "error";
+		}
+	}
+
+	@RequestMapping(value = "/loan/{id}/extend", method = RequestMethod.GET)
+	public String extendLoan(@CookieValue(TokenUtils.TOKEN_COOKIE_NAME) String token, @PathVariable("id") int id, Model model)
+	{
+		TokenUtils.UserInfo userInfo = tokenUtils.getUserInfoFromJwtToken(token);
+
+		model.addAttribute("userInfo", userInfo);
+
+		try
+		{
+			try
+			{
+				feignProxy.extendLoan(token, id);
+
+				model.addAttribute("messageType", "success");
+				model.addAttribute("message", "Emprunt prolongé avec succès.");
+			}
+			catch(Exception e)
+			{
+				model.addAttribute("messageType", "danger");
+				model.addAttribute("message", "Impossible de prolonger l'emprunt.");
+			}
+
+			User user = feignProxy.getUser(token);
+
+			model.addAttribute("user", user);
+			model.addAttribute("show", "xxxx"); // "show" pour déplier l'utilisateur, "xxxx" (choisi arbitrairement) pour le cacher
 
 			return "user";
 		}
@@ -71,7 +107,7 @@ public class UserController
 			user.setSex(fullUserInfo.getSex());
 
 			model.addAttribute("user", user);
-			model.addAttribute("show", "show");
+			model.addAttribute("show", "show"); // "show" pour déplier l'utilisateur, "xxxx" (choisi arbitrairement) pour le cacher
 
 			try
 			{

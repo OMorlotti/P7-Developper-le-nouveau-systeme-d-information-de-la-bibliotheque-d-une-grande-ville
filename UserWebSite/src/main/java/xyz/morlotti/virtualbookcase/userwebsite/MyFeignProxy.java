@@ -15,15 +15,25 @@ public interface MyFeignProxy
 	@GetMapping("/auth/login")
 	public String login(@RequestParam("login") String login, @RequestParam("password") String password);
 
-	@GetMapping("/user")
-	public User getUser(@RequestHeader("Authorization") String token);
+	@GetMapping("/auth/remind-password")
+	public ResponseEntity<Void> remindPassword(@RequestParam("email") String email);
 
-	@PutMapping("/user")
-	public ResponseEntity<Void> updateUser(@RequestHeader(TokenUtils.TOKEN_HEADER_NAME) String token, @RequestBody User user);
+	/**/
 
 	@GetMapping("/book/{id}")
 	public Book getBook(@PathVariable("id") int id);
 
 	@PostMapping("/book/search")
 	public Iterable<Book> searchBook(@RequestBody Search search);
+
+	/**/
+
+	@GetMapping("/user")
+	public User getUser(@RequestHeader(TokenUtils.TOKEN_HEADER_NAME) String token);
+
+	@PutMapping("/user")
+	public ResponseEntity<Void> updateUser(@RequestHeader(TokenUtils.TOKEN_HEADER_NAME) String token, @RequestBody User user);
+
+	@PutMapping("/loan/{id}/extend")
+	public ResponseEntity<Void> extendLoan(@RequestHeader(TokenUtils.TOKEN_HEADER_NAME) String token, @PathVariable("id") int id);
 }
