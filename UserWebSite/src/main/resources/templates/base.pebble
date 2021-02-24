@@ -12,7 +12,7 @@
 
         <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom px-1 py-0">
             <a class="navbar-brand" href="{{ href('/') }}">
-                e-Bibliothèque
+                Votre Bibliothèque
             </a>
 
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mainNavbar">
@@ -67,7 +67,7 @@
                     <small>© Olivier Morlotti, Tous droits réservés.</small>
                 </div>
                 <div class="col-md-4 text-center">
-                    <small>Bibliothèque Municipale</small>
+                    <small>Votre Bibliothèque</small>
                 </div>
                 <div class="col-md-4 text-center">
                     <small>@ Nous contacter</small>
