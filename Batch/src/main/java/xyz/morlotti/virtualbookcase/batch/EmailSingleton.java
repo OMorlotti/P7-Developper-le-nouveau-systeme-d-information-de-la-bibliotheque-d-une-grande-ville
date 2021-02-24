@@ -25,11 +25,11 @@ public class EmailSingleton
 	{
 		Properties properties = PropertiesLoaderUtils.loadProperties(new ClassPathResource("/application.properties"));
 
-		String host = properties.getProperty("virtualbookcase.app.host");
-		String port = properties.getProperty("virtualbookcase.app.port");
-		String mode = properties.getProperty("virtualbookcase.app.mode");
-		String user = properties.getProperty("virtualbookcase.app.user");
-		String pass = properties.getProperty("virtualbookcase.app.pass");
+		String host = properties.getProperty("virtualbookcase.app.smtp.host");
+		String port = properties.getProperty("virtualbookcase.app.smtp.port");
+		String mode = properties.getProperty("virtualbookcase.app.smtp.mode");
+		String user = properties.getProperty("virtualbookcase.app.smtp.user");
+		String pass = properties.getProperty("virtualbookcase.app.smtp.pass");
 
 		if(host.isEmpty()
 			   ||

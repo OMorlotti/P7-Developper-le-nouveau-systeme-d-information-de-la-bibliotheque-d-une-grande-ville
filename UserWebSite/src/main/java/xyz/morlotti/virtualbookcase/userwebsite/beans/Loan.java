@@ -13,8 +13,6 @@ public class Loan implements java.io.Serializable, Comparable
 {
      private Integer id;
 
-     private User user;
-
      private Book book;
 
      private LocalDate loanStartDate;

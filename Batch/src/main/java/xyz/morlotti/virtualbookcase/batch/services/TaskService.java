@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import org.springframework.stereotype.Service;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,12 @@ import xyz.morlotti.virtualbookcase.batch.EmailSingleton;
 @EnableScheduling
 public class TaskService
 {
+	@Value("${virtualbookcase.app.login}")
+	String login;
+
+	@Value("${virtualbookcase.app.password}")
+	String password;
+
 	@Autowired
 	MyFeignProxy myFeignProxy;
 
@@ -29,7 +36,9 @@ public class TaskService
 	@Scheduled(cron = "0 10 * * * *") // Tous les jours à 10h
 	public void mainTask()
 	{
-		List<Loan> loans = myFeignProxy.listLoansInLate();
+		String token = myFeignProxy.login(login, password);
+
+		List<Loan> loans = myFeignProxy.listLoansInLate(token);
 
 		for(Loan loan: loans)
 		{
