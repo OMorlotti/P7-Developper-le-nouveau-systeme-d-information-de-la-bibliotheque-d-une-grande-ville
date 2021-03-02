@@ -25,6 +25,10 @@ public class Loan implements java.io.Serializable, Comparable
 
      private String state;
 
+     private long remainingDays;
+
+     private LocalDate returnDate;
+
      @Override
      public int compareTo(Object o)
      {

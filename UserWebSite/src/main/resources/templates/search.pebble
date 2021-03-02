@@ -78,9 +78,10 @@
     </div>
 </div>
 
-{% if books is not empty %}
+{% if showResult %}
+{%   if books is not empty %}
 <div class="card mt-2">
-    <h3 class="card-header" data-toggle="collapse" data-target="#collapseTwo">{{ books|length }} résultat{% if books|length > 1 %}s{% endif %}</h3>
+    <h3 class="card-header" data-toggle="collapse" data-target="#collapseTwo">{{ books|length }} résultat{% if books|length > 1 %}s{% endif %} trouvé{% if books|length > 1 %}s{% endif %}</h3>
     <div class="card-body collapse show" id="collapseTwo">
     	<table class="table table-sm">
     		<thead>
@@ -108,5 +109,10 @@
 		</table>
     </div>
 </div>
+{%   else %}
+<div class="card mt-2">
+    <h3 class="card-header" data-toggle="collapse" data-target="#collapseTwo">Aucun résultat trouvé</h3>
+</div>
+{%   endif %}
 {% endif %}
 {% endblock %}

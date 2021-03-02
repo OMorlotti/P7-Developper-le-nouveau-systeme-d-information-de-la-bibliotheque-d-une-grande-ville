@@ -104,6 +104,7 @@
 				<tr>
 					<td>Titre du livre</a></td>
 					<td>Date d'emprunt</td>
+                    <td>Date de retour</td>
 					<td>État de l'emprunt</td>
 				</tr>
     		</thead>
@@ -115,11 +116,12 @@
 				<tr{% if loan.state == 'RETURNED' %} class="returned-book" style="display: none;"{% endif %}>
 					<td><a href="{{ href("/book/" + loan.book.id) }}" target="_blank">★ {{ loan.book.bookDescription.title }}</a></td>
 					<td>{{ loan.loanStartDate | date("dd/MM/yyyy") }}</td>
+                    <td>{{ loan.returnDate | date("dd/MM/yyyy") }}</td>
 					<td>
 					    {% if loan.state == 'RETURNED' %}
                             <span class="badge badge-secondary">rendu</span>
 					    {% elseif loan.state == 'NO_EXTENSION_IN_LATE' or loan.state == 'EXTENSION_ASKED_IN_LATE' %}
-                            <span class="badge badge-danger">retard</span>
+                            <span class="badge badge-danger">retard {{ -loan.remainingDays }} jour(s)</span>
 					    {% elseif loan.state == 'NO_EXTENSION' %}
                             <span class="badge badge-success">récent</span>
 					    {% elseif loan.state == 'ASK_EXTENSION' %}

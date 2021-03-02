@@ -25,6 +25,10 @@ public class Loan implements java.io.Serializable
 
      private String state;
 
+     private long remainingDays;
+
+     private LocalDate returnDate;
+
      private String login;
 
      private String email;

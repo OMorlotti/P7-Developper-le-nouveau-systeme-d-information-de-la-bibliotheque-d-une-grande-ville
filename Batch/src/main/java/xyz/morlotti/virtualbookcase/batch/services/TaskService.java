@@ -51,8 +51,8 @@ public class TaskService
 					loan.getEmail(),
 					loan.getEmail(),
 					"",
-					"Retour de livre en retard",
-					"Bonjour " + loan.getLogin() + "\nLe retour du livre " + loan.getBook().getBookDescription().getTitle() + " est hors délais.\n" +
+					"Retour de livre en retard de " + (-loan.getRemainingDays()) + " jour(s)",
+					"Bonjour " + loan.getLogin() + "\nLe retour du livre " + loan.getBook().getBookDescription().getTitle() + " est hors délais de "+ (-loan.getRemainingDays()) + " jour(s).\n" +
 						"Veuillez effectuer le retour au plus vite !,\n" +
 						"Cordialement,\n" +
 						"Votre bibliothèque"

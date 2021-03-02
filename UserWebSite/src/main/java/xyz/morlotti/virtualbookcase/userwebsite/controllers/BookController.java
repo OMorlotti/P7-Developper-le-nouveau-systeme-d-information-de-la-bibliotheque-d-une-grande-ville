@@ -53,6 +53,7 @@ public class BookController
 		TokenUtils.UserInfo userInfo = tokenUtils.getUserInfoFromJwtToken(token);
 
 		model.addAttribute("userInfo", userInfo);
+		model.addAttribute("showResult", false);
 
 		return "search";
 	}
@@ -63,6 +64,7 @@ public class BookController
 		TokenUtils.UserInfo userInfo = tokenUtils.getUserInfoFromJwtToken(token);
 
 		model.addAttribute("userInfo", userInfo);
+		model.addAttribute("showResult", true);
 
 		try
 		{
