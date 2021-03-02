@@ -48,7 +48,7 @@ public class BookServiceImpl implements BookService
 	{
 		Book existingBook = getBook(id).get();
 
-		existingBook.setAvailable(book.isAvailable());
+		existingBook.setLocalId(book.getLocalId());
 
 		existingBook.setCondition(book.getCondition());
 
