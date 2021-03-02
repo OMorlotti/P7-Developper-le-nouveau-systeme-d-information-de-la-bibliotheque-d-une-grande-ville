@@ -1,14 +1,14 @@
 package xyz.morlotti.virtualbookcase.webapi.services.impl;
 
 import org.springframework.stereotype.Service;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import xyz.morlotti.virtualbookcase.webapi.models.Loan;
 import xyz.morlotti.virtualbookcase.webapi.daos.LoanDAO;
+import xyz.morlotti.virtualbookcase.webapi.services.interfaces.LoanService;
 import xyz.morlotti.virtualbookcase.webapi.exceptions.APINotCreatedException;
 import xyz.morlotti.virtualbookcase.webapi.exceptions.APINotDeletedException;
-import xyz.morlotti.virtualbookcase.webapi.services.interfaces.LoanService;
 
 import java.util.Optional;
 

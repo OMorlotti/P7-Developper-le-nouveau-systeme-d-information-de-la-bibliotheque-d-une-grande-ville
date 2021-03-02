@@ -1,7 +1,7 @@
 package xyz.morlotti.virtualbookcase.userwebsite.beans;
 
-import java.util.List;
 import java.util.Date;
+import java.util.List;
 
 import lombok.*;
 

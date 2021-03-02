@@ -10,9 +10,8 @@ import javax.persistence.PersistenceContext;
 
 import org.springframework.stereotype.Repository;
 
-import xyz.morlotti.virtualbookcase.webapi.daos.beans.SearchResult;
-import xyz.morlotti.virtualbookcase.webapi.models.Book;
 import xyz.morlotti.virtualbookcase.webapi.daos.beans.Search;
+import xyz.morlotti.virtualbookcase.webapi.daos.beans.SearchResult;
 
 @Repository
 public class SearchJpaRepositoryImpl implements SearchJpaRepository
