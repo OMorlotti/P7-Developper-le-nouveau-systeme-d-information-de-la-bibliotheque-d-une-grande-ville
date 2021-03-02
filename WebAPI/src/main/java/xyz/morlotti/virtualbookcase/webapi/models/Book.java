@@ -5,13 +5,14 @@ import java.util.Date;
 import java.util.stream.Stream;
 
 import javax.persistence.*;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.NotEmpty;
 
 import lombok.*;
 
 import com.fasterxml.jackson.annotation.*;
 
 import org.springframework.data.annotation.CreatedDate;
+
 import xyz.morlotti.virtualbookcase.webapi.exceptions.APIInvalidValueException;
 
 @Getter // génère automatiquement les getters
@@ -64,6 +65,7 @@ public class Book implements java.io.Serializable
     @Column(name = "id", unique = true, nullable = false)
     private Integer id;
 
+    @NotEmpty
     @Column(name = "localId", nullable = false, length = 64)
     private String localId;
 

@@ -3,9 +3,9 @@ package xyz.morlotti.virtualbookcase.userwebsite.security;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 
-import io.jsonwebtoken.*;
-
 import lombok.*;
+
+import io.jsonwebtoken.*;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

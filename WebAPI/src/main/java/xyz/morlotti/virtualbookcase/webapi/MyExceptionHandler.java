@@ -13,7 +13,6 @@ import xyz.morlotti.virtualbookcase.webapi.exceptions.APINotFoundException;
 import xyz.morlotti.virtualbookcase.webapi.exceptions.APINotCreatedException;
 import xyz.morlotti.virtualbookcase.webapi.exceptions.APINotDeletedException;
 
-
 @ControllerAdvice
 public class MyExceptionHandler extends ResponseEntityExceptionHandler
 {

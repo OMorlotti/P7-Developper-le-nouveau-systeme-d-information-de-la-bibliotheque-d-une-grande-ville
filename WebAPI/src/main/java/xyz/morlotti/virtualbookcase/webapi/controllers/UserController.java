@@ -3,6 +3,8 @@ package xyz.morlotti.virtualbookcase.webapi.controllers;
 import java.net.URI;
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -40,7 +42,7 @@ public class UserController
 
 	@PreAuthorize("hasAuthority('ADMIN') or hasAuthority('EMPLOYEE')")
 	@RequestMapping(value = "/user/{id}", method = RequestMethod.GET)
-	public User getUser(@PathVariable int id)
+	public User getUser(@PathVariable("id") int id)
 	{
 		Optional<User> optional = userService.getUser(id);
 
@@ -54,7 +56,7 @@ public class UserController
 
 	@PreAuthorize("hasAuthority('ADMIN') or hasAuthority('EMPLOYEE')")
 	@RequestMapping(value = "/user", method = RequestMethod.POST)
-	public ResponseEntity<Void> addUser(@RequestBody User user)
+	public ResponseEntity<Void> addUser(@Valid @RequestBody User user)
 	{
 		User newUser = userService.addUser(user);
 
@@ -70,7 +72,7 @@ public class UserController
 
 	@PreAuthorize("hasAuthority('ADMIN') or hasAuthority('EMPLOYEE') or hasAuthority('USER')")
 	@RequestMapping(value = "/user", method = RequestMethod.PUT)
-	public ResponseEntity<Void> updateCurrentUser(@RequestBody User user, Authentication authentication)
+	public ResponseEntity<Void> updateCurrentUser(@Valid @RequestBody User user, Authentication authentication)
 	{
 		UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
 
@@ -88,7 +90,7 @@ public class UserController
 
 	@PreAuthorize("hasAuthority('ADMIN') or hasAuthority('EMPLOYEE')")
 	@RequestMapping(value = "/user/{id}", method = RequestMethod.PUT)
-	public ResponseEntity<Void> updateUser(@PathVariable int id, @RequestBody User user)
+	public ResponseEntity<Void> updateUser(@PathVariable("id") int id, @RequestBody User user)
 	{
 		User newUser = userService.updateUser(id, user);
 
@@ -104,7 +106,7 @@ public class UserController
 
 	@PreAuthorize("hasAuthority('ADMIN')")
 	@RequestMapping(value = "/user/{id}", method = RequestMethod.DELETE)
-	public ResponseEntity<Void> deleteUser(@PathVariable int id)
+	public ResponseEntity<Void> deleteUser(@PathVariable("id") int id)
 	{
 		userService.deleteUser(id);
 

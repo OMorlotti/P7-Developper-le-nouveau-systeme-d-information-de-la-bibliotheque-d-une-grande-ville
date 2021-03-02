@@ -1,8 +1,8 @@
 package xyz.morlotti.virtualbookcase.batch.beans;
 
-import lombok.*;
-
 import java.time.LocalDate;
+
+import lombok.*;
 
 @Getter
 @Setter
