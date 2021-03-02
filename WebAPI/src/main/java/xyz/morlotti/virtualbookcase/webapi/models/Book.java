@@ -86,6 +86,9 @@ public class Book implements java.io.Serializable
         this.condition = condition.toCode();
     }
 
+    @Column(name = "available", nullable = false)
+    private boolean available;
+
     @CreatedDate
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
@@ -96,19 +99,4 @@ public class Book implements java.io.Serializable
     @JsonIgnore
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "book")
     private Set<Loan> loans;
-
-    ////////
-
-    public boolean isAvailable()
-    {
-        for(Loan loan: loans)
-        {
-            if(loan.getLoanEndDate() != null)
-            {
-                return false;
-            }
-        }
-
-        return true;
-    }
 }

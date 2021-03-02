@@ -4,7 +4,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import xyz.morlotti.virtualbookcase.webapi.models.Book;
 import xyz.morlotti.virtualbookcase.webapi.models.Loan;
+import xyz.morlotti.virtualbookcase.webapi.daos.BookDAO;
 import xyz.morlotti.virtualbookcase.webapi.daos.LoanDAO;
 import xyz.morlotti.virtualbookcase.webapi.services.interfaces.LoanService;
 import xyz.morlotti.virtualbookcase.webapi.exceptions.APINotCreatedException;
@@ -17,6 +19,9 @@ public class LoanServiceImpl implements LoanService
 {
 	@Autowired
 	private LoanDAO loanDAO;
+
+	@Autowired
+	private BookDAO bookDAO;
 
 	public Iterable<Loan> listLoans()
 	{
@@ -46,6 +51,19 @@ public class LoanServiceImpl implements LoanService
 		if(newLoan == null)
 		{
 			throw new APINotCreatedException("Loan not inserted");
+		}
+
+		/* Update the book's availability */
+
+		Book book = loan.getBook();
+
+		book.setAvailable(loan.getLoanEndDate() != null);
+
+		Book newBook = bookDAO.save(book);
+
+		if(newLoan == null)
+		{
+			throw new APINotCreatedException("Book not updated");
 		}
 
 		return newLoan;
