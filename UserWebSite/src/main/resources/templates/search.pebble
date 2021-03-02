@@ -97,8 +97,8 @@
 				<tr>
 					<td><a href="{{ href("/bookDescription/" + searchResult.bookDescription.id) }}" target="_blank">★ {{ searchResult.bookDescription.title }}</a></td>
 					<td>{{ searchResult.bookDescription.authorFirstname }} {{ searchResult.bookDescription.authorLastname }}</td>
-					<td>{{ searchResult.nbAvailable }}</td>
-					<td>{{ searchResult.nbNotAvailable }}</td>
+					<td><span class="badge badge-success">{{ searchResult.nbAvailable }}</span></td>
+					<td><span class="badge badge-danger">{{ searchResult.nbNotAvailable }}</span></td>
     			</tr>
 				{% endfor %}
 			</tbody>
