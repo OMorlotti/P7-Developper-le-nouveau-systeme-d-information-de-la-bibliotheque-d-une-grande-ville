@@ -8,6 +8,8 @@ import xyz.morlotti.virtualbookcase.userwebsite.beans.Book;
 import xyz.morlotti.virtualbookcase.userwebsite.beans.User;
 import xyz.morlotti.virtualbookcase.userwebsite.beans.forms.Search;
 import xyz.morlotti.virtualbookcase.userwebsite.security.TokenUtils;
+import xyz.morlotti.virtualbookcase.userwebsite.beans.BookDescription;
+import xyz.morlotti.virtualbookcase.userwebsite.beans.forms.SearchResult;
 
 @FeignClient(name = "myFeignProxy", url = "localhost:9090")
 public interface MyFeignProxy
@@ -23,8 +25,13 @@ public interface MyFeignProxy
 	@GetMapping("/book/{id}")
 	public Book getBook(@PathVariable("id") int id);
 
+	@GetMapping("/bookDescription/{id}")
+	public BookDescription getBookDescription(@PathVariable("id") int id);
+
+	/**/
+
 	@PostMapping("/book/search")
-	public Iterable<Book> searchBook(@RequestBody Search search);
+	public Iterable<SearchResult> searchBook(@RequestBody Search search);
 
 	/**/
 

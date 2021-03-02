@@ -10,6 +10,7 @@ import javax.persistence.PersistenceContext;
 
 import org.springframework.stereotype.Repository;
 
+import xyz.morlotti.virtualbookcase.webapi.daos.beans.SearchResult;
 import xyz.morlotti.virtualbookcase.webapi.models.Book;
 import xyz.morlotti.virtualbookcase.webapi.daos.beans.Search;
 
@@ -20,7 +21,7 @@ public class SearchJpaRepositoryImpl implements SearchJpaRepository
 	private EntityManager entityManager;
 
 	@Override
-	public List<Book> search(Search search)
+	public List<SearchResult> search(Search search)
 	{
 		Set<String> conds = new LinkedHashSet<>();
 
@@ -56,9 +57,9 @@ public class SearchJpaRepositoryImpl implements SearchJpaRepository
 			conds.add("bd.isbn LIKE :isbn");
 		}
 
-		String sql = "SELECT b FROM BOOK b, BOOKDESCRIPTION bd WHERE b.bookDescription.id = bd.id AND " + String.join(" AND ", conds) + " ORDER BY bd.title ASC, b.id DESC";
+		String sql = "SELECT NEW xyz.morlotti.virtualbookcase.webapi.daos.beans.SearchResult(bd, (SELECT COUNT(*) FROM BOOK b WHERE b.available = 1 AND b.bookDescription.id = bd.id), (SELECT COUNT(*) FROM BOOK b WHERE b.available = 0 AND b.bookDescription.id = bd.id)) FROM BOOKDESCRIPTION bd WHERE " + String.join(" AND ", conds) + " ORDER BY bd.title ASC";
 
-		TypedQuery<Book> query = entityManager.createQuery(sql, Book.class);
+		TypedQuery<SearchResult> query = entityManager.createQuery(sql, SearchResult.class);
 
 		if(search.getTitle() != null && !search.getTitle().isEmpty())
 		{

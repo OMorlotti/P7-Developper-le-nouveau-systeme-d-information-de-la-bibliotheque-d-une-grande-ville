@@ -4,12 +4,9 @@ import org.springframework.stereotype.Repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import xyz.morlotti.virtualbookcase.webapi.models.Book;
-import xyz.morlotti.virtualbookcase.webapi.daos.customJpaRepositories.SearchJpaRepository;
-
-// https://dev.to/brunodrugowick/four-steps-to-extend-a-spring-data-jpa-repository-with-your-own-code-53b0
 
 @Repository
-public interface BookDAO extends JpaRepository<Book, Integer>, SearchJpaRepository
+public interface BookDAO extends JpaRepository<Book, Integer>
 {
 
 }

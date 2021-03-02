@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 
+import xyz.morlotti.virtualbookcase.webapi.daos.beans.SearchResult;
 import xyz.morlotti.virtualbookcase.webapi.models.Book;
 import xyz.morlotti.virtualbookcase.webapi.daos.BookDAO;
 import xyz.morlotti.virtualbookcase.webapi.daos.beans.Search;
@@ -66,12 +67,5 @@ public class BookServiceImpl implements BookService
 		{
 			throw new APINotDeletedException("Book " + id + " not deleted: " + e.getMessage());
 		}
-	}
-
-	public Iterable<Book> searchBookDescriptions(Search search)
-	{
-		Iterable<Book> bookDescriptions = bookDAO.search(search);
-
-		return bookDescriptions;
 	}
 }

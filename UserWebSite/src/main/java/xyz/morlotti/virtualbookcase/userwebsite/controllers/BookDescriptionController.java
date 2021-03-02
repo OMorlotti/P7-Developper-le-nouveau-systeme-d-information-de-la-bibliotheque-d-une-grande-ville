@@ -8,12 +8,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import xyz.morlotti.virtualbookcase.userwebsite.beans.Book;
 import xyz.morlotti.virtualbookcase.userwebsite.MyFeignProxy;
 import xyz.morlotti.virtualbookcase.userwebsite.security.TokenUtils;
+import xyz.morlotti.virtualbookcase.userwebsite.beans.BookDescription;
 
 @Controller
-public class BookController
+public class BookDescriptionController
 {
 	@Autowired
 	MyFeignProxy feignProxy;
@@ -21,7 +21,7 @@ public class BookController
 	@Autowired
 	TokenUtils tokenUtils;
 
-	@RequestMapping(value = "/book/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/bookDescription/{id}", method = RequestMethod.GET)
 	public String book(@CookieValue(TokenUtils.TOKEN_COOKIE_NAME) String token, @PathVariable("id") int id, Model model)
 	{
 		TokenUtils.UserInfo userInfo = tokenUtils.getUserInfoFromJwtToken(token);
@@ -30,11 +30,11 @@ public class BookController
 
 		try
 		{
-			Book book = feignProxy.getBook(id);
+			BookDescription bookDescription = feignProxy.getBookDescription(id);
 
-			model.addAttribute("book", book);
+			model.addAttribute("bookDescription", bookDescription);
 
-			return "book";
+			return "bookDescription";
 		}
 		catch(Exception e)
 		{

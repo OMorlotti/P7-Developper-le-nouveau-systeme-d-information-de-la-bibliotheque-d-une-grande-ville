@@ -79,31 +79,27 @@
 </div>
 
 {% if showResult %}
-{%   if books is not empty %}
+{%   if searchResults is not empty %}
 <div class="card mt-2">
-    <h3 class="card-header" data-toggle="collapse" data-target="#collapseTwo">{{ books|length }} résultat{% if books|length > 1 %}s{% endif %} trouvé{% if books|length > 1 %}s{% endif %}</h3>
+    <h3 class="card-header" data-toggle="collapse" data-target="#collapseTwo">{{ searchResults|length }} résultat{% if searchResults|length > 1 %}s{% endif %} trouvé{% if searchResults|length > 1 %}s{% endif %}</h3>
     <div class="card-body collapse show" id="collapseTwo">
     	<table class="table table-sm">
     		<thead>
 				<tr>
 					<td>Titre du livre</a></td>
 					<td>Auteur</td>
-					<td>Disponibilité</td>
+					<td>Disponible(s)</td>
+					<td>Indisponible(s)</td>
 				</tr>
     		</thead>
     		<tbody>
-			{% for book in books %}
+			    {% for searchResult in searchResults %}
 				<tr>
-					<td><a href="{{ href("/book/" + book.id) }}" target="_blank">★ {{ book.bookDescription.title }}</a></td>
-					<td>{{ book.bookDescription.authorFirstname }} {{ book.bookDescription.authorLastname }}</td>
-					<td>
-                        {% if book.available %}
-                        <span class="badge badge-success">Disponible</span>
-                        {% else %}
-                        <span class="badge badge-danger">Indisponible</span>
-                        {% endif %}
-					</td>
-				</tr>
+					<td><a href="{{ href("/bookDescription/" + searchResult.bookDescription.id) }}" target="_blank">★ {{ searchResult.bookDescription.title }}</a></td>
+					<td>{{ searchResult.bookDescription.authorFirstname }} {{ searchResult.bookDescription.authorLastname }}</td>
+					<td>{{ searchResult.nbAvailable }}</td>
+					<td>{{ searchResult.nbNotAvailable }}</td>
+    			</tr>
 				{% endfor %}
 			</tbody>
 		</table>
