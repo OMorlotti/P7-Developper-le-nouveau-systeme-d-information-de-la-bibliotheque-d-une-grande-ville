@@ -38,32 +38,70 @@ les informations liées à la base de donnée.
 
 	Cette application a été développée avec :
 	- Intellij IDEA
-	- Java 12 (version xxxxXXXXXXXX)
+	- Java 12
 	- Tomcat 9
-	- MySQL (version 8.0.21)
-	- le framework Spring (version 5.2.1)
-	- Spring boot
-	- LOMBOK
-	- Spring DATA JPA
+	- MySQL 8
+	- Spring Boot 2.4
 
-L'application a été développée suivant une architecture microservice
+L'application a été développée suivant une architecture microservice :
 
+![WholeProject](WholeProject.png)
 
-![architecture diagram](Architecture-P7-Diagram.jpg)
+La partie WebAPI étant développé avec Spring Boot et Spring Security :
 
+![WebAPI](WebAPI.png)
 
 ## Déploiement
 
-1- Importez tous les microservices du repository.
+1- Créez une base de données nommée `virtualbookcase`.
 
-2- Créez une base de données pour chaque microservice. Les scripts sont dans le dossier "livrables/script".
-Vous devez modifier les propriétés de la datasource dans chaque fichier "application.properties" de chaque
-microservice (dans src/main/resources/).
+2- À la racine du projet, exécutez `mvn clean package` pour générer le fichier JAR dans le dossier `target` de chaque sous-projet :
+  * `./WebAPI/target/VirtualBookcaseWebAPI-1.0.0.jar`
+  * `./UserWebSite/target/VirtualBookcaseUserWebSite-1.0.0.jar`
+  * `./Batch/target/VirtualBookcaseBatch-1.0.0.jar`
 
-3- Lancez l'application : démarrez "library-eureka" en premier et "library-batch" en dernier.
+3- Lancez les fichiers JARs :
+  * `java -jar ./WebAPI/target/VirtualBookcaseWebAPI-1.0.0.jar`
+  * `java -jar ./UserWebSite/target/VirtualBookcaseUserWebSite-1.0.0.jar`
+  * `java -jar ./Batch/target/VirtualBookcaseBatch-1.0.0.jar`
 
-Dans votre navigateur, vous pourrez accéder au site à l'adresse localhost:9090, si vous n'avez pas modifié
-les propriétés "server.port".
+`VirtualBookcaseWebAPI-1.0.0.jar` admet les paramètres suivants :
+  * `--MYSQL_HOST=<localhost>`
+  * `--MYSQL_PORT=<8889>`
+  * `--MYSQL_DBNAME=<virtualbookcase>`
+  * `--MYSQL_USERNAME=<root>`
+  * `--MYSQL_PASSWORD=<root>`
+
+
+  * `--JWT_SECRET=<asdfSFS34wfsdfsdfSDSD32dfsddDDerQSNCK34SOWEK5354fdgdf4>`
+  * `--JWT_EXPIRATION_MS=<86400000>`
+
+
+  * `--SMTP_HOST=<>`
+  * `--SMTP_PORT=<>`
+  * `--SMTP_MODE=<>`
+  * `--SMTP_USER=<>`
+  * `--SMTP_PASS=<>`
+
+`VirtualBookcaseUserWebSite-1.0.0.jar` admet les paramètres suivants :
+
+  * `--JWT_SECRET=<asdfSFS34wfsdfsdfSDSD32dfsddDDerQSNCK34SOWEK5354fdgdf4>`
+
+`VirtualBookcaseBatch-1.0.0.jar` admet les paramètres suivants :
+
+  * `--BATCH_LOGIN=<>`
+  * `--BATCH_PASSWORD=<>`
+
+  * `--SMTP_HOST=<>`
+  * `--SMTP_PORT=<>`
+  * `--SMTP_MODE=<>`
+  * `--SMTP_USER=<>`
+  * `--SMTP_PASS=<>`
+
+> Remarque : la notation `<>` indique la valeur par défaut d'un paramètre. 
+
+4- Dans votre navigateur, accédez au site à l'adresse [http://localhost:9090](http://localhost:9090).
+
 
 ## Auteur
 
