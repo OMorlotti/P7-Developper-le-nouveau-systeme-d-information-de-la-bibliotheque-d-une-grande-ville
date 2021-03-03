@@ -43,7 +43,7 @@ les informations liées à la base de donnée.
 	- MySQL 8
 	- Spring Boot 2.4
 
-L'application a été développée suivant une architecture microservice :
+L'application a été développée suivant une architecture à microservices :
 
 ![WholeProject](WholeProject.png)
 
