@@ -57,13 +57,16 @@ public class LoanServiceImpl implements LoanService
 
 		Book book = loan.getBook();
 
-		book.setAvailable(loan.getLoanEndDate() != null);
-
-		Book newBook = bookDAO.save(book);
-
-		if(newLoan == null)
+		if(book.isAvailable() != (loan.getLoanEndDate() != null))
 		{
-			throw new APINotCreatedException("Book not updated");
+			book.setAvailable(loan.getLoanEndDate() != null);
+
+			Book newBook = bookDAO.save(book);
+
+			if(newBook == null)
+			{
+				throw new APINotCreatedException("Book not updated");
+			}
 		}
 
 		return newLoan;
