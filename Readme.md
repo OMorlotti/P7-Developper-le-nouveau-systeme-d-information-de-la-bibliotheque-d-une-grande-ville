@@ -100,7 +100,7 @@ La partie WebAPI étant développé avec Spring Boot et Spring Security :
 
 > Remarque : la notation `<>` indique la valeur par défaut d'un paramètre. 
 
-4- Dans votre navigateur, accédez au site à l'adresse [http://localhost:9090](http://localhost:9090).
+4- Dans votre navigateur, accédez au site à l'adresse [http://localhost:9091](http://localhost:9091).
 
 
 ## Auteur
