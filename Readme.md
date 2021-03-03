@@ -79,7 +79,7 @@ La partie WebAPI étant développé avec Spring Boot et Spring Security :
 
   * `--SMTP_HOST=<>`
   * `--SMTP_PORT=<>`
-  * `--SMTP_MODE=<>`
+  * `--SMTP_MODE=<>` O pour SMTP, 1 pour SMTPS et 2 pour SMTP_TLS
   * `--SMTP_USER=<>`
   * `--SMTP_PASS=<>`
 
@@ -94,7 +94,7 @@ La partie WebAPI étant développé avec Spring Boot et Spring Security :
 
   * `--SMTP_HOST=<>`
   * `--SMTP_PORT=<>`
-  * `--SMTP_MODE=<>`
+  * `--SMTP_MODE=<>` O pour SMTP, 1 pour SMTPS et 2 pour SMTP_TLS
   * `--SMTP_USER=<>`
   * `--SMTP_PASS=<>`
 
