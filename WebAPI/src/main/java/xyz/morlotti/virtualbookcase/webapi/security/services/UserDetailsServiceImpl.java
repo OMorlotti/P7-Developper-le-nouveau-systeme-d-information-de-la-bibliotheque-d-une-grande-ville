@@ -24,7 +24,7 @@ public class UserDetailsServiceImpl implements UserDetailsService
 
 		if(!optional.isPresent())
 		{
-			throw new UsernameNotFoundException("User " + login + " not found");
+			throw new UsernameNotFoundException("User `" + login + "` not found");
 		}
 
 		return UserDetailsImpl.build(optional.get());

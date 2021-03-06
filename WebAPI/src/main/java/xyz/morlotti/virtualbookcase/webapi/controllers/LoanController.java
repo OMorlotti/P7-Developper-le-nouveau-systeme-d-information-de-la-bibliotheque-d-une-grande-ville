@@ -18,7 +18,7 @@ import xyz.morlotti.virtualbookcase.webapi.models.User;
 import xyz.morlotti.virtualbookcase.webapi.services.interfaces.LoanService;
 import xyz.morlotti.virtualbookcase.webapi.exceptions.APINotFoundException;
 import xyz.morlotti.virtualbookcase.webapi.security.services.UserDetailsImpl;
-import xyz.morlotti.virtualbookcase.webapi.exceptions.APiNotAuthorizedException;
+import xyz.morlotti.virtualbookcase.webapi.exceptions.APINotAuthorizedException;
 
 @RestController
 public class LoanController
@@ -94,7 +94,7 @@ public class LoanController
 
 		if(!"ASK_EXTENSION".equals(loan.getState()))
 		{
-			throw new APiNotAuthorizedException("This loan is not available for being extended");
+			throw new APINotAuthorizedException("This loan is not available for being extended");
 		}
 
 		loan.setExtensionAsked(true);
@@ -130,7 +130,7 @@ public class LoanController
 
 		if(loan.getUser().getId() != userDetails.getId() && userDetails.getAuthority() == User.Role.USER)
 		{
-			throw new APiNotAuthorizedException("The current user is not the borrower");
+			throw new APINotAuthorizedException("The current user is not the borrower");
 		}
 
 		return loan;
