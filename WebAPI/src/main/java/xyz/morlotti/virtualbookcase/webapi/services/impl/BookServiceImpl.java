@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import xyz.morlotti.virtualbookcase.webapi.models.Book;
 import xyz.morlotti.virtualbookcase.webapi.daos.BookDAO;
 import xyz.morlotti.virtualbookcase.webapi.services.interfaces.BookService;
-import xyz.morlotti.virtualbookcase.webapi.exceptions.APINotCreatedException;
+import xyz.morlotti.virtualbookcase.webapi.exceptions.APINotModifiedException;
 import xyz.morlotti.virtualbookcase.webapi.exceptions.APINotDeletedException;
 
 import java.util.Optional;
@@ -38,7 +38,7 @@ public class BookServiceImpl implements BookService
 
 		if(newBook == null)
 		{
-			throw new APINotCreatedException("Book not inserted");
+			throw new APINotModifiedException("Book not inserted");
 		}
 
 		return newBook;

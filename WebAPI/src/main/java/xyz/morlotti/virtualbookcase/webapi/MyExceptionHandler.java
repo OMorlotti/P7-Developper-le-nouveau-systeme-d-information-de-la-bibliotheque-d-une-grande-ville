@@ -10,10 +10,10 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-import xyz.morlotti.virtualbookcase.webapi.exceptions.APINotAuthorizedException;
 import xyz.morlotti.virtualbookcase.webapi.exceptions.APINotFoundException;
-import xyz.morlotti.virtualbookcase.webapi.exceptions.APINotCreatedException;
-import xyz.morlotti.virtualbookcase.webapi.exceptions.APINotDeletedException;
+import xyz.morlotti.virtualbookcase.webapi.exceptions.APINotModifiedException;
+import xyz.morlotti.virtualbookcase.webapi.exceptions.APIInvalidValueException;
+import xyz.morlotti.virtualbookcase.webapi.exceptions.APINotAuthorizedException;
 
 @ControllerAdvice
 public class MyExceptionHandler extends ResponseEntityExceptionHandler
@@ -36,15 +36,15 @@ public class MyExceptionHandler extends ResponseEntityExceptionHandler
 		response.sendError(HttpStatus.NOT_FOUND.value());
 	}
 
-	@ExceptionHandler(APINotCreatedException.class)
-	public void springHandleNotCreated(HttpServletResponse response) throws IOException
+	@ExceptionHandler(APINotModifiedException.class)
+	public void springHandleNotModified(HttpServletResponse response) throws IOException
 	{
 		response.sendError(HttpStatus.NOT_MODIFIED.value());
 	}
 
-	@ExceptionHandler(APINotDeletedException.class)
-	public void springHandleNotDeleted(HttpServletResponse response) throws IOException
+	@ExceptionHandler(APIInvalidValueException.class)
+	public void springHandleInvalidValue(HttpServletResponse response) throws IOException
 	{
-		response.sendError(HttpStatus.NOT_FOUND.value());
+		response.sendError(HttpStatus.BAD_REQUEST.value());
 	}
 }

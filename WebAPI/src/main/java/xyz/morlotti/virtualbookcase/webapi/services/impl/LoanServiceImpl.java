@@ -9,7 +9,7 @@ import xyz.morlotti.virtualbookcase.webapi.models.Loan;
 import xyz.morlotti.virtualbookcase.webapi.daos.BookDAO;
 import xyz.morlotti.virtualbookcase.webapi.daos.LoanDAO;
 import xyz.morlotti.virtualbookcase.webapi.services.interfaces.LoanService;
-import xyz.morlotti.virtualbookcase.webapi.exceptions.APINotCreatedException;
+import xyz.morlotti.virtualbookcase.webapi.exceptions.APINotModifiedException;
 import xyz.morlotti.virtualbookcase.webapi.exceptions.APINotDeletedException;
 
 import java.util.Optional;
@@ -50,7 +50,7 @@ public class LoanServiceImpl implements LoanService
 
 		if(newLoan == null)
 		{
-			throw new APINotCreatedException("Loan not inserted");
+			throw new APINotModifiedException("Loan not inserted");
 		}
 
 		/* Update the book's availability */
@@ -65,7 +65,7 @@ public class LoanServiceImpl implements LoanService
 
 			if(newBook == null)
 			{
-				throw new APINotCreatedException("Book not updated");
+				throw new APINotModifiedException("Book not updated");
 			}
 		}
 

@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import xyz.morlotti.virtualbookcase.webapi.models.User;
 import xyz.morlotti.virtualbookcase.webapi.daos.UserDAO;
 import xyz.morlotti.virtualbookcase.webapi.services.interfaces.UserService;
-import xyz.morlotti.virtualbookcase.webapi.exceptions.APINotCreatedException;
+import xyz.morlotti.virtualbookcase.webapi.exceptions.APINotModifiedException;
 import xyz.morlotti.virtualbookcase.webapi.exceptions.APINotDeletedException;
 
 @Service
@@ -38,7 +38,7 @@ public class UserServiceImpl implements UserService
 
 		if(newUser == null)
 		{
-			throw new APINotCreatedException("User not inserted");
+			throw new APINotModifiedException("User not inserted");
 		}
 
 		return newUser;
