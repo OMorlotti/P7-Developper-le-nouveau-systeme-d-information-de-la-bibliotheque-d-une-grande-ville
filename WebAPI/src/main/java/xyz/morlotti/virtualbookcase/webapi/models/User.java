@@ -149,7 +149,7 @@ public class User implements java.io.Serializable
     @Column(name = "birthdate", nullable = false)
     private LocalDate birthdate;
 
-    @Column(name = "sex", nullable = false)
+    @Column(name = "sex", nullable = false, columnDefinition = "INT DEFAULT 0")
     private Integer sex;
 
     public Sex getSex()
@@ -162,7 +162,7 @@ public class User implements java.io.Serializable
         this.sex = sex.toCode();
     }
 
-    @Column(name = "role", nullable = false)
+    @Column(name = "role", nullable = false, columnDefinition = "INT DEFAULT 2")
     private Integer role;
 
     public Role getRole()

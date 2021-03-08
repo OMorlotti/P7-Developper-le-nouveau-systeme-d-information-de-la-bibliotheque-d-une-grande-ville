@@ -73,7 +73,7 @@ public class Book implements java.io.Serializable
     @JoinColumn(name = "bookDescriptionFK", nullable = false)
     private BookDescription bookDescription;
 
-    @Column(name = "cond", nullable = false)
+    @Column(name = "cond", nullable = false, columnDefinition = "INT DEFAULT 0")
     private Integer condition;
 
     public Condition getCondition()
