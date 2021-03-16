@@ -98,7 +98,6 @@ public class Book implements java.io.Serializable
     ////////
 
     @JsonIgnore
-    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "book")
     private Set<Loan> loans;
 }
