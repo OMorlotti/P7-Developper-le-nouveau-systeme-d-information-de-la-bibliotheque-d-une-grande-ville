@@ -6,6 +6,7 @@ import java.util.Date;
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -68,12 +69,14 @@ public class BookDescription implements java.io.Serializable
 
     @CreatedDate
     @Temporal(TemporalType.TIMESTAMP)
+    @org.hibernate.annotations.CreationTimestamp
     @Column(name = "created", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Date created;
 
     ////////
 
     @JsonIgnore
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "bookDescription")
     private Set<Book> books;
 }

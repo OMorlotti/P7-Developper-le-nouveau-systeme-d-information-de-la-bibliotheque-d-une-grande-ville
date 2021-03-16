@@ -91,12 +91,14 @@ public class Book implements java.io.Serializable
 
     @CreatedDate
     @Temporal(TemporalType.TIMESTAMP)
+    @org.hibernate.annotations.CreationTimestamp
     @Column(name = "created", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Date created;
 
     ////////
 
     @JsonIgnore
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "book")
     private Set<Loan> loans;
 }

@@ -180,11 +180,13 @@ public class User implements java.io.Serializable
 
     @CreatedDate
     @Temporal(TemporalType.TIMESTAMP)
+    @org.hibernate.annotations.CreationTimestamp
     @Column(name = "created", nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Date created;
 
     ////////
 
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
     private Set<Loan> loans;
 
