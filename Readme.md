@@ -8,6 +8,10 @@
 
 ## Le projet :
 
+**Le source**<br/>
+
+https://github.com/OMorlotti/P7
+
 **Le site web**<br/>
 Le but est de permettre aux usagers de suivre les prêts de leur ouvrages à travers une
 interface web:
