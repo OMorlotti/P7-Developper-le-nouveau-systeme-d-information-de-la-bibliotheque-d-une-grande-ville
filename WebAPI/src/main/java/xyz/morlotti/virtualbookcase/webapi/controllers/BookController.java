@@ -33,7 +33,7 @@ public class BookController
 	{
 		Optional<Book> optional = bookService.getBook(id);
 
-		if(!optional.isPresent())
+		if(optional.isEmpty())
 		{
 			throw new APINotFoundException("Book " + id + " not found");
 		}

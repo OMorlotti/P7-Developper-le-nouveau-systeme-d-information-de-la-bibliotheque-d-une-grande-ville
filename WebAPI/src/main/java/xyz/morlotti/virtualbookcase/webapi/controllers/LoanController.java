@@ -46,7 +46,7 @@ public class LoanController
 	{
 		Optional<Loan> optional = loanService.getLoan(id);
 
-		if(!optional.isPresent())
+		if(optional.isEmpty())
 		{
 			throw new APINotFoundException("Loan " + id + " not found");
 		}
