@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import xyz.morlotti.virtualbookcase.userwebsite.MyFeignProxy;
+import xyz.morlotti.virtualbookcase.userwebsite.beans.forms.Email;
 import xyz.morlotti.virtualbookcase.userwebsite.security.TokenUtils;
 import xyz.morlotti.virtualbookcase.userwebsite.beans.forms.Credentials;
 
@@ -61,8 +62,29 @@ public class AuthController
 	}
 
 	@RequestMapping(value="/remind-password", method = RequestMethod.GET)
-	public String remindPassword()
+	public String remindPasswordStep1()
 	{
 		return "remind-password";
+	}
+
+	@RequestMapping(value="/remind-password", method = RequestMethod.POST, consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE})
+	public String remindPasswordStep2(Email email, Model model)
+	{
+		try
+		{
+			feignProxy.remindPassword(email.getEmail());
+
+			model.addAttribute("messageType", "success");
+			model.addAttribute("message", "Mot de passe envoyé.");
+
+			return "home";
+		}
+		catch(Exception e)
+		{
+			model.addAttribute("messageType", "danger");
+			model.addAttribute("message", "Mot de passe non envoyé.");
+
+			return "remind-password";
+		}
 	}
 }
