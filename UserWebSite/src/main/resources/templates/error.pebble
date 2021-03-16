@@ -1,6 +1,16 @@
 {% extends "base" %}
 
 {% block content %}
+
+{% if not message %}
+<div class="alert alert-danger">
+    Ressource indisponible !
+    <button type="button" class="close" data-dismiss="alert">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+{% endif %}
+
 <div class="text-center my-4">
     <button class="btn btn-warning" onclick="history.back();">Retour à la page précédente</button>
 </div>
