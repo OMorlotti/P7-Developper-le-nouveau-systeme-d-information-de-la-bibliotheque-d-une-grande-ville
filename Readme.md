@@ -49,7 +49,7 @@ L'application a été développée suivant une architecture à microservices :
 
 La partie WebAPI étant développé avec Spring Boot et Spring Security :
 
-![WebAPI](WebAPI.png)
+![WebAPI](WebAPI2.png)
 
 ## Déploiement
 
