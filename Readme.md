@@ -68,7 +68,6 @@ La partie WebAPI étant développé avec Spring Boot et Spring Security :
 `VirtualBookcaseWebAPI-1.0.0.jar` admet les paramètres suivants :
   * `--MYSQL_HOST=<localhost>`
   * `--MYSQL_PORT=<8889>`
-  * `--MYSQL_DBNAME=<virtualbookcase>`
   * `--MYSQL_USERNAME=<root>`
   * `--MYSQL_PASSWORD=<root>`
 
