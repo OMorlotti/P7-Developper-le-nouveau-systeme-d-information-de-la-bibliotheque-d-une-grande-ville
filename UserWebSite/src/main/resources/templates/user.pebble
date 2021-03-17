@@ -130,7 +130,6 @@
 					    {% elseif loan.state == 'EXTENSION_ASKED' %}
                             <span class="badge badge-success">prolongé</span>
 					    {% endif %}
-					    {{ loan.state }}
 					</td>
 				</tr>
 				{% endfor %}
