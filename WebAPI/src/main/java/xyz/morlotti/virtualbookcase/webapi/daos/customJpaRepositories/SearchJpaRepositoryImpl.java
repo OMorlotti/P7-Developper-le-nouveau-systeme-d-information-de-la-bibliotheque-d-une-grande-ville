@@ -33,7 +33,7 @@ public class SearchJpaRepositoryImpl implements SearchJpaRepository
 
 		if(search.getAuthor() != null && !search.getAuthor().isEmpty())
 		{
-			conds.add("bd.author LIKE :author");
+			conds.add("bd.authorFirstname LIKE :author OR bd.authorLastname LIKE :author");
 		}
 
 		if(search.getEditionNumber() != null && !search.getEditionNumber().isEmpty())
