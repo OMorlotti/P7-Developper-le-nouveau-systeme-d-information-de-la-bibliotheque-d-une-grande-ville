@@ -126,10 +126,11 @@
                             <span class="badge badge-success">récent</span>
 					    {% elseif loan.state == 'ASK_EXTENSION' %}
                             <span class="badge badge-success">récent</span>
-                            <a href="{{ href("/loan/" + loan.book.id + "/extend") }}">prolonger 1 mois</a>
+                            <a href="{{ href("/loan/" + loan.id + "/extend") }}">prolonger 1 mois</a>
 					    {% elseif loan.state == 'EXTENSION_ASKED' %}
                             <span class="badge badge-success">prolongé</span>
 					    {% endif %}
+					    {{ loan.state }}
 					</td>
 				</tr>
 				{% endfor %}
